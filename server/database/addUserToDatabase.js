@@ -1,5 +1,5 @@
 const { MongoClient } = require('mongodb'); 
-const bcrypt = require('bcrypt'); // Import bcrypt
+const bcrypt = require('bcrypt'); 
 
 const addUserToDatabase = async (req, res, next) => {
   try {
@@ -7,16 +7,16 @@ const addUserToDatabase = async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
 
     const usersCollection = db.collection('users');
-    // check for existing users in db
+
     const existingUser = await usersCollection.findOne({ email });
     if (existingUser) {
-        return res.status(409).json({ message: 'User with this email already exists' }); // 409 Conflict
+        return res.status(409).json({ message: 'User with this email already exists' }); 
       } 
-    // Hash the password
-    const saltRounds = 10; // Adjust as needed
+ 
+    const saltRounds = 10; 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // Insert the user with the hashed password
+ 
     await usersCollection.insertOne({
       firstName,
       lastName,

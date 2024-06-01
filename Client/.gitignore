@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 anime.jsx
+data-requests
+fetchWaifu.jsx
+gitignore

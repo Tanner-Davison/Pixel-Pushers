@@ -8,14 +8,14 @@ const Home = () => {
     const fetchUser = async () => {
       try {
         const res = await axios.get("/api/private", {
-          withCredentials: true, // Crucial for sending cookies
+          withCredentials: true, 
         });
         console.log("Response data:", res.data); 
         setUserData(res.data);
         console.log(res.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
-        // Handle errors (e.g., redirect to login if unauthorized)
+       
       }
     };
     fetchUser();

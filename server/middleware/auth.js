@@ -56,10 +56,10 @@ const userLogin = async (req, res, next) => {
 
     });
 
-    // Decode the JWT to get user data
+
     const decoded = jwt.verify(token, secretKey);
 
-    // Set req.user with decoded data
+   
     req.user = { userId: decoded.userId, email: decoded.email };
 
     next();
@@ -71,13 +71,13 @@ const userLogin = async (req, res, next) => {
 const authenticateUser = (req, res, next) => {
   console.log('running');
 
-  const token = req.cookies.jwtToken; // Get token from cookies
+  const token = req.cookies.jwtToken; 
   console.log(token); 
 
   if (token) {
     try {
       const decoded = jwt.verify(token, secretKey);
-      // Set req.user here *after* successful verification
+      
       req.user = { userId: decoded.userId, email: decoded.email }; 
       next(); 
     } catch (error) {

@@ -5,7 +5,7 @@ const { connectToDatabase } = require("./database/database");
 const { addUserToDatabase } = require("./database/addUserToDatabase");
 const { newUser, userLogin, authenticateUser } = require("./middleware/auth");
 const PORT = process.env.PORT || 3001;
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb'); // Import ObjectId
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb'); 
 
 const app = express();
 app.use(
@@ -40,7 +40,7 @@ connectToDatabase().then((client) => {
 
       const db = req.app.locals.db;
       const usersCollection = db.collection('users');
-      // Convert userId to ObjectId
+     
       const objectId = new ObjectId(userId); 
 
       const user = await usersCollection.findOne({ _id: objectId }); 
