@@ -1,0 +1,197 @@
+@import url('chillax.css');
+@font-face {
+  font-family: 'Archivo Bold';
+  src: url('Archivo-Bold.woff2') format('woff2'),
+      url('Archivo-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Orbitron Regular';
+  src: url('Orbitron-Regular.woff2') format('woff2'),
+      url('Orbitron-Regular.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Archivo SemiBold';
+  src: url('Archivo-SemiBold.woff2') format('woff2'),
+      url('Archivo-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Archivo Regular';
+  src: url('Archivo-SemiBold.woff2') format('woff2'),
+      url('Archivo-SemiBold.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Archivo SemiBoldItalic';
+  src: url('Archivo-SemiBoldItalic.woff2') format('woff2'),
+      url('Archivo-SemiBoldItalic.woff') format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Archivo ExtraBold';
+  src: url('Archivo-ExtraBold.woff2') format('woff2'),
+      url('Archivo-ExtraBold.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chillax-Extralight';
+  src: url('Chillax-Extralight.woff2') format('woff2'),
+       url('Chillax-Extralight.woff') format('woff'),
+       url('Chillax-Extralight.ttf') format('truetype');
+  font-weight: 200;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Chillax-Light';
+  src: url('Chillax-Light.woff2') format('woff2'),
+       url('Chillax-Light.woff') format('woff'),
+       url('Chillax-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Chillax-Regular';
+  src: url('Chillax-Regular.woff2') format('woff2'),
+       url('Chillax-Regular.woff') format('woff'),
+       url('Chillax-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Chillax-Medium';
+  src: url('Chillax-Medium.woff2') format('woff2'),
+       url('Chillax-Medium.woff') format('woff'),
+       url('Chillax-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Chillax-Semibold';
+  src: url('Chillax-Semibold.woff2') format('woff2'),
+       url('Chillax-Semibold.woff') format('woff'),
+       url('Chillax-Semibold.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Chillax-Bold';
+  src: url('Chillax-Bold.woff2') format('woff2'),
+       url('Chillax-Bold.woff') format('woff'),
+       local('Chillax-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+/**
+* This is a variable font
+* You can control variable axes as shown below:
+* font-variation-settings: wght 700.0;
+*
+* available axes:
+'wght' (range from 200.0 to 700.0
+*/
+@font-face {
+  font-family: 'Chillax-Variable';
+  src: url('Chillax-Variable.woff2') format('woff2'),
+       url('Chillax-Variable.woff') format('woff'),
+       url('Chillax-Variable.ttf') format('truetype');
+  font-weight: 200 700;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Chillax-Extralight';
+  src: url('Chillax-Extralight.woff2') format('woff2'),
+       url('Chillax-Extralight.woff') format('woff'),
+       url('Chillax-Extralight.ttf') format('truetype');
+  font-weight: 200;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Chillax-Light';
+  src: url('Chillax-Light.woff2') format('woff2'),
+       url('Chillax-Light.woff') format('woff'),
+       url('Chillax-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Chillax-Regular';
+  src: url('Chillax-Regular.woff2') format('woff2'),
+       url('Chillax-Regular.woff') format('woff'),
+       url('Chillax-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Chillax-Medium';
+  src: url('Chillax-Medium.woff2') format('woff2'),
+       url('Chillax-Medium.woff') format('woff'),
+       url('Chillax-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Chillax-Semibold';
+  src: url('Chillax-Semibold.woff2') format('woff2'),
+       url('Chillax-Semibold.woff') format('woff'),
+       url('Chillax-Semibold.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Chillax-Bold';
+  src: url('Chillax-Bold.woff2') format('woff2'),
+       url('Chillax-Bold.woff') format('woff'),
+       url('Chillax-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+/**
+* This is a variable font
+* You can control variable axes as shown below:
+* font-variation-settings: wght 700.0;
+*
+* available axes:
+'wght' (range from 200.0 to 700.0
+*/
+@font-face {
+  font-family: 'Chillax-Variable';
+  src: url('Chillax-Variable.woff2') format('woff2'),
+       url('Chillax-Variable.woff') format('woff'),
+       url('Chillax-Variable.ttf') format('truetype');
+  font-weight: 200 700;
+  font-display: swap;
+  font-style: normal;
+}
+
