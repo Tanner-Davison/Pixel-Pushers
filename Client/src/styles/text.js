@@ -686,7 +686,7 @@ ${media.mobile} {
   background-clip: text;
   -webkit-text-stroke-width: 0.07vw;
 `,
-bodyMChillax: `
+  bodyMChillax: `
   font-family: 'Chillax-Regular';
   font-style: normal;
   font-weight: 400;
@@ -711,7 +711,7 @@ bodyMChillax: `
       line-height: 6.308vw;
     }
     `,
-    bodyMBoldChillax: `
+  bodyMBoldChillax: `
     font-family: 'Chillax-Regular';
     font-style: normal;
     font-weight: 700;
@@ -736,5 +736,30 @@ bodyMChillax: `
         line-height: 6.308vw;
       }
       `,
+  h2Chillax: `
+  font-family: 'Chillax-Regular';
+  font-style: normal;
+  font-weight: 500;
+
+    ${media.fullWidth} {
+      font-size: 34px;
+      line-height: 56px;
+    }
+    
+    ${media.desktop} {
+      font-size: 2.361vw;
+      line-height: 3.889vw;
+    }
+
+    ${media.tablet} {
+      font-size: 4.688vw;
+      line-height: 5.469vw;
+    }
+
+    ${media.mobile} {
+      font-size: 8.879vw;
+      line-height: 9.813vw;
+    }
+    `,
 };
 export default text;
