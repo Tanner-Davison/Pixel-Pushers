@@ -36,7 +36,7 @@ const Login = () => {
   return (
     <Wrapper>
       <Form id="login-form">
-        <FormHeader>Sign In </FormHeader>
+        <FormHeader>User Login </FormHeader>
         <Email
           type="email"
           placeholder="Email"

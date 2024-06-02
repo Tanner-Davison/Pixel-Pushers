@@ -761,5 +761,30 @@ ${media.mobile} {
       line-height: 9.813vw;
     }
     `,
+  bodySChillax: `
+  font-family: 'Chillax-Regular';
+  font-style: normal;
+  font-weight: 600;
+
+    ${media.fullWidth} {
+      font-size: 16px;
+      line-height: 24px;
+    }
+    
+    ${media.desktop} {
+      font-size: 1.111vw;
+      line-height: 1.667vw;
+    }
+
+    ${media.tablet} {
+      font-size: 1.563vw;
+      line-height: 2.344vw;
+    }
+
+    ${media.mobile} {
+      font-size: 3.738vw;
+      line-height: 5.607vw;
+    }
+    `,
 };
 export default text;

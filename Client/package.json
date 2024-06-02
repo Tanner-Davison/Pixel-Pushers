@@ -11,6 +11,10 @@
     "start": "vite"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-brands-svg-icons": "^6.5.2",
+    "@fortawesome/free-regular-svg-icons": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "antd": "^5.17.4",
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",

@@ -12,8 +12,31 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userEmailExists, setUserEmailExists] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [isStrong, setIsStrong] = useState(null);
+  const [passwordFill, setPasswordFill] = useState("black");
   const navigate = useNavigate();
+
+  const handlePasswordStrength = (e) => {
+    const currentPassword = e.target.value;
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (e.target.value && password.length > 4) {
+      setIsStrong(regex.test(currentPassword));
+    }
+    if (!e.target.value) {
+      setPasswordFill("black");
+      setIsStrong(null);
+    }
+
+    setPasswordFill(
+      regex.test(currentPassword)
+        ? "hsla(135, 50%, 50%, 1)"
+        : "hsla(350, 50%, 60%, 1)"
+    );
+    return setPassword(e.target.value);
+  };
   const handleSubmit = async () => {
+    if (!isStrong) return setPasswordError(true);
     const data = {
       firstName,
       lastName,
@@ -23,7 +46,7 @@ const Register = () => {
     try {
       const res = await axios.post("/api/usersignup", data);
       console.log(res.data);
-      return navigate('/login',{email, password})
+      return navigate("/login", { email, password });
     } catch (error) {
       if (error.response.status === 409) {
         setUserEmailExists(true);
@@ -34,7 +57,7 @@ const Register = () => {
 
   return (
     <Wrapper>
-      <Form id="login-form">
+      <Form id="login-form" $iserror={userEmailExists}>
         <FormHeader>Create Login</FormHeader>
         <input
           type="text"
@@ -46,23 +69,47 @@ const Register = () => {
           placeholder="Last Name"
           onChange={(e) => setLastName(e.target.value.toLowerCase())}
         />
+
         <Email
           type="email"
           placeholder="Email"
           $iserror={userEmailExists}
           onChange={(e) => setEmail(e.target.value.toLowerCase())}
+          onFocus={() => setUserEmailExists(false)}
         />
-        <input
-          type="password"
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <PasswordWrapper>
+          <Password
+            type="text"
+            $isstrong={isStrong}
+            $error={passwordError}
+            onFocus={()=>setPasswordError(false)}
+            placeholder="password"
+            onChange={(e) => handlePasswordStrength(e)}
+          />
+          {password.length > 4 && (
+            <StatusSymbol $isstrong={isStrong}>
+              <SVG
+                viewBox="0 0 10 10"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{ width: "10px", height: "10px" }}
+              >
+                <circle cx="5" cy="5" r="3" fill={passwordFill} />
+              </SVG>
+              <Status $passwordstrong={isStrong}>
+                {isStrong === null ? "" : isStrong ? "Strong" : "Weak"}
+              </Status>
+            </StatusSymbol>
+          )}
+        </PasswordWrapper>
         <button type="button" onClick={() => handleSubmit()}>
           Submit
         </button>
         {userEmailExists && (
           <EmailError>
-            Email already in use. Try again or <a>login</a>.
+            Email in use. Try again{" "}
+            <LoginLink href="/login">
+              Go To Login<Arrow>→</Arrow>
+            </LoginLink>
           </EmailError>
         )}
       </Form>
@@ -75,7 +122,79 @@ const EmailError = styled.div`
   width: 100%;
   text-align: center;
 `;
+const Arrow = styled.span`
+  font-size: 1.2em; /* Adjust font size as needed */
+  margin-left: 5px; /* Adjust spacing as needed */
+`;
+const LoginLink = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: hsla(150, 52%, 51%, 1);
+`;
+const SVG = styled.svg``;
+const Status = styled.p`
+  ${text.bodySChillax}
+  color: ${(props) =>
+    props.$passwordstrong
+      ? "hsla(135, 50%, 50%, 1)"
+      : "hsla(350, 50%, 60%, 1)"};
+`;
+const StatusSymbol = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  left: 99%;
+  text-wrap: nowrap;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.5vw 0.694vw;
+  border-radius: 10px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-left: none;
+  ${media.fullWidth} {
+    padding: 5px 10px;
+  }
 
+  ${media.tablet} {
+    padding: 0.488vw 0.977vw;
+  }
+
+  ${media.mobile} {
+    position: relative;
+    padding: 1.168vw 2.336vw;
+    left: unset;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: unset;
+  }
+`;
+const Password = styled.input`
+  color: ${(props) =>
+    props.$isstrong === null
+      ? "white"
+      : props.$isstrong
+      ? "hsla(135, 50%, 50%, 1)"
+      : "hsla(350, 50%, 60%, 1)"};
+
+  border: ${(props) =>
+    props.$error ? "1px solid hsla(350, 50%, 60%, 1)" : "none"};
+`;
+const PasswordWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  ${media.fullWidth} {
+  }
+
+  ${media.tablet} {
+  }
+
+  ${media.mobile} {
+    flex-direction: column;
+    gap: 2.336vw;
+  }
+`;
 const Email = styled.input`
   border: ${(props) => (props.$iserror ? "2px solid red" : "unset")};
   color: ${(props) => (props.$iserror ? "red" : "unset")};
