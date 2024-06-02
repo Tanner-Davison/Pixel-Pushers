@@ -26,7 +26,7 @@ const newUser = (req, res, next) => {
 const userLogin = async (req, res, next) => {
   const { email, password } = req.body;
   if (!isValidEmail(email) || !password) {
-    res.status(402).json({ message: "missing email and or password" });
+    res.status(422).json({ message: "missing email and or password" });
     return;
   }
 

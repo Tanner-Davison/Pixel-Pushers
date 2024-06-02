@@ -15,6 +15,7 @@ const Register = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [isStrong, setIsStrong] = useState(null);
   const [passwordFill, setPasswordFill] = useState("black");
+ 
   const navigate = useNavigate();
 
   const handlePasswordStrength = (e) => {
@@ -36,7 +37,8 @@ const Register = () => {
     return setPassword(e.target.value);
   };
   const handleSubmit = async () => {
-    if (!isStrong) return setPasswordError(true);
+    if (!isStrong ) return
+    
     const data = {
       firstName,
       lastName,
@@ -57,16 +59,21 @@ const Register = () => {
 
   return (
     <Wrapper>
-      <Form id="login-form" $iserror={userEmailExists}>
+      <Form
+        id="login-form"
+        $iserror={userEmailExists}
+      >
         <FormHeader>Create Login</FormHeader>
-        <input
+        <FirstName
           type="text"
           placeholder="First Name"
+          $firstname={firstName === ''}
           onChange={(e) => setFirstName(e.target.value.toLowerCase())}
         />
-        <input
+        <LastName
           type="text"
           placeholder="Last Name"
+          $lastname={lastName}
           onChange={(e) => setLastName(e.target.value.toLowerCase())}
         />
 
@@ -82,7 +89,7 @@ const Register = () => {
             type="text"
             $isstrong={isStrong}
             $error={passwordError}
-            onFocus={()=>setPasswordError(false)}
+            onFocus={() => setPasswordError(false)}
             placeholder="password"
             onChange={(e) => handlePasswordStrength(e)}
           />
@@ -179,6 +186,14 @@ const Password = styled.input`
 
   border: ${(props) =>
     props.$error ? "1px solid hsla(350, 50%, 60%, 1)" : "none"};
+`;
+
+const FirstName = styled.input`
+
+`;
+
+const LastName = styled.input`
+
 `;
 const PasswordWrapper = styled.div`
   position: relative;
