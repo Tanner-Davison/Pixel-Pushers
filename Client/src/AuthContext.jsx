@@ -16,7 +16,6 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const handleContextLogin = (userData) => {
-    console.log(userData)
     localStorage.setItem("userInfo", JSON.stringify(userData));
     setIsLoggedIn(true);
   };
