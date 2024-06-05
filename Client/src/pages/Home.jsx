@@ -11,9 +11,7 @@ const Home = () => {
         const res = await axios.get("/api/private", {
           withCredentials: true,
         });
-        console.log("Response data:", res.data);
         setUserData(res.data);
-        console.log(res.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }

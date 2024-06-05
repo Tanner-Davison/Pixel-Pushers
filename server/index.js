@@ -5,13 +5,13 @@ const { connectToDatabase } = require("./database/database");
 const { addUserToDatabase } = require("./database/addUserToDatabase");
 const { newUser, userLogin, authenticateUser } = require("./middleware/auth");
 const PORT = process.env.PORT || 3001;
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb'); 
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const app = express();
 app.use(
   cors({
-    origin: "*", 
-    credentials: true, 
+    origin: "*",
+    credentials: true,
   })
 );
 app.use(express.json());
@@ -30,31 +30,37 @@ connectToDatabase().then((client) => {
   });
 
   app.post("/api/userlogin", userLogin, (req, res) => {
-    res.json({ message: 'Login successful', user: req.user });
+    res.json({ message: "Login successful", user: req.user });
   });
 
-  app.get('/api/private', authenticateUser, async (req, res) => {
+  app.get("/api/private", authenticateUser, async (req, res) => {
     try {
-      const userId = req.user.userId; 
-      console.log("USER ID", userId); 
+      const userId = req.user.userId;
+      console.log("USER ID", userId);
 
       const db = req.app.locals.db;
-      const usersCollection = db.collection('users');
-     
-      const objectId = new ObjectId(userId); 
+      const usersCollection = db.collection("users");
 
-      const user = await usersCollection.findOne({ _id: objectId }); 
+      const objectId = new ObjectId(userId);
+
+      const user = await usersCollection.findOne({ _id: objectId });
 
       if (user) {
         res.json(user);
       } else {
-        res.status(404).json({ message: 'User not found' });
+        res.status(404).json({ message: "User not found" });
       }
     } catch (error) {
-      console.error('Error fetching user data:', error);
-      res.status(500).json({ message: 'Error retrieving data' });
+      console.error("Error fetching user data:", error);
+      res.status(500).json({ message: "Error retrieving data" });
     }
   });
+});
+app.post("/api/logout", authenticateUser, async (req, res) => {
+  const user = { userId: req.user.userId };
+  console.log(user.userId);
+  res.clearCookie("jwtToken");
+  res.json({ message: "user logged out successfuly" });
 });
 
 app.listen(PORT, () => {

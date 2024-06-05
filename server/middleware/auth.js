@@ -56,11 +56,10 @@ const userLogin = async (req, res, next) => {
 
     });
 
-
     const decoded = jwt.verify(token, secretKey);
 
-   
-    req.user = { userId: decoded.userId, email: decoded.email };
+    console.log(decoded.userId, user.firstName)
+    req.user = { userId: decoded.userId, email: decoded.email, name:user.firstName };
 
     next();
   } catch (error) {

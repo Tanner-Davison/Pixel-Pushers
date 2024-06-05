@@ -1,5 +1,6 @@
 
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
+import { AuthProvider } from './AuthContext';
 import Home from './pages/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
@@ -18,9 +19,9 @@ function App() {
     )
   )
   return (
-    <>
+    <AuthProvider>
       <RouterProvider router={router}/>
-    </>
+    </AuthProvider>
   );
 }
 

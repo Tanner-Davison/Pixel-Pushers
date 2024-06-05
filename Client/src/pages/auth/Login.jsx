@@ -5,6 +5,7 @@ import media from "styles/media";
 import text from "styles/text";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState(null);
@@ -12,7 +13,7 @@ const Login = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
-
+  const {handleContextLogin} = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
@@ -28,6 +29,7 @@ const Login = () => {
     try {
       const res = await axios.post("/api/userlogin", data);
       console.log("jwt user", res.data.user);
+      handleContextLogin(res.data.user)
       return navigate("/");
     } catch (error) {
       if (
