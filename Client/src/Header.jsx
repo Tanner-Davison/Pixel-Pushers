@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-// import { Menu } from 'antd';
 import {
   HomeTwoTone,
   EditTwoTone,
@@ -19,9 +18,6 @@ const Header = () => {
   const headerRef = useRef();
   const [current, setCurrent] = useState("mail");
 
-  const onClick = (e) => {
-    setCurrent(e.key);
-  };
   const handleLogout = async () => {
     try {
       const res = await axios.post("/api/logout", { withCredentials: true });
@@ -44,7 +40,6 @@ const Header = () => {
         .timeline({ paused: true })
         .to(hover.querySelector(".border-grow"), {
           width: "100%",
-          duration: 0.5,
           ease: "back.out",
         })
         .to(
@@ -52,7 +47,7 @@ const Header = () => {
           {
             scale: 1.2,
             ease: "linear",
-            duration: 0.3,
+            duration:.2
           },
           0
         );
@@ -64,50 +59,38 @@ const Header = () => {
       hover.addEventListener("mouseover", () => timeline.play());
       hover.addEventListener("mouseout", () => timeline.reverse());
     });
-  });
+  },{scope:headerRef,dependencies:[isLoggedIn]});
 
   return (
     <>
-      <Menu
-        ref={headerRef}
-        onClick={onClick}
-        selectedKeys={[current]}
-        mode="horizontal"
-      >
-        <MenuItem className="menu-item" key="h" style={{marginRight:'auto'}} icon={<HomeTwoTone />}>
+      <Menu ref={headerRef}>
+        <MenuItem
+          className="menu-item"
+          style={{ marginRight: "auto" }}
+          icon={<HomeTwoTone />}
+        >
           <Link to="/">Home</Link>
           <Border className="border-grow" />
         </MenuItem>
         {!isLoggedIn && (
-          <MenuItem
-            className="menu-item"
-            key="r"
-            icon={<EditTwoTone />}
-            style={{ marginLeft: "auto" }}
-          >
+          <MenuItem className="menu-item" icon={<EditTwoTone />}>
             <Link to="/register">New User</Link>
             <Border className="border-grow" />
           </MenuItem>
         )}
         {!isLoggedIn && (
-          <MenuItem className="menu-item" key="l" icon={<CheckCircleTwoTone />}>
+          <MenuItem className="menu-item" icon={<CheckCircleTwoTone />}>
             <Link to="/login">Login</Link>
             <Border className="border-grow" />
           </MenuItem>
         )}
-        <MenuItem className="menu-item" key="a" icon={<CheckCircleTwoTone />}>
+        <MenuItem className="menu-item" icon={<CheckCircleTwoTone />}>
           <Link to="/Anime">Anime</Link>
           <Border className="border-grow" />
         </MenuItem>
         {isLoggedIn && (
-          <MenuItem className="menu-item" key="o" icon={<CheckCircleTwoTone />}>
-            <Logout
-              onClick={() => {
-                handleLogout();
-              }}
-            >
-              Logout
-            </Logout>
+          <MenuItem className="menu-item" icon={<CheckCircleTwoTone />}>
+            <Logout onClick={handleLogout}>Logout</Logout>
             <Border className="border-grow" />
           </MenuItem>
         )}
@@ -144,6 +127,6 @@ const Menu = styled.div`
   align-items: center;
   justify-content: center;
   gap: 25px;
-  height:35px;
+  height: 35px;
   background-color: #412485;
 `;
