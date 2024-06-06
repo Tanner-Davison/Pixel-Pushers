@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import text from "styles/text";
+
+import { useAuth } from "../AuthContext";
+
 const Home = () => {
   const [userData, setUserData] = useState("");
+ const {handleContextLogout} = useAuth()
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -12,12 +16,16 @@ const Home = () => {
           withCredentials: true,
         });
         setUserData(res.data);
+        
       } catch (error) {
         console.error("Error fetching user data:", error);
+        handleContextLogout()
       }
     };
+
     fetchUser();
-  }, []);
+
+  }, [handleContextLogout]);
   const username = (name) => {
     const firstLetter = name.slice(0, 1).toUpperCase();
     const restOfName = name.slice(1).toLowerCase();

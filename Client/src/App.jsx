@@ -4,8 +4,9 @@ import { AuthProvider } from './AuthContext';
 import Home from './pages/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
-import Header from './Header';
+import Header from './pages/Header';
 import Anime from './Anime';
+import Profile from './pages/Profile/Profile';
 
 function App() {
   const router = createBrowserRouter(
@@ -15,6 +16,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="Anime" element={<Anime/>}/>
+        <Route path="profile" element={<Profile/>}/>
       </Route>
     )
   )

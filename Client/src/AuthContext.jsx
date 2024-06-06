@@ -21,8 +21,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const handleContextLogout = () => {
-    localStorage.clear();
     setIsLoggedIn(false);
+    localStorage.clear();
   };
 
   return (

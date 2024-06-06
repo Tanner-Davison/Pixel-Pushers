@@ -1,22 +1,22 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import {
-  HomeTwoTone,
-  EditTwoTone,
   CheckCircleTwoTone,
+  EditTwoTone,
+  HomeTwoTone,
 } from "@ant-design/icons";
-import { Outlet, Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import axios from "axios";
-import { useAuth } from "./AuthContext";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import axios from "axios";
+import gsap from "gsap";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import text from "styles/text";
+import { useAuth } from "../AuthContext";
 
 const Header = () => {
   const { isLoggedIn, handleContextLogout } = useAuth();
+
   const navigate = useNavigate();
   const headerRef = useRef();
-  const [current, setCurrent] = useState("mail");
 
   const handleLogout = async () => {
     try {
@@ -30,36 +30,38 @@ const Header = () => {
     }
   };
 
-  useGSAP(() => {
-    const hoverables = gsap.utils.toArray(".menu-item");
-    gsap.config({
-      nullTargetWarn: false,
-    });
-    const playTimeline = (hover) => {
-      const hoverTL = gsap
-        .timeline({ paused: true })
-        .to(hover.querySelector(".border-grow"), {
-          width: "100%",
-          ease: "back.out",
-        })
-        .to(
-          hover.querySelector("a"),
-          {
-            scale: 1.2,
-            ease: "linear",
-            duration:.2
-          },
-          0
-        );
-      return hoverTL;
-    };
+  useGSAP(
+    () => {
+      const hoverables = gsap.utils.toArray(".menu-item");
+      gsap.config({
+        nullTargetWarn: false,
+      });
+      const playTimeline = (hover) => {
+        const hoverTL = gsap
+          .timeline({ paused: true })
+          .to(hover.querySelector(".border-grow"), {
+            width: "100%",
+            ease: "back.out",
+          })
+          .to(
+            hover.querySelector("a"),
+            {
+              scale: 1.2,
+              ease: "linear",
+            },
+            0
+          );
+        return hoverTL;
+      };
 
-    hoverables.forEach((hover) => {
-      const timeline = playTimeline(hover);
-      hover.addEventListener("mouseover", () => timeline.play());
-      hover.addEventListener("mouseout", () => timeline.reverse());
-    });
-  },{scope:headerRef,dependencies:[isLoggedIn]});
+      hoverables.forEach((hover) => {
+        const timeline = playTimeline(hover);
+        hover.addEventListener("mouseover", () => timeline.play());
+        hover.addEventListener("mouseout", () => timeline.reverse());
+      });
+    },
+    { scope: headerRef, dependencies: [isLoggedIn] }
+  );
 
   return (
     <>
@@ -72,6 +74,12 @@ const Header = () => {
           <Link to="/">Home</Link>
           <Border className="border-grow" />
         </MenuItem>
+        {isLoggedIn && (
+          <MenuItem className="menu-item">
+            <Link to="/profile">Profile</Link>
+            <Border className="border-grow" />
+          </MenuItem>
+        )}
         {!isLoggedIn && (
           <MenuItem className="menu-item" icon={<EditTwoTone />}>
             <Link to="/register">New User</Link>
@@ -84,16 +92,17 @@ const Header = () => {
             <Border className="border-grow" />
           </MenuItem>
         )}
-        <MenuItem className="menu-item" icon={<CheckCircleTwoTone />}>
+        {/* <MenuItem className="menu-item" icon={<CheckCircleTwoTone />}>
           <Link to="/Anime">Anime</Link>
           <Border className="border-grow" />
-        </MenuItem>
+        </MenuItem> */}
         {isLoggedIn && (
           <MenuItem className="menu-item" icon={<CheckCircleTwoTone />}>
             <Logout onClick={handleLogout}>Logout</Logout>
             <Border className="border-grow" />
           </MenuItem>
         )}
+      
       </Menu>
       <Outlet />
     </>
@@ -129,4 +138,5 @@ const Menu = styled.div`
   gap: 25px;
   height: 35px;
   background-color: #412485;
+  overflow: hidden;
 `;
