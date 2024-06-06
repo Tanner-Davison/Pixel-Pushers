@@ -71,7 +71,6 @@ const authenticateUser = (req, res, next) => {
   console.log('running');
 
   const token = req.cookies.jwtToken; 
-  console.log(token); 
 
   if (token) {
     try {

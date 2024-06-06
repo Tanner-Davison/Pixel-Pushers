@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const { connectToDatabase } = require("./database/database");
 const { addUserToDatabase } = require("./database/addUserToDatabase");
 const { newUser, userLogin, authenticateUser } = require("./middleware/auth");
+const {userDetails} = require('./middleware/userInfo');
 const PORT = process.env.PORT || 3001;
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
@@ -61,6 +62,12 @@ app.post("/api/logout", authenticateUser, async (req, res) => {
   console.log(user.userId);
   res.clearCookie("jwtToken");
   res.json({ message: "user logged out successfuly" });
+});
+app.get("/api/userData", authenticateUser, userDetails, async (req, res) => {
+  const user = { userId: req.user,  };
+  console.log(user); 
+
+  res.json({ user: req.user }); 
 });
 
 app.listen(PORT, () => {
