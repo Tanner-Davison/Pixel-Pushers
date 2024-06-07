@@ -102,7 +102,6 @@ const Header = () => {
             <Border className="border-grow" />
           </MenuItem>
         )}
-      
       </Menu>
       <Outlet />
     </>
@@ -132,6 +131,7 @@ const MenuItem = styled.div`
   width: 100px;
 `;
 const Menu = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -139,4 +139,5 @@ const Menu = styled.div`
   height: 35px;
   background-color: #412485;
   overflow: hidden;
+  z-index: 3;
 `;
