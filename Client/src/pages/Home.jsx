@@ -27,9 +27,7 @@ const Home = () => {
 
   }, [handleContextLogout]);
   const username = (name) => {
-    const firstLetter = name.slice(0, 1).toUpperCase();
-    const restOfName = name.slice(1).toLowerCase();
-    return firstLetter + restOfName;
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
   };
 
   const welcome = !userData ? (

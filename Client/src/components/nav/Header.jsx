@@ -10,7 +10,7 @@ import gsap from "gsap";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import text from "styles/text";
-import { useAuth } from "../AuthContext";
+import { useAuth } from "../../AuthContext";
 
 const Header = () => {
   const { isLoggedIn, handleContextLogout } = useAuth();
