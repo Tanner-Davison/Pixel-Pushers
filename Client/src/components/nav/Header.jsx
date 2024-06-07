@@ -39,7 +39,10 @@ const Header = () => {
       const playTimeline = (hover) => {
         const hoverTL = gsap
           .timeline({ paused: true })
-          .to(hover.querySelector(".border-grow"), {
+          .fromTo(hover.querySelector(".border-grow"), {
+            width:'0%',
+          },
+          {
             width: "100%",
             ease: "back.out",
           })
@@ -47,7 +50,7 @@ const Header = () => {
             hover.querySelector("a"),
             {
               scale: 1.2,
-              ease: "linear",
+              ease: "back.out",
             },
             0
           );
@@ -60,7 +63,7 @@ const Header = () => {
         hover.addEventListener("mouseout", () => timeline.reverse());
       });
     },
-    { scope: headerRef, dependencies: [isLoggedIn] }
+    { scope: headerRef, dependencies: [isLoggedIn], revertOnUpdate:false }
   );
 
   return (
@@ -92,10 +95,10 @@ const Header = () => {
             <Border className="border-grow" />
           </MenuItem>
         )}
-        {/* <MenuItem className="menu-item" icon={<CheckCircleTwoTone />}>
+        <MenuItem className="menu-item" icon={<CheckCircleTwoTone />}>
           <Link to="/Anime">Anime</Link>
           <Border className="border-grow" />
-        </MenuItem> */}
+        </MenuItem>
         {isLoggedIn && (
           <MenuItem className="menu-item" icon={<CheckCircleTwoTone />}>
             <Logout onClick={handleLogout}>Logout</Logout>
@@ -137,6 +140,7 @@ const Menu = styled.div`
   justify-content: center;
   gap: 25px;
   height: 35px;
+  padding:0px 25px;
   background-color: #412485;
   overflow: hidden;
   z-index: 3;
