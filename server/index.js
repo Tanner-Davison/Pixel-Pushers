@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const multer = require("multer");
 const { connectToDatabase } = require("./database/database");
 const { addUserToDatabase } = require("./database/addUserToDatabase");
 const { newUser, userLogin, authenticateUser } = require("./middleware/auth");
@@ -89,12 +88,6 @@ app.post(
   "/api/uploadProfilePhoto",
   authenticateUser,
   uploadProfilePhoto,
-  async (req, res) => {
-    res.json({
-      message: "Profile photo uploaded successfully",
-      profileImageUrl: req.user.profileImageUrl,
-    });
-  }
 );
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
