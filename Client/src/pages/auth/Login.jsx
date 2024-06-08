@@ -3,9 +3,9 @@ import styled from "styled-components";
 import media from "styles/media";
 // import colors from "styles/colors";
 import text from "styles/text";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
+import { login } from "../../API/UserLoginHandler";
 
 const Login = () => {
   const [email, setEmail] = useState(null);
@@ -13,7 +13,7 @@ const Login = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
-  const {handleContextLogin} = useAuth();
+  const { handleContextLogin } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
@@ -22,26 +22,14 @@ const Login = () => {
     } else if (!password) {
       setPasswordError(true);
     }
-    const data = {
+    await login(
       email,
+      setEmailError,
+      setPasswordError,
       password,
-    };
-    try {
-      const res = await axios.post("/api/userlogin", data);
-      console.log("jwt user", res.data.user);
-      handleContextLogin(res.data.user)
-      return navigate("/");
-    } catch (error) {
-      if (
-        error.response.status === 409 ||
-        error.response.status === 422 ||
-        error.response.status === 401
-      ) {
-        setEmailError(true);
-        setPasswordError(true);
-      }
-      return console.error("Error during signup:", error.response.status);
-    }
+      handleContextLogin,
+      navigate
+    );
   };
   const HandleEmailChange = (e) => {
     const regex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;

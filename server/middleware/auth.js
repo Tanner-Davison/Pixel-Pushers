@@ -1,13 +1,15 @@
-const { MongoClient } = require("mongodb");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
 require("dotenv").config();
 const secretKey = process.env.JWT_SECRET_KEY;
+
 
 const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
+
 
 const newUser = (req, res, next) => {
   const { firstName, lastName, email } = req.body;
@@ -24,7 +26,6 @@ const newUser = (req, res, next) => {
 };
 
 const userLogin = async (req, res, next) => {
-
   const { email, password } = req.body;
 
   if (!isValidEmail(email) || !password) {
@@ -55,40 +56,48 @@ const userLogin = async (req, res, next) => {
     res.cookie("jwtToken", token, {
       httpOnly: true,
       sameSite: "lax",
-
     });
 
     const decoded = jwt.verify(token, secretKey);
 
-    req.user = { userId: decoded.userId, email: decoded.email, name:user.firstName };
+    req.user = {
+      userId: decoded.userId,
+      email: decoded.email,
+      name: user.firstName,
+    };
 
-    next();
+    res.json({ message: "Login successful", user: req.user });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "An error occurred during login" });
   }
 };
+const logout = (req, res) => {
+  res.clearCookie("jwtToken");
+  res.json({ message: "user logged out successfuly" });
+};
 const authenticateUser = (req, res, next) => {
-  console.log('running');
+  console.log("running");
 
-  const token = req.cookies.jwtToken; 
+  const token = req.cookies.jwtToken;
 
   if (token) {
     try {
       const decoded = jwt.verify(token, secretKey);
-      
-      req.user = { userId: decoded.userId, email: decoded.email }; 
-      next(); 
+
+      req.user = { userId: decoded.userId, email: decoded.email };
+      next();
     } catch (error) {
-      console.error('Authentication error:', error);
-      res.status(401).json({ message: 'Unauthorized' });
+      console.error("Authentication error:", error);
+      res.status(401).json({ message: "Unauthorized" });
     }
   } else {
-    res.status(401).json({ message: 'Unauthorized' });
+    res.status(401).json({ message: "Unauthorized" });
   }
 };
 module.exports = {
   newUser,
   userLogin,
+  logout,
   authenticateUser,
 };

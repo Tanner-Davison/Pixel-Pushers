@@ -2,9 +2,10 @@ import { useState } from "react";
 import styled from "styled-components";
 import media from "styles/media";
 // import colors from "styles/colors";
-import text from "styles/text";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import text from "styles/text";
+import { passwordStrength } from "../../UtilityFunctions/PasswordHandler";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -15,30 +16,12 @@ const Register = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [isStrong, setIsStrong] = useState(null);
   const [passwordFill, setPasswordFill] = useState("black");
- 
+
   const navigate = useNavigate();
 
-  const handlePasswordStrength = (e) => {
-    const currentPassword = e.target.value;
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-    if (e.target.value && password.length > 4) {
-      setIsStrong(regex.test(currentPassword));
-    }
-    if (!e.target.value) {
-      setPasswordFill("black");
-      setIsStrong(null);
-    }
-
-    setPasswordFill(
-      regex.test(currentPassword)
-        ? "hsla(135, 50%, 50%, 1)"
-        : "hsla(350, 50%, 60%, 1)"
-    );
-    return setPassword(e.target.value);
-  };
   const handleSubmit = async () => {
-    if (!isStrong ) return
-    
+    if (!isStrong) return;
+
     const data = {
       firstName,
       lastName,
@@ -46,7 +29,7 @@ const Register = () => {
       password,
     };
     try {
-      const res = await axios.post("/api/usersignup", data);
+      const res = await axios.post("/pixel-pushers/usersignup", data);
       console.log(res.data);
       return navigate("/login", { email, password });
     } catch (error) {
@@ -59,15 +42,12 @@ const Register = () => {
 
   return (
     <Wrapper>
-      <Form
-        id="login-form"
-        $iserror={userEmailExists}
-      >
+      <Form id="login-form" $iserror={userEmailExists}>
         <FormHeader>Create Login</FormHeader>
         <FirstName
           type="text"
           placeholder="First Name"
-          $firstname={firstName === ''}
+          $firstname={firstName === ""}
           onChange={(e) => setFirstName(e.target.value.toLowerCase())}
         />
         <LastName
@@ -91,7 +71,15 @@ const Register = () => {
             $error={passwordError}
             onFocus={() => setPasswordError(false)}
             placeholder="password"
-            onChange={(e) => handlePasswordStrength(e)}
+            onChange={(e) =>
+              passwordStrength(
+                e,
+                password,
+                setPasswordFill,
+                setIsStrong,
+                setPassword
+              )
+            }
           />
           {password.length > 4 && (
             <StatusSymbol $isstrong={isStrong}>
@@ -188,13 +176,9 @@ const Password = styled.input`
     props.$error ? "1px solid hsla(350, 50%, 60%, 1)" : "none"};
 `;
 
-const FirstName = styled.input`
+const FirstName = styled.input``;
 
-`;
-
-const LastName = styled.input`
-
-`;
+const LastName = styled.input``;
 const PasswordWrapper = styled.div`
   position: relative;
   display: flex;

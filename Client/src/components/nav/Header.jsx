@@ -5,29 +5,20 @@ import {
   HomeTwoTone,
 } from "@ant-design/icons";
 import { useGSAP } from "@gsap/react";
-import axios from "axios";
 import gsap from "gsap";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import text from "styles/text";
 import { useAuth } from "../../AuthContext";
+import { logout } from "../../API/UserLoginHandler";
 
 const Header = () => {
   const { isLoggedIn, handleContextLogout } = useAuth();
-
   const navigate = useNavigate();
   const headerRef = useRef();
 
   const handleLogout = async () => {
-    try {
-      const res = await axios.post("/api/logout", { withCredentials: true });
-      if (res) {
-        handleContextLogout();
-        navigate("/login");
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    logout(handleContextLogout, navigate);
   };
 
   useGSAP(
@@ -39,13 +30,16 @@ const Header = () => {
       const playTimeline = (hover) => {
         const hoverTL = gsap
           .timeline({ paused: true })
-          .fromTo(hover.querySelector(".border-grow"), {
-            width:'0%',
-          },
-          {
-            width: "100%",
-            ease: "back.out",
-          })
+          .fromTo(
+            hover.querySelector(".border-grow"),
+            {
+              width: "0%",
+            },
+            {
+              width: "100%",
+              ease: "back.out",
+            }
+          )
           .to(
             hover.querySelector("a"),
             {
@@ -63,7 +57,7 @@ const Header = () => {
         hover.addEventListener("mouseout", () => timeline.reverse());
       });
     },
-    { scope: headerRef, dependencies: [isLoggedIn], revertOnUpdate:false }
+    { scope: headerRef, dependencies: [isLoggedIn], revertOnUpdate: false }
   );
 
   return (
@@ -140,7 +134,7 @@ const Menu = styled.div`
   justify-content: center;
   gap: 25px;
   height: 35px;
-  padding:0px 25px;
+  padding: 0px 25px;
   background-color: #412485;
   overflow: hidden;
   z-index: 3;

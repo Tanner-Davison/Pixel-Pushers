@@ -40,7 +40,7 @@
   },
   "vite": {
     "proxy": {
-      "/api": "http://localhost:3001"
+      "/pixel-pushers": "http://localhost:3001"
     }
   }
 }

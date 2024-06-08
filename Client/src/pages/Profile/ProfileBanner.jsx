@@ -7,8 +7,8 @@ import media from "../../styles/media";
 import text from "../../styles/text";
 
 //eslint-disable-next-line
-const ProfileBanner = ({ data, setPhotoChange }) => {
-  const { profileImageUrl = "" } = data || {};
+const ProfileBanner = ({ userData }) => {
+  const { profileImageUrl = "" } = userData || {};
   const [photo, setPhoto] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -41,7 +41,7 @@ const ProfileBanner = ({ data, setPhotoChange }) => {
     reader.onload = (e) => {
       const dataUrl = e.target.result;
       setLoading(true);
-      fetch("/api/uploadProfilePhoto", {
+      fetch("/pixel-pushers/uploadProfilePhoto", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -95,7 +95,7 @@ const ProfileBanner = ({ data, setPhotoChange }) => {
             className="profile-img"
             src={loadingGiphy}
             alt={"loading"}
-            style={{ minHeight: "25px", height: "75px", width: "75px" }}
+            style={{ minHeight: "100px", height: "150px", width: "150px" }}
           />
         )}
         <UploadPhotoBtn
@@ -109,7 +109,7 @@ const ProfileBanner = ({ data, setPhotoChange }) => {
         <input
           type="file"
           id="hidden-file-upload"
-          accept="image/png, image/jpeg, image/webp"
+          accept="image/*"
           onChange={(e) => handleFileChange(e)}
           style={{ display: "none" }}
         />
@@ -147,19 +147,29 @@ const UploadPhotoBtn = styled.img`
   background-repeat: no-repeat;
 
   opacity: ${(props) => (props.$visible ? "1" : "0")};
-  bottom: 0px;
-  right: 55px;
-  top: 55px;
-  width: 35px;
-  height: 35px;
+  bottom: 0vw;
+  right: 3.819vw;
+  top: 3.819vw;
+  width: 2.431vw;
+  height: 2.431vw;
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   &:hover {
     transform: scale(1.1);
   }
   ${media.fullWidth} {
+    bottom: 0px;
+    right: 55px;
+    top: 55px;
+    width: 35px;
+    height: 35px;
   }
 
   ${media.tablet} {
+    bottom: 0vw;
+    right: 5.371vw;
+    top: 5.371vw;
+    width: 3.418vw;
+    height: 3.418vw;
   }
 
   ${media.mobile} {
@@ -172,9 +182,8 @@ const UploadPhotoBtn = styled.img`
 const ProfileImage = styled.img`
   cursor: pointer;
   position: relative;
-  width: auto;
   width: 100%;
-  min-height: 100%;
+  height: auto;
   border-radius: 5%;
 
   transition: filter 0.3s ease-in-out;
@@ -210,11 +219,15 @@ const ProfileImageWrapper = styled.div`
   ${media.fullWidth} {
     bottom: -70px;
     margin-left: 40px;
+    width: 150px;
+    height: 150px;
   }
 
   ${media.tablet} {
     bottom: -6.836vw;
     margin-left: 3.906vw;
+    width: 14.648vw;
+    height: 14.648vw;
   }
 
   ${media.mobile} {

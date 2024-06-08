@@ -2,48 +2,39 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import text from "styles/text";
-
+import { username } from "../UtilityFunctions/username";
 import { useAuth } from "../AuthContext";
+import { fetchUserData } from "../API/UserData";
 
 const Home = () => {
   const [userData, setUserData] = useState("");
- const {handleContextLogout} = useAuth()
+  const [isLoading, setIsLoading] = useState(true);
+  const { handleContextLogout } = useAuth();
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await axios.get("/api/home", {
-          withCredentials: true,
-        });
-        setUserData(res.data);
-        
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        handleContextLogout()
-      }
-    };
-
-    fetchUser();
-
+    fetchUserData(setUserData, setIsLoading, handleContextLogout);
   }, [handleContextLogout]);
-  const username = (name) => {
-    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-  };
 
-  const welcome = !userData ? (
-    <WelcomeMessage>{"Welcome Please Continue to login"}</WelcomeMessage>
-  ) : (
-    <WelcomeMessage>{`Welcome ${username(
-      userData.firstName
-    )},`}</WelcomeMessage>
-  );
-
-  return <div>{welcome}</div>;
-};
+  
+  return (
+  <Wrapper>
+    {isLoading && <Loading></Loading>}
+    {!isLoading && !userData && <WelcomeMessage>{'Please continue to'}<a href={'/login'}> login</a></WelcomeMessage>}
+    {userData && <WelcomeMessage>{`Welcome ${username(userData.firstName)},`}</WelcomeMessage>}
+  </Wrapper>
+  
+)};
 
 export default Home;
+const Loading = styled.p`
+  ${text.bodyM}
 
+`
 const WelcomeMessage = styled.p`
   ${text.bodyMChillax}
   padding:10px;
 `;
+const Wrapper = styled.div`
+  display: flex;
+
+`

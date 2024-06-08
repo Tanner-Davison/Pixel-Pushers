@@ -16,7 +16,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': {
+      '/pixel-pushers': {
         target: 'http://localhost:3001',
       }
     }
