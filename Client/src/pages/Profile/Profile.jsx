@@ -6,38 +6,49 @@ import text from "styles/text";
 import media from "styles/media";
 
 const Profile = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState(null);
+
   const username = (name) => {
     return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase() + " ";
   };
-  const [data, setData] = useState(null);
-  const fetchUserData = async () => {
-    try {
-      const response = await axios.get("/api/userData", {
-        withCredentials: true,
-      });
-      setData(response.data.user);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
+
   useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("/api/userData", {
+          withCredentials: true,
+        });
+        setData(response.data.user);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
     fetchUserData();
   }, []);
 
-
   return (
     <Wrapper>
-      <ProfileBanner data={data} />
-      <UserInfo>
-        {data?.firstName && data?.lastName && (
-          <p>{`${username(data.firstName)}${username(data.lastName)}`}</p>
-        )}
-      </UserInfo>
+      {isLoading && <Loading>{"Loading..."}</Loading>}
+      {!isLoading && (
+        <>
+          <ProfileBanner data={data} />
+          <UserInfo>
+            {data?.firstName && data?.lastName && (
+              <p>{`${username(data.firstName)}${username(data.lastName)}`}</p>
+            )}
+          </UserInfo>
+        </>
+      )}
     </Wrapper>
   );
 };
 
 export default Profile;
+const Loading = styled.p`
+  ${text.bodyMChillax}
+`;
 const UserInfo = styled.div`
   display: flex;
   ${text.h4}

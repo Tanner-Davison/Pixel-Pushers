@@ -95,7 +95,7 @@ const ProfileBanner = ({ data, setPhotoChange }) => {
             className="profile-img"
             src={loadingGiphy}
             alt={"loading"}
-            style={{ minHeight: "25px", height: "75px", width: "75px" }}
+            style={{ minHeight: "100px", height: "150px", width: "150px" }}
           />
         )}
         <UploadPhotoBtn
@@ -109,7 +109,7 @@ const ProfileBanner = ({ data, setPhotoChange }) => {
         <input
           type="file"
           id="hidden-file-upload"
-          accept="image/png, image/jpeg, image/webp"
+          accept="image/*"
           onChange={(e) => handleFileChange(e)}
           style={{ display: "none" }}
         />
@@ -199,7 +199,7 @@ const ProfileImageWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 10.417vw;
-  height: 10.417vw;
+  height: auto;
   border: 3px solid white;
   box-sizing: border-box;
   overflow: hidden;
@@ -210,6 +210,8 @@ const ProfileImageWrapper = styled.div`
   ${media.fullWidth} {
     bottom: -70px;
     margin-left: 40px;
+    width: 150px;
+    height: 150px;
   }
 
   ${media.tablet} {
