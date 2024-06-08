@@ -95,7 +95,7 @@ const ProfileBanner = ({ data, setPhotoChange }) => {
             className="profile-img"
             src={loadingGiphy}
             alt={"loading"}
-            style={{minHeight:'25px',height:'75px', width:'75px'}}
+            style={{ minHeight: "25px", height: "75px", width: "75px" }}
           />
         )}
         <UploadPhotoBtn
