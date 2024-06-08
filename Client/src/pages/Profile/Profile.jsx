@@ -9,7 +9,6 @@ const Profile = () => {
   const username = (name) => {
     return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase() + " ";
   };
-  const [photoChange, setPhotoChange] = useState(false)
   const [data, setData] = useState(null);
   const fetchUserData = async () => {
     try {
@@ -28,7 +27,7 @@ const Profile = () => {
 
   return (
     <Wrapper>
-      <ProfileBanner data={data} setPhotoChange={setPhotoChange} />
+      <ProfileBanner data={data} />
       <UserInfo>
         {data?.firstName && data?.lastName && (
           <p>{`${username(data.firstName)}${username(data.lastName)}`}</p>
