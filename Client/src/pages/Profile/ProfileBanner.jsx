@@ -33,10 +33,10 @@ const ProfileBanner = ({ data, setPhotoChange }) => {
 
   const handleFileChange = (event) => {
     handleMouseLeave;
+    const file = event.target.files[0];
     if (!file) {
       return;
     }
-    const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
       const dataUrl = e.target.result;
@@ -171,10 +171,10 @@ const UploadPhotoBtn = styled.img`
 const ProfileImage = styled.img`
   cursor: pointer;
   position: relative;
+  width: auto;
   width: 100%;
   min-height: 100%;
-  height: auto;
-  border-radius: 50%;
+  border-radius: 5%;
 
   transition: filter 0.3s ease-in-out;
   &:hover {

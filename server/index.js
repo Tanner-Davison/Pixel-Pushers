@@ -6,6 +6,7 @@ const { connectToDatabase } = require("./database/database");
 const { addUserToDatabase } = require("./database/addUserToDatabase");
 const { newUser, userLogin, authenticateUser } = require("./middleware/auth");
 const { userDetails } = require("./middleware/userInfo");
+const {uploadProfilePhoto}= require('./middleware/photoHandler')
 const PORT = process.env.PORT || 3001;
 const cloudApiKey = process.env.CLOUDINARY_API_KEY;
 const cloudinarySecret = process.env.CLOUDINARY_SECRET;
@@ -84,37 +85,17 @@ app.get("/api/userData", authenticateUser, userDetails, async (req, res) => {
   res.json({ user: req.user });
 });
 
-app.post("/api/uploadProfilePhoto", authenticateUser, async (req, res) => {
-  try {
-    const { profilePhoto } = req.body;
-
-    // Upload the image to Cloudinary
-    const uploadResult = await cloudinary.uploader.upload(profilePhoto, {
-      folder: "pixel_pushers_profile_photos", // Optional: Specify a folder for organizing photos
-      public_id: req.user.userId, // Use the user's ID for unique file names
-      overwrite: true, // Overwrite if a file with the same ID exists
-    });
-
-    // Update the user's profile picture URL in your database
-    const db = req.app.locals.db;
-    const usersCollection = db.collection("users");
-    const objectId = new ObjectId(req.user.userId);
-
-    await usersCollection.updateOne(
-      { _id: objectId },
-      { $set: { profileImageUrl: uploadResult.secure_url } }
-    );
-    console.log(uploadResult.secure_url);
-    // Send a success response
+app.post(
+  "/api/uploadProfilePhoto",
+  authenticateUser,
+  uploadProfilePhoto,
+  async (req, res) => {
     res.json({
       message: "Profile photo uploaded successfully",
-      profileImageUrl: uploadResult.secure_url,
+      profileImageUrl: req.user.profileImageUrl,
     });
-  } catch (error) {
-    console.error("Error uploading profile photo:", error);
-    res.status(500).json({ message: "Error uploading photo" });
   }
-});
+);
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
