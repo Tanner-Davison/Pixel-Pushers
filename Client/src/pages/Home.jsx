@@ -12,7 +12,7 @@ const Home = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("/api/private", {
+        const res = await axios.get("/api/home", {
           withCredentials: true,
         });
         setUserData(res.data);

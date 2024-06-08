@@ -9,26 +9,26 @@ const Profile = () => {
   const username = (name) => {
     return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase() + " ";
   };
-
+  const [photoChange, setPhotoChange] = useState(false)
   const [data, setData] = useState(null);
-
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("/api/userData", {
+        withCredentials: true,
+      });
+      setData(response.data.user);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get("/api/userData", {
-          withCredentials: true,
-        });
-        setData(response.data.user);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
     fetchUserData();
   }, []);
 
+
   return (
     <Wrapper>
-      <ProfileBanner data={data} />
+      <ProfileBanner data={data} setPhotoChange={setPhotoChange} />
       <UserInfo>
         {data?.firstName && data?.lastName && (
           <p>{`${username(data.firstName)}${username(data.lastName)}`}</p>

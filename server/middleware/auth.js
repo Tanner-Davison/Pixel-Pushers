@@ -24,7 +24,9 @@ const newUser = (req, res, next) => {
 };
 
 const userLogin = async (req, res, next) => {
+
   const { email, password } = req.body;
+
   if (!isValidEmail(email) || !password) {
     res.status(422).json({ message: "missing email and or password" });
     return;
@@ -58,7 +60,6 @@ const userLogin = async (req, res, next) => {
 
     const decoded = jwt.verify(token, secretKey);
 
-    console.log(decoded.userId, user.firstName)
     req.user = { userId: decoded.userId, email: decoded.email, name:user.firstName };
 
     next();
