@@ -1,6 +1,6 @@
 const { ObjectId } = require("mongodb");
 const {cloudinary }= require('../Cloudinary/cloudinaryConfig'); 
-
+const fs = require('fs');
 const uploadProfilePhoto = async (req, res, next) => {
   try {
     if (!req.file) {
@@ -24,7 +24,7 @@ const uploadProfilePhoto = async (req, res, next) => {
     );
 
     req.user = { ...req.user, profileImageUrl: uploadResult.secure_url };
-
+    fs.unlinkSync(req.file.path);
     res.json({
       message: "Profile photo uploaded successfully",
       profileImageUrl: uploadResult.secure_url,
