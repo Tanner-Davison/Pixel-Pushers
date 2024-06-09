@@ -3,10 +3,11 @@ const {cloudinary }= require('../Cloudinary/cloudinaryConfig');
 
 const uploadProfilePhoto = async (req, res, next) => {
   try {
-    const { profilePhoto } = req.body;
-console.log('running photo');
-
-    const uploadResult = await cloudinary.uploader.upload(profilePhoto, {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+    const file  = req.file.path; 
+    const uploadResult = await cloudinary.uploader.upload(file, {
       folder: "pixel_pushers_profile_photos",
       upload_preset:'profile_photos',
       public_id: req.user.userId,
