@@ -1,12 +1,14 @@
-const cloudinary = require("cloudinary").v2;
 const { ObjectId } = require("mongodb");
+const {cloudinary }= require('../Cloudinary/cloudinaryConfig'); 
 
 const uploadProfilePhoto = async (req, res, next) => {
   try {
     const { profilePhoto } = req.body;
+console.log('running photo');
 
     const uploadResult = await cloudinary.uploader.upload(profilePhoto, {
       folder: "pixel_pushers_profile_photos",
+      upload_preset:'profile_photos',
       public_id: req.user.userId,
       overwrite: true,
     });

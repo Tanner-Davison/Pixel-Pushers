@@ -120,13 +120,13 @@ const MenuItem = styled.div`
   a {
     color: white;
     ${text.bodyMBoldChillax}
-    text-wrap:nowrap;
+
   }
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100px;
+  width: auto;
 `;
 const Menu = styled.div`
   position: relative;

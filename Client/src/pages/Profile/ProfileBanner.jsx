@@ -5,6 +5,7 @@ import loadingGiphy from "../../assets/loadingGiphy.webp";
 import uploadPhotoSvg from "../../assets/uploadPhotoSvg.svg";
 import media from "../../styles/media";
 import text from "../../styles/text";
+import { handlePhoto } from "../../API/photoHandler";
 
 //eslint-disable-next-line
 const ProfileBanner = ({ userData }) => {
@@ -31,8 +32,8 @@ const ProfileBanner = ({ userData }) => {
     fileUploader.click();
   };
 
-  const handleFileChange = (event) => {
-    handleMouseLeave;
+  const handleFileChange = async (event) => {
+    handleMouseLeave; // Assuming this handles mouse events, include it as needed
     const file = event.target.files[0];
     if (!file) {
       return;
@@ -62,8 +63,8 @@ const ProfileBanner = ({ userData }) => {
           console.log(error);
           setLoading(false);
         });
-    };
-    reader.readAsDataURL(file);
+        };
+      reader.readAsDataURL(file);
   };
 
   return (
@@ -183,7 +184,7 @@ const ProfileImage = styled.img`
   cursor: pointer;
   position: relative;
   width: 100%;
-  height: auto;
+  height: 100%;
   border-radius: 5%;
 
   transition: filter 0.3s ease-in-out;
