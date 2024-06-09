@@ -4,27 +4,29 @@ import ProfileBanner from "./ProfileBanner";
 import text from "styles/text";
 import media from "styles/media";
 import { fetchUserData } from "../../API/UserData";
-import { username } from "../../UtilityFunctions/username";
+import { username } from "../../HelperFunctions/username";
 import { useAuth } from "../../AuthContext";
 
 const Profile = () => {
-  const {handleContextLogout} = useAuth();
+  const { handleContextLogout } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     fetchUserData(setUserData, setIsLoading, handleContextLogout);
+    //eslint-disable-next-line
   }, []);
 
   return (
     <Wrapper>
-      {isLoading && <Loading>{"Loading..."}</Loading>}
       {!isLoading && (
         <>
           <ProfileBanner userData={userData} />
           <UserInfo>
             {userData?.firstName && userData?.lastName && (
-              <p>{`${username(userData.firstName)}${username(userData.lastName)}`}</p>
+              <Username>{`${username(userData.firstName)}${username(
+                userData.lastName
+              )}`}</Username>
             )}
           </UserInfo>
         </>
@@ -34,12 +36,11 @@ const Profile = () => {
 };
 
 export default Profile;
-const Loading = styled.p`
-  ${text.bodyMChillax}
+const Username = styled.h4`
+  ${text.h4}
 `;
 const UserInfo = styled.div`
   display: flex;
-  ${text.h4}
   align-self: flex-start;
   margin: 100px 0px 0px 100px;
   ${media.fullWidth} {

@@ -2,10 +2,10 @@ import { useState } from "react";
 import styled from "styled-components";
 import media from "styles/media";
 // import colors from "styles/colors";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import text from "styles/text";
-import { passwordStrength } from "../../UtilityFunctions/PasswordHandler";
+import { passwordStrength } from "../../HelperFunctions/PasswordHandler";
+import { createUser } from "../../API/CreateUser";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -19,25 +19,15 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async () => {
+  const onSubmit = async () => {
     if (!isStrong) return;
-
     const data = {
       firstName,
       lastName,
       email,
       password,
     };
-    try {
-      const res = await axios.post("/pixel-pushers/usersignup", data);
-      console.log(res.data);
-      return navigate("/login", { email, password });
-    } catch (error) {
-      if (error.response.status === 409) {
-        setUserEmailExists(true);
-      }
-      console.error("Error during signup:", error.response.status);
-    }
+    return createUser(data, navigate, email, password, setUserEmailExists);
   };
 
   return (
@@ -96,7 +86,7 @@ const Register = () => {
             </StatusSymbol>
           )}
         </PasswordWrapper>
-        <button type="button" onClick={() => handleSubmit()}>
+        <button type="button" onClick={() => onSubmit()}>
           Submit
         </button>
         {userEmailExists && (
@@ -118,8 +108,8 @@ const EmailError = styled.div`
   text-align: center;
 `;
 const Arrow = styled.span`
-  font-size: 1.2em; /* Adjust font size as needed */
-  margin-left: 5px; /* Adjust spacing as needed */
+  font-size: 1.2em;
+  margin-left: 5px;
 `;
 const LoginLink = styled.a`
   display: flex;

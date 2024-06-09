@@ -44,7 +44,7 @@ const Header = () => {
             hover.querySelector("a"),
             {
               scale: 1.2,
-              ease: "back.out",
+              ease: "expoScale.out",
             },
             0
           );
@@ -68,7 +68,7 @@ const Header = () => {
           style={{ marginRight: "auto" }}
           icon={<HomeTwoTone />}
         >
-          <Link to="/">Home</Link>
+          <Link to="/">Pixel Pushers</Link>
           <Border className="border-grow" />
         </MenuItem>
         {isLoggedIn && (
@@ -120,6 +120,7 @@ const MenuItem = styled.div`
   a {
     color: white;
     ${text.bodyMBoldChillax}
+    text-wrap:nowrap;
   }
   display: flex;
   align-items: center;

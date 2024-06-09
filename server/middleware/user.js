@@ -8,7 +8,6 @@ const userDetails = async (req, res, next) => {
     const userId = new ObjectId(req.user.userId);
     const currentUser = await usersCollection.findOne({ _id: userId });
     if (currentUser) {
-      console.log("user found");
       req.user = { ...req.user, ...currentUser };
       res.json({ user: req.user });
     } else {

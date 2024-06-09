@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import styled from "styled-components";
 import text from "styles/text";
-import { username } from "../UtilityFunctions/username";
+import { username } from "../HelperFunctions/username";
 import { useAuth } from "../AuthContext";
 import { fetchUserData } from "../API/UserData";
 
