@@ -6,7 +6,6 @@ export const login = async (
   setPasswordError,
   password,
   handleContextLogin,
-  navigate
 ) => {
   const data = {
     email,
@@ -15,7 +14,9 @@ export const login = async (
   try {
     const res = await axios.post("/pixel-pushers/userlogin", data);
     handleContextLogin(res.data.user);
-    return navigate("/");
+    console.log(res.data.message)
+    ;
+    return {user:res.data.user, message:res.data.message};
   } catch (error) {
     if (
       error.response.status === 409 ||

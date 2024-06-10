@@ -5,52 +5,61 @@ import loadingGiphy from "../../assets/loadingGiphy.webp";
 import uploadPhotoSvg from "../../assets/uploadPhotoSvg.svg";
 import media from "../../styles/media";
 import text from "../../styles/text";
-import { handlePhoto } from "../../API/photoHandler";
+import { uploadCoverPhoto } from "../../API/photoHandler";
 
-//eslint-disable-next-line
 const ProfileBanner = ({ userData }) => {
   const { profileImageUrl = "" } = userData || {};
   const [photo, setPhoto] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [coverPhoto, setCoverPhoto]= useState(userData.coverPhotoUrl || '')
+  const [backgroundHover, setBackgroundHover] = useState(false);
 
+  const coverPhotoClick =  (e) => {
+    const hiddenInput = document.querySelector('#hidden-cover-file-upload')
+    hiddenInput.click(e)
+  };
+  const coverPhotoChange = async (e)=>{
+    const file = event.target.files[0];
+    if (!file) {
+      return;
+    }
+    const formData = new FormData()
+    formData.append('file',file);
+    const response = await uploadCoverPhoto(formData)
+    if(response){
+      console.log(response.message)
+      setCoverPhoto(response.coverPhotoUrl)
+    }else{
+      console.log('bad response')
+    }
+  }
   const handleVisibility = () => {
     const profileImg = document.querySelector(".profile-img");
     profileImg.style.filter = "brightness(50%)";
     setIsVisible(true);
   };
-
-  const handleMouseLeave = (e) => {
-    if (e.currentTarget.classList.value.includes("upload-btn")) return;
-    const profileImg = document.querySelector(".profile-img");
-    profileImg.style.filter = "brightness(100%)";
-    return setIsVisible(false);
-  };
-
   const handlePhotoUpload = () => {
     const fileUploader = document.querySelector("#hidden-file-upload");
     fileUploader.click();
   };
 
   const handleFileChange = async (event) => {
-    handleMouseLeave; // Assuming this handles mouse events, include it as needed
+    handleMouseLeave; 
     const file = event.target.files[0];
     if (!file) {
       return;
     }
-  
     setLoading(true);
-  
     const formData = new FormData();
-    formData.append('file', file); // Add the file to the FormData
-  
+    formData.append("file", file);
+     // Add the file to the FormData
     try {
       const response = await fetch("/pixel-pushers/uploadProfilePhoto", {
         method: "POST",
         body: formData, // Send FormData instead of JSON
-        credentials: "include", 
+        credentials: "include",
       });
-  
       if (response.ok) {
         const dataRes = await response.json();
         setLoading(false);
@@ -64,8 +73,20 @@ const ProfileBanner = ({ userData }) => {
     }
   };
 
+
+  const handleMouseLeave = (e) => {
+    if (e.currentTarget.classList.value.includes("upload-btn")) return;
+    const profileImg = document.querySelector(".profile-img");
+    profileImg.style.filter = "brightness(100%)";
+    return setIsVisible(false);
+  };
+
   return (
-    <Wrapper>
+    <Wrapper
+      $imageurl={coverPhoto}
+      onMouseEnter={() => setBackgroundHover(true)}
+      onMouseLeave={() => setBackgroundHover(false)}
+    >
       <ProfileImageWrapper
         className="image-wrapper"
         onMouseEnter={handleVisibility}
@@ -112,7 +133,16 @@ const ProfileBanner = ({ userData }) => {
           style={{ display: "none" }}
         />
       </ProfileImageWrapper>
-      <AddBackground>Change Background</AddBackground>
+      <AddBackground onClick={coverPhotoClick} $ishover={backgroundHover}>
+        Change Background
+      </AddBackground>
+      <input
+        type="file"
+        id="hidden-cover-file-upload"
+        style={{ display: "none" }}
+        accept="image/*"
+        onChange={(e)=> coverPhotoChange(e)}
+      />
     </Wrapper>
   );
 };
@@ -120,20 +150,25 @@ const ProfileBanner = ({ userData }) => {
 export default ProfileBanner;
 const AddBackground = styled.button`
   display: flex;
+  opacity: ${(props) => (props.$ishover ? "1" : "0")};
   align-items: center;
-  height: 30px;
+  height: 2.083vw;
   align-self: flex-end;
   margin: 10px 25px 10px auto;
   border: none;
   outline: none;
+  transition: opacity 0.3s ease-in-out;
   ${media.fullWidth} {
+    height: 30px;
   }
 
   ${media.tablet} {
+    height: 2.93vw;
   }
 
   ${media.mobile} {
-    ${text.bodyXSBold}
+    ${text.bodySBold}
+    height: 7.009vw;
   }
 `;
 const UploadPhotoBtn = styled.img`
@@ -180,8 +215,8 @@ const UploadPhotoBtn = styled.img`
 const ProfileImage = styled.img`
   cursor: pointer;
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 10.417vw;
+  height: 10.417vw;
   border-radius: 5%;
 
   transition: filter 0.3s ease-in-out;
@@ -189,14 +224,18 @@ const ProfileImage = styled.img`
     filter: brightness(50%);
   }
   ${media.fullWidth} {
+    width: 150px;
+    height: 150px;
   }
 
   ${media.tablet} {
+    width: 14.648vw;
+    height: 14.648vw;
   }
 
   ${media.mobile} {
-    width: 100px;
-    height: 100px;
+    width: 23.364vw;
+    height: 23.364vw;
   }
 `;
 const ProfileImageWrapper = styled.div`
@@ -210,7 +249,7 @@ const ProfileImageWrapper = styled.div`
   border: 3px solid white;
   box-sizing: border-box;
   overflow: hidden;
-  bottom: -4.861vw;
+  bottom: -3.861vw;
   margin-left: 2.778vw;
   background-color: black;
   border-radius: 50%;
@@ -229,7 +268,7 @@ const ProfileImageWrapper = styled.div`
   }
 
   ${media.mobile} {
-    bottom: -50px;
+    bottom: -9.682vw;
     margin-left: 25px;
     width: 23.364vw;
     height: 23.364vw;
@@ -238,10 +277,30 @@ const ProfileImageWrapper = styled.div`
 const Wrapper = styled.div`
   position: relative;
   display: flex;
-  width: 90%;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
-  outline: 2px solid blue;
+  width: 95%;
+  background-image:${props=> props.$imageurl ? `url(${props.$imageurl})`: 'unset'};
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:cover;
+  border-bottom-left-radius: 1.736vw;
+  border-bottom-right-radius: 1.736vw;
+  border:1px solid black;
+  border-top:none;
   height: 300px;
   z-index: 1;
+  ${media.fullWidth} {
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+  }
+
+  ${media.tablet} {
+    border-bottom-left-radius: 2.441vw;
+    border-bottom-right-radius: 2.441vw;
+  }
+
+  ${media.mobile} {
+    width: 100%;
+    border-bottom-left-radius: 0vw;
+    border-bottom-right-radius: 5.841vw;
+  }
 `;

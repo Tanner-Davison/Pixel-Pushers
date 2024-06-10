@@ -4,6 +4,7 @@ import {
   EditTwoTone,
   HomeTwoTone,
 } from "@ant-design/icons";
+import colors from 'styles/colors'
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Link, Outlet, useNavigate } from "react-router-dom";
@@ -107,7 +108,7 @@ const Header = () => {
 
 export default Header;
 const Border = styled.div`
-  background-color: #05f769;
+  background-color: ${colors.navGreen};
   width: 0px;
   border-radius: 50px;
   height: 2.5px;

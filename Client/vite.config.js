@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite'
-
 import react from '@vitejs/plugin-react-swc'
 
 // https://vitejs.dev/config/
@@ -20,5 +19,14 @@ export default defineConfig({
         target: 'http://localhost:3001',
       }
     }
+  },
+  build: {
+    rollupOptions: {
+      external: [
+        'react', // Disable prop type validation for React
+        'react-dom',
+        'react/jsx-runtime', 
+      ],
+    },
   },
 })

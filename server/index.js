@@ -7,7 +7,8 @@ const { connectToDatabase } = require("./Database/database");
 const { addUserToDatabase } = require("./Database/addUserToDatabase");
 const { userLogin, logout, userDetails } = require("./Controllers/UserController");
 const {authenticate,verifyNewUserData} = require('./Middleware/auth')
-const { uploadProfilePhoto } = require("./Controllers/cloudinaryController");
+const { uploadProfilePhoto, uploadCoverPhoto } = require("./Controllers/cloudinaryController");
+const { updateUserInfo } = require("./Database/updateUser");
 const PORT = process.env.PORT || 3001;
 try {
   fs.mkdirSync('uploads', { recursive: true });
@@ -36,6 +37,10 @@ connectToDatabase().then((client) => {
 
   app.post("/pixel-pushers/logout", authenticate,logout)
   
+  app.post('/pixel-pushers/user/update', authenticate, updateUserInfo);
+
+  app.post('/pixel-pushers/uploadCoverPhoto',authenticate,upload.single('file'),uploadCoverPhoto )
+
   app.get("/pixel-pushers/userData", authenticate, userDetails);
 
   app.post("/pixel-pushers/uploadProfilePhoto", authenticate,upload.single('file'), uploadProfilePhoto);

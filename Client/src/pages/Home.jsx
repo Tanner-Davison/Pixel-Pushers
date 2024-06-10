@@ -11,13 +11,13 @@ const Home = () => {
   const { handleContextLogout } = useAuth();
 
   useEffect(() => {
-    fetchUserData(setUserData, setIsLoading, handleContextLogout);
-  }, [handleContextLogout]);
+   !userData && fetchUserData(setUserData, setIsLoading, handleContextLogout);
+   //eslint-disable-next-line
+  }, []);
 
   
   return (
   <Wrapper>
-    {isLoading && <Loading></Loading>}
     {!isLoading && !userData && <WelcomeMessage>{'Please continue to'}<a href={'/login'}> login</a></WelcomeMessage>}
     {userData && <WelcomeMessage>{`Welcome ${username(userData.firstName)},`}</WelcomeMessage>}
   </Wrapper>
@@ -25,10 +25,6 @@ const Home = () => {
 )};
 
 export default Home;
-const Loading = styled.p`
-  ${text.bodyM}
-
-`
 const WelcomeMessage = styled.p`
   ${text.bodyMChillax}
   padding:10px;

@@ -62,6 +62,7 @@ const userDetails = async (req, res) => {
     const currentUser = await usersCollection.findOne({ _id: userId });
     if (currentUser) {
       req.user = { ...req.user, ...currentUser };
+      console.log('user details delivered to client...')
       res.json({ user: req.user });
     } else {
       res.status(404).json({ message: "User not found" });

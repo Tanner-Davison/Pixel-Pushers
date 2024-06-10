@@ -22,7 +22,7 @@ const Login = () => {
     } else if (!password) {
       setPasswordError(true);
     }
-    await login(
+    const response = await login(
       email,
       setEmailError,
       setPasswordError,
@@ -30,6 +30,10 @@ const Login = () => {
       handleContextLogin,
       navigate
     );
+    if (response.message === "Login successful") {
+      handleContextLogin(response.user);
+      navigate("/");
+    }
   };
   const HandleEmailChange = (e) => {
     const regex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
