@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require('path');
 const cors = require("cors");
 const fs = require('fs');
 const cookieParser = require("cookie-parser");
@@ -24,6 +25,7 @@ app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ limit: "100mb", extended: true }));
 app.use(cors({origin: "*",credentials: true}));
 app.use(cookieParser());
+app.use('path')
 //
 
 
