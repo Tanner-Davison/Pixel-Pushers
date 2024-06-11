@@ -6,34 +6,35 @@ import uploadPhotoSvg from "../../assets/uploadPhotoSvg.svg";
 import media from "../../styles/media";
 import text from "../../styles/text";
 import { uploadCoverPhoto } from "../../API/photoHandler";
+import protrudingSquares from "../../assets/hollowedBoxes.svg";
 
 const ProfileBanner = ({ userData }) => {
   const { profileImageUrl = "" } = userData || {};
   const [photo, setPhoto] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [coverPhoto, setCoverPhoto]= useState(userData.coverPhotoUrl || '')
+  const [coverPhoto, setCoverPhoto] = useState(userData.coverPhotoUrl || "");
   const [backgroundHover, setBackgroundHover] = useState(false);
 
-  const coverPhotoClick =  (e) => {
-    const hiddenInput = document.querySelector('#hidden-cover-file-upload')
-    hiddenInput.click(e)
+  const coverPhotoClick = (e) => {
+    const hiddenInput = document.querySelector("#hidden-cover-file-upload");
+    hiddenInput.click(e);
   };
-  const coverPhotoChange = async (e)=>{
+  const coverPhotoChange = async (e) => {
     const file = event.target.files[0];
     if (!file) {
       return;
     }
-    const formData = new FormData()
-    formData.append('file',file);
-    const response = await uploadCoverPhoto(formData)
-    if(response){
-      console.log(response.message)
-      setCoverPhoto(response.coverPhotoUrl)
-    }else{
-      console.log('bad response')
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await uploadCoverPhoto(formData);
+    if (response) {
+      console.log(response.message);
+      setCoverPhoto(response.coverPhotoUrl);
+    } else {
+      console.log("bad response");
     }
-  }
+  };
   const handleVisibility = () => {
     const profileImg = document.querySelector(".profile-img");
     profileImg.style.filter = "brightness(50%)";
@@ -45,7 +46,7 @@ const ProfileBanner = ({ userData }) => {
   };
 
   const handleFileChange = async (event) => {
-    handleMouseLeave; 
+    handleMouseLeave;
     const file = event.target.files[0];
     if (!file) {
       return;
@@ -53,7 +54,7 @@ const ProfileBanner = ({ userData }) => {
     setLoading(true);
     const formData = new FormData();
     formData.append("file", file);
-     // Add the file to the FormData
+    // Add the file to the FormData
     try {
       const response = await fetch("/pixel-pushers/uploadProfilePhoto", {
         method: "POST",
@@ -73,7 +74,6 @@ const ProfileBanner = ({ userData }) => {
     }
   };
 
-
   const handleMouseLeave = (e) => {
     if (e.currentTarget.classList.value.includes("upload-btn")) return;
     const profileImg = document.querySelector(".profile-img");
@@ -83,6 +83,8 @@ const ProfileBanner = ({ userData }) => {
 
   return (
     <Wrapper
+      className='profilebannerwrapper'
+      id='workplease'
       $imageurl={coverPhoto}
       onMouseEnter={() => setBackgroundHover(true)}
       onMouseLeave={() => setBackgroundHover(false)}
@@ -132,6 +134,7 @@ const ProfileBanner = ({ userData }) => {
           onChange={(e) => handleFileChange(e)}
           style={{ display: "none" }}
         />
+        
       </ProfileImageWrapper>
       <AddBackground onClick={coverPhotoClick} $ishover={backgroundHover}>
         Change Background
@@ -141,7 +144,7 @@ const ProfileBanner = ({ userData }) => {
         id="hidden-cover-file-upload"
         style={{ display: "none" }}
         accept="image/*"
-        onChange={(e)=> coverPhotoChange(e)}
+        onChange={(e) => coverPhotoChange(e)}
       />
     </Wrapper>
   );
@@ -244,16 +247,17 @@ const ProfileImageWrapper = styled.div`
   align-self: flex-end;
   align-items: center;
   justify-content: center;
-  width: 10.417vw;
-  height: 10.417vw;
-  border: 3px solid white;
   box-sizing: border-box;
   overflow: hidden;
-  bottom: -3.861vw;
-  margin-left: 2.778vw;
   background-color: black;
   border-radius: 50%;
+  width: 10.417vw;
+  height: 10.417vw;
+  border: 0.208vw solid white;
+  bottom: -3.861vw;
+  margin-left: 2.778vw;
   ${media.fullWidth} {
+    border: 3px solid white;
     bottom: -70px;
     margin-left: 40px;
     width: 150px;
@@ -265,42 +269,51 @@ const ProfileImageWrapper = styled.div`
     margin-left: 3.906vw;
     width: 14.648vw;
     height: 14.648vw;
+    border: 0.293vw solid white;
   }
 
   ${media.mobile} {
     bottom: -9.682vw;
-    margin-left: 25px;
+    margin-left: 5.841vw;
     width: 23.364vw;
     height: 23.364vw;
+    border: 0.701vw solid white;
   }
 `;
 const Wrapper = styled.div`
   position: relative;
   display: flex;
   width: 95%;
-  background-image:${props=> props.$imageurl ? `url(${props.$imageurl})`: 'unset'};
-  background-repeat:no-repeat;
-  background-position:center;
-  background-size:cover;
-  border-bottom-left-radius: 1.736vw;
-  border-bottom-right-radius: 1.736vw;
-  border:1px solid black;
-  border-top:none;
-  height: 300px;
+  background-image: ${(props) =>
+    props.$imageurl ? `url(${props.$imageurl})` : `url(${protrudingSquares})`};
+  background-repeat: ${(props) => (props.$imageurl ? "no-repeat" : "repeat")};
+  background-position: center;
+  background-size: ${(props) => (props.$imageurl ? "cover" : "59%")};
+  margin-top: 1.736vw;
+  border-radius: 1.736vw;
+  border: 0.069vw solid black;
+  border-top: none;
+  height: 20.833vw;
   z-index: 1;
   ${media.fullWidth} {
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+    height: 300px;
+    border-radius: 25px;
+    margin-top: 25px;
+    border: 1px solid black;
   }
 
   ${media.tablet} {
-    border-bottom-left-radius: 2.441vw;
-    border-bottom-right-radius: 2.441vw;
+    height: 29.297vw;
+    border-radius: 2.441vw;
+    margin-top: 2.441vw;
+    border: 0.098vw solid black;
   }
 
   ${media.mobile} {
-    width: 100%;
-    border-bottom-left-radius: 0vw;
-    border-bottom-right-radius: 5.841vw;
+    width: 90%;
+    height: 45.093vw;
+    border-radius: 5.841vw;
+    margin-top: 5.841vw;
+    border: 0.234vw solid black;
   }
 `;

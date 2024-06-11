@@ -13,7 +13,9 @@ const ProfileIntro = ({ userData }) => {
   const [editorVisible, setEditorVisible] = useState(false);
   const [elementClicked, setElementClicked] = useState("");
   const [columnHover, setColumnHover] = useState(false);
-  const workLocation = `${location?.city}, ${location?.region}`;
+  const workLocation = location
+    ? `${location?.city}, ${location?.region}`
+    : "[Add Work Location]";
   const editor = (value = "", copy = "") => {
     return <Edit onClick={() => handleEditClick(value)}>{copy}</Edit>;
   };
@@ -39,7 +41,7 @@ const ProfileIntro = ({ userData }) => {
             onMouseEnter={() => setColumnHover("headline")}
             onMouseLeave={() => setColumnHover("")}
           >
-            <Headline>{headline || "New user"}</Headline>
+            <Headline>{headline || "Add user headline | Career"}</Headline>
             <ActionButton>
               {columnHover === "headline" && editor("headline", "+ headline")}{" "}
             </ActionButton>
@@ -50,28 +52,26 @@ const ProfileIntro = ({ userData }) => {
             onMouseLeave={() => setColumnHover("")}
           >
             <StatusLabel>Job Status : </StatusLabel>
-            <Selected $status={selected}>
-              {selected || editor("job-status", "+ job status")}
-            </Selected>
+            {<Selected $status={selected}>{selected || 'unset'}</Selected>}
+
             <ActionButton>
               {columnHover === "job-status" &&
                 editor(
                   "job-status",
                   selected ? "+ Change Status" : "+ job status"
-                )}{" "}
+                )}
             </ActionButton>
           </JobStatusDiv>
 
-          <LocationDiv>
-            <Location onMouseEnter={() => setColumnHover("location")}>
-              {workLocation}
-            </Location>
+          <LocationDiv
+            onMouseEnter={() => setColumnHover("location")}
+            onMouseLeave={() => setColumnHover("")}
+          >
+            <Location>{workLocation || "Update Location"}</Location>
             {columnHover === "location" &&
               editor("location", location ? "+ Edit Location" : "+ location")}
           </LocationDiv>
         </InfoDiv>
-        <p></p>
-        <p></p>
       </UserInfo>
     </>
   );
@@ -82,7 +82,7 @@ const ActionButton = styled.span``;
 const Edit = styled.button`
   ${text.bodyS};
   height: 100%;
-  padding: 4px 10px;
+  padding: 0.278vw 0.694vw;
   color: ${colors.primaryPurple};
   &:hover {
     color: ${colors.darkPurple};
@@ -106,11 +106,26 @@ const InfoColumn = styled.div`
   display: flex;
   align-items: center;
   width: fit-content;
-  gap: 10px;
-  min-height: 35px;
+  gap: 0.694vw;
+  min-height: 2.431vw;
+  ${media.fullWidth} {
+    gap: 10px;
+    min-height: 35px;
+  }
+
+  ${media.tablet} {
+    gap: 0.977vw;
+    min-height: 3.418vw;
+  }
+
+  ${media.mobile} {
+    gap: 2.336vw;
+    min-height: 8.178vw;
+  }
 `;
 const HeadlineDiv = styled(InfoColumn)`
   cursor: pointer;
+  ${text.bodySBold}
 `;
 const LocationDiv = styled(InfoColumn)`
   cursor: pointer;
@@ -143,6 +158,7 @@ const Headline = styled.p`
 const Username = styled.h3`
   ${text.h3}
   margin-bottom:1.389vw;
+
   ${media.fullWidth} {
     margin-bottom: 20px;
   }
@@ -158,19 +174,29 @@ const Username = styled.h3`
 const InfoDiv = styled.div`
   display: flex;
   flex-direction: column;
-  border-left: 2px solid ${colors.navGreen};
-  padding-left: 15px;
-  gap: 10px;
+  border-left: 0.139vw solid ${colors.navGreen};
+  padding-left: 1.042vw;
+  margin-left: 1.042vw;
+  gap: 0.694vw;
   ${media.fullWidth} {
+    border-left: 2px solid ${colors.navGreen};
     padding-left: 15px;
+    margin-left: 15px;
+    gap: 10px;
   }
 
   ${media.tablet} {
+    border-left: 0.195vw solid ${colors.navGreen};
     padding-left: 1.465vw;
+    margin-left: 1.465vw;
+    gap: 0.977vw;
   }
 
   ${media.mobile} {
+    border-left: 0.467vw solid ${colors.navGreen};
     padding-left: 2.505vw;
+    margin-left: 3.505vw;
+    gap: 2.336vw;
   }
 `;
 const UserInfo = styled.div`
@@ -179,11 +205,11 @@ const UserInfo = styled.div`
   flex-direction: column;
   width: 100%;
   margin: 5.903vw 0vw 0vw 0vw;
-  padding-left: 6.597vw;
+  padding-left: 95px;
 
   ${media.fullWidth} {
     margin: 85px 0px 0px 0px;
-    padding-left: 0px;
+    padding-left: 95px;
   }
 
   ${media.tablet} {
