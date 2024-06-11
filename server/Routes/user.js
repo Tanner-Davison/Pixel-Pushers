@@ -1,12 +1,12 @@
 const express = require('express');
 const { authenticate, verifyNewUserData } = require('../middleware/auth');
 const { 
-  addUserToDatabase, 
   userLogin, 
   logout, 
   userDetails, 
-  updateUserInfo 
 } = require('../Controllers/UserController');
+const{addUserToDatabase}=require('../database/addUserToDatabase')
+const {updateUserInfo}=require('../database/updateUser')
 
 const userRouter = express.Router();
 
