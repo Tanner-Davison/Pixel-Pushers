@@ -6,11 +6,17 @@ import text from "styles/text";
 import { fetchUserLocation } from "../../API/UserData";
 import { updateUserData } from "../../API/UserData";
 
-const IntroSettingsModal = ({ setIntroEditor, focused, setElementClicked, setEditorVisible,userData }) => {
+const IntroSettingsModal = ({
+  setIntroEditor,
+  focused,
+  setElementClicked,
+  setEditorVisible,
+  userData,
+}) => {
   const [focus, setFocus] = useState(focused || false);
   const [inputLocation, setInputLocation] = useState("");
-  const [headline, setHeadline] = useState(userData.headline || '');
-  const [selected, setSelected] = useState(userData.selected || '');
+  const [headline, setHeadline] = useState(userData.headline || "");
+  const [selected, setSelected] = useState(userData.selected || "");
   const [location, setLocation] = useState("");
 
   const handleOutsideClick = (e) => {
@@ -20,19 +26,19 @@ const IntroSettingsModal = ({ setIntroEditor, focused, setElementClicked, setEdi
     }
   };
 
- const handleSubmit = async () => {
-  const data = {
-    headline:headline,
-    selected:selected,
-    location:location,
+  const handleSubmit = async () => {
+    const data = {
+      headline: headline,
+      selected: selected,
+      location: location,
+    };
+    const response = await updateUserData(data);
+    if (response) {
+      console.log("running");
+      setEditorVisible(false);
+      return window.location.reload();
+    }
   };
-  const response = await updateUserData(data);
-  if (response) {
-    console.log('running')
-     setEditorVisible(false)
-    return window.location.reload()
-  }
-};
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -53,7 +59,8 @@ const IntroSettingsModal = ({ setIntroEditor, focused, setElementClicked, setEdi
         <FormInputs>
           <HeadlineDiv $focus={focus === "headline"}>
             <p>Profile Headline</p>
-            <input
+            <InputHeadline
+              $focus={focus === "headline"}
               type="text"
               onFocus={() => setFocus("headline")}
               name="headline"
@@ -65,11 +72,12 @@ const IntroSettingsModal = ({ setIntroEditor, focused, setElementClicked, setEdi
           <JobStatusDiv $focus={focus === "job-status"}>
             <SelectDiv>Job Status</SelectDiv>
             <Select
+              $focus={focus === "job-status"}
               onFocus={() => setFocus("job-status")}
               value={selected}
               onChange={(e) => setSelected(e.target.value)}
             >
-              <option value={'N/A'}>N/A</option>
+              <option value={"N/A"}>N/A</option>
               <option value="Employed">Employed</option>
               <option value="Open to work">Open to work</option>
               <option value="Self Employed">Self Employed</option>
@@ -79,12 +87,13 @@ const IntroSettingsModal = ({ setIntroEditor, focused, setElementClicked, setEdi
           <LocationDiv $focus={focus === "location"}>
             <LocationLabel>Work Location</LocationLabel>
             <IPLocation
+              $focus={focus === "location"}
               onFocus={() => setFocus("location")}
               onChange={(e) => setInputLocation(e.target.value)}
               value={inputLocation}
             />
           </LocationDiv>
-          <Submit onClick={handleSubmit}>Save</Submit>
+          <UpdateBtn onClick={handleSubmit}>Update</UpdateBtn>
         </FormInputs>
       </Form>
     </Wrapper>
@@ -92,13 +101,41 @@ const IntroSettingsModal = ({ setIntroEditor, focused, setElementClicked, setEdi
 };
 
 export default IntroSettingsModal;
-const Submit = styled.button``;
-const IPLocation = styled.input``;
+const UpdateBtn = styled.button`
+position: absolute;
+  border: 0.069vw ridge ${colors.yellow500};
+  color: ${colors.yellow400};
+  bottom:2.083vw;
+  right:3.472vw;
+  ${media.fullWidth} {
+    border: 1px ridge ${colors.yellow500};
+    bottom:30px;
+  right:50px;
+  }
+  
+  ${media.tablet} {
+    border: 0.098vw ridge ${colors.yellow500};
+    bottom:2.93vw;
+  right:4.883vw;
+  }
+  
+  ${media.mobile} {
+    border: 0.234vw ridge ${colors.yellow500};
+    bottom:5.009vw;
+  right:5.682vw;
+  }
+`;
+const IPLocation = styled.input`
+  border: 1px solid
+    ${(props) => (props.$focus ? `${colors.navGreen}` : `unset`)};
+`;
 
 const Select = styled.select`
   ${text.bodyM}
   border-radius: 0.556vw;
   padding: 5px;
+  border: 1px solid
+    ${(props) => (props.$focus ? `${colors.navGreen}` : `unset`)};
   ${media.fullWidth} {
     border-radius: 8px;
     padding: 5px;
@@ -140,17 +177,23 @@ const InputDiv = styled.div`
     gap: 2.336vw;
   }
 `;
+const InputHeadline = styled.input`
+  border: 1px solid
+    ${(props) => (props.$focus ? `${colors.navGreen}` : `unset`)};
+`;
 
 const JobStatusDiv = styled(InputDiv)`
   border-left: 3px solid
     ${(props) =>
-      props.$focus ? `${colors.navGreen}` : `${colors.primaryPurple}`};
+      props.$focus ? `${colors.navGreen}` : `transparent`};
+      transition:border .3s ease-in-out;
 `;
 
 const HeadlineDiv = styled(InputDiv)`
   border-left: 3px solid
     ${(props) =>
-      props.$focus ? `${colors.navGreen}` : `${colors.primaryPurple}`};
+      props.$focus ? `${colors.navGreen}` : `transparent`};
+      transition:border .3s ease-in-out;
 `;
 
 const SelectDiv = styled(InputDiv)``;
@@ -163,7 +206,8 @@ const Title = styled.h2`
 const LocationDiv = styled(InputDiv)`
   border-left: 3px solid
     ${(props) =>
-      props.$focus ? `${colors.navGreen}` : `${colors.primaryPurple}`};
+      props.$focus ? `${colors.navGreen}` : `transparent`};
+      transition:border .3s ease-in-out;
 `;
 
 const FormInputs = styled.div`
@@ -175,35 +219,41 @@ const FormInputs = styled.div`
 `;
 
 const Form = styled.div`
+position: relative;
   display: flex;
   flex-direction: column;
   background-color: #242424;
   gap: 1.736vw;
   width: 55.556vw;
-  height: 34.722vw;
+  height: auto;
+  min-height: 27.778vw;
   border-radius: 1.556vw;
   padding: 3.472vw;
-  -webkit-box-shadow: 0px 0px 8px -3px ${colors.navGreen}; 
+  -webkit-box-shadow: 0px 0px 8px -3px ${colors.navGreen};
   box-shadow: 0px 0px 8px -1px ${colors.primaryPurple};
-  border:2px solid black;
+  border: 2px solid black;
   ${media.fullWidth} {
     padding: 50px;
     width: 800px;
-    height: 500px;
     border-radius: 8px;
     gap: 25px;
   }
 
   ${media.tablet} {
     width: 78.125vw;
-    height: 48.828vw;
     gap: 2.441vw;
+    border: 0.195vw solid black;
+    padding: 4.883vw;
+    top:-15vh;
   }
 
   ${media.mobile} {
+    padding: 20px 5px;
     width: 90%;
-    height: 500px;
+    min-height: 88.785vw;
     gap: 5.841vw;
+    text-align: center;
+    
   }
 `;
 

@@ -4,6 +4,7 @@ const userRouter = express.Router();
 const { authenticate, verifyNewUserData } = require('../middleware/auth');
 const { userLogin, logout, userDetails, } = require('../Controllers/UserController');
 const{addUserToDatabase}=require('../database/addUserToDatabase')
+const {updateUserInfo} = require('../database/updateUser')
 
 
 //adding temp comment

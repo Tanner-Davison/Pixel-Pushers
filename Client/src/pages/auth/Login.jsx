@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 import media from "styles/media";
-// import colors from "styles/colors";
 import text from "styles/text";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthContext";

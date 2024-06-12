@@ -1,9 +1,9 @@
 const express = require("express");
 const cors = require("cors");
-const fs = require('fs');
 require('dotenv').config();
+const fs = require('fs');
 const cookieParser = require("cookie-parser");
-const { connectToDatabase } = require("./Database/database");
+const { connectDb } = require("./Database/database");
 const userRouter = require('./Routes/user');
 const uploadRouter = require('./Routes/upload');
 const PORT = process.env.PORT || 3001;
@@ -26,7 +26,7 @@ app.use(cookieParser());
 //
 
 
-connectToDatabase().then((client) => {
+connectDb().then((client) => {
   app.locals.db = client.db("PixelPushers");
   
   app.use('/pixel-pushers/user', userRouter); 

@@ -9,6 +9,7 @@ import IntroSettingsModal from "./IntroSettingsModal";
 const ProfileIntro = ({ userData }) => {
   //prettier-ignore
   const { firstName = "", lastName = "", headline = "", selected = "", location='' } = userData || {};
+
   const userName = `${username(firstName)}${username(lastName)}`;
   const [editorVisible, setEditorVisible] = useState(false);
   const [elementClicked, setElementClicked] = useState("");
@@ -52,7 +53,7 @@ const ProfileIntro = ({ userData }) => {
             onMouseLeave={() => setColumnHover("")}
           >
             <StatusLabel>Job Status : </StatusLabel>
-            {<Selected $status={selected}>{selected || 'unset'}</Selected>}
+            {<Selected $status={selected}>{selected || "unset"}</Selected>}
 
             <ActionButton>
               {columnHover === "job-status" &&

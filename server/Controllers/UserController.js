@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { ObjectId } = require("mongodb");
-require("dotenv").config();
 const secretKey = process.env.JWT_SECRET_KEY;
 
 const isValidEmail = (email) => {
@@ -26,17 +25,21 @@ const userLogin = async (req, res, next) => {
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
+
     const payload = {
       userId: user._id.toString(),
       email: user.email.toString(),
     };
+
     const token = jwt.sign(payload, secretKey, { expiresIn: "2h" });
-    
+
     res.cookie("jwtToken", token, {
       httpOnly: true,
       sameSite: "lax",
     });
+
     const decoded = jwt.verify(token, secretKey);
+
     req.user = {
       userId: decoded.userId,
       email: decoded.email,
@@ -63,14 +66,18 @@ const userDetails = async (req, res) => {
     const currentUser = await usersCollection.findOne({ _id: userId });
     if (currentUser) {
       req.user = { ...req.user, ...currentUser };
-      console.log('user details delivered to client...')
+
       res.json({ user: req.user });
+
+      return console.log("Successfully sent user details");
     } else {
       res.status(404).json({ message: "User not found" });
+      console.log("User data not found -  or does not exist. ");
       return;
     }
   } catch (error) {
-    console.error("Error fetching current user", error);
+    console.error("Error fetching user data", error);
+
     res.status(500).json({ message: "Error fetching user data" });
     return;
   }

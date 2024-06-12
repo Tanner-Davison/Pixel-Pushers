@@ -10,7 +10,7 @@ const client = new MongoClient(uri, {
   }
 });
 
-async function connectToDatabase() {
+async function connectDb() {
   try {
     await client.connect();
    
@@ -26,5 +26,5 @@ async function connectToDatabase() {
 }
 
 module.exports = {
-  connectToDatabase 
+  connectDb
 };
