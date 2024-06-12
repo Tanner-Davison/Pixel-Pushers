@@ -1,6 +1,6 @@
 export const uploadCoverPhoto = async(file)=>{
    try {
-   const response = await fetch("/pixel-pushers/uploadCoverPhoto", {
+   const response = await fetch("/pixel-pushers/upload/CoverPhoto", {
       method: "POST",
       body:file,
       credentials: "include",

@@ -13,7 +13,7 @@ const ProfileBanner = ({ userData }) => {
   const [photo, setPhoto] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [coverPhoto, setCoverPhoto] = useState(userData.coverPhotoUrl || "");
+  const [coverPhoto, setCoverPhoto] = useState(userData?.coverPhotoUrl || "");
   const [backgroundHover, setBackgroundHover] = useState(false);
 
   const coverPhotoClick = (e) => {
@@ -54,11 +54,11 @@ const ProfileBanner = ({ userData }) => {
     setLoading(true);
     const formData = new FormData();
     formData.append("file", file);
-    // Add the file to the FormData
+
     try {
-      const response = await fetch("/pixel-pushers/uploadProfilePhoto", {
+      const response = await fetch("/pixel-pushers/upload/ProfilePhoto", {
         method: "POST",
-        body: formData, // Send FormData instead of JSON
+        body: formData, 
         credentials: "include",
       });
       if (response.ok) {

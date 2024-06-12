@@ -6,7 +6,7 @@ export const fetchUserData = async (
   handleContextLogout
 ) => {
   try {
-    const response = await axios.get("/pixel-pushers/userData", {
+    const response = await axios.get("/pixel-pushers/user/data", {
       withCredentials: true,
     });
     setUserData(response.data.user);

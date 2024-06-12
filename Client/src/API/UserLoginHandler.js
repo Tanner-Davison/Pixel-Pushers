@@ -12,7 +12,7 @@ export const login = async (
     password,
   };
   try {
-    const res = await axios.post("/pixel-pushers/userlogin", data);
+    const res = await axios.post("/pixel-pushers/user/login", data);
     handleContextLogin(res.data.user);
     console.log(res.data.message)
     ;
@@ -32,7 +32,7 @@ export const login = async (
 
 export const logout =async(handleContextLogout, navigate)=>{
   try {
-    const res = await axios.post("/pixel-pushers/logout", { withCredentials: true });
+    const res = await axios.post("/pixel-pushers/user/logout", { withCredentials: true });
     if (res) {
       handleContextLogout();
       navigate("/login");

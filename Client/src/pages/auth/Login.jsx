@@ -32,7 +32,7 @@ const Login = () => {
     );
     if (response.message === "Login successful") {
       handleContextLogin(response.user);
-      navigate("/");
+      navigate("/profile");
     }
   };
   const HandleEmailChange = (e) => {
