@@ -54,11 +54,11 @@ const ProfileBanner = ({ userData }) => {
     setLoading(true);
     const formData = new FormData();
     formData.append("file", file);
-    // Add the file to the FormData
+
     try {
       const response = await fetch("/pixel-pushers/upload/ProfilePhoto", {
         method: "POST",
-        body: formData, // Send FormData instead of JSON
+        body: formData, 
         credentials: "include",
       });
       if (response.ok) {
