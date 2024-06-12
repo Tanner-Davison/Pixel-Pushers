@@ -13,7 +13,7 @@ const ProfileBanner = ({ userData }) => {
   const [photo, setPhoto] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [coverPhoto, setCoverPhoto] = useState(userData.coverPhotoUrl || "");
+  const [coverPhoto, setCoverPhoto] = useState(userData?.coverPhotoUrl || "");
   const [backgroundHover, setBackgroundHover] = useState(false);
 
   const coverPhotoClick = (e) => {

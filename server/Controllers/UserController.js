@@ -31,6 +31,7 @@ const userLogin = async (req, res, next) => {
       email: user.email.toString(),
     };
     const token = jwt.sign(payload, secretKey, { expiresIn: "2h" });
+    
     res.cookie("jwtToken", token, {
       httpOnly: true,
       sameSite: "lax",

@@ -3,10 +3,12 @@ const secretKey = process.env.JWT_SECRET_KEY;
 
 const authenticate = async (req, res, next) => {
   const token = req.cookies.jwtToken;
+  console.log(token);
   if (token) {
     try {
       const decoded = jwt.verify(token, secretKey);
       req.user = { userId: decoded.userId, email: decoded.email };
+      console.log("Authenticated succsesfully", req.user);
       next();
     } catch (error) {
       console.error("Authentication error:", error);
