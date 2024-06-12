@@ -6,7 +6,7 @@ const { userLogin, logout, userDetails, } = require('../Controllers/UserControll
 const{addUserToDatabase}=require('../database/addUserToDatabase')
 const {updateUserInfo}=require('../database/updateUser')
 
-
+//adding temp comment
 // User-related routes
 userRouter.post('/signup', verifyNewUserData, addUserToDatabase);
 userRouter.post('/login', userLogin);
