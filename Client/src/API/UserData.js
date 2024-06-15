@@ -10,7 +10,7 @@ export const fetchUserData = async (
       withCredentials: true,
     });
     setUserData(response.data.user);
-    setIsLoading(false);
+    return setIsLoading(false);
   } catch (error) {
     console.error("Error fetching user data:", error);
     setIsLoading(false);
