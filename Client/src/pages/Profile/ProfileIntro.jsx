@@ -241,7 +241,7 @@ const InfoDiv = styled.div`
     padding-left: 2.505vw;
     margin-left: 0.98vw;
     gap: 2.336vw;
-    width: 85vw;
+    width: 88vw;
   }
 `;
 const UserInfo = styled.div`
