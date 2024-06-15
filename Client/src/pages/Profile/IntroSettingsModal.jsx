@@ -215,7 +215,18 @@ const FormInputs = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   text-wrap: nowrap;
-  gap: 25px;
+  gap: 1.736vw;
+  ${media.fullWidth} {
+    gap: 25px;
+  }
+  
+  ${media.tablet} {
+    gap: 2.441vw;
+  }
+  
+  ${media.mobile} {
+    gap: 4.841vw;
+  }
 `;
 
 const Form = styled.div`

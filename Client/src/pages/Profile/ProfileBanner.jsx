@@ -58,7 +58,7 @@ const ProfileBanner = ({ userData }) => {
     try {
       const response = await fetch("/pixel-pushers/upload/ProfilePhoto", {
         method: "POST",
-        body: formData, 
+        body: formData,
         credentials: "include",
       });
       if (response.ok) {
@@ -83,8 +83,8 @@ const ProfileBanner = ({ userData }) => {
 
   return (
     <Wrapper
-      className='profilebannerwrapper'
-      id='workplease'
+      className="profilebannerwrapper"
+      id="workplease"
       $imageurl={coverPhoto}
       onMouseEnter={() => setBackgroundHover(true)}
       onMouseLeave={() => setBackgroundHover(false)}
@@ -134,11 +134,10 @@ const ProfileBanner = ({ userData }) => {
           onChange={(e) => handleFileChange(e)}
           style={{ display: "none" }}
         />
-        
       </ProfileImageWrapper>
-      <AddBackground onClick={coverPhotoClick} $ishover={backgroundHover}>
+      <CoverPhotoBtn onClick={coverPhotoClick} $ishover={backgroundHover}>
         Change Background
-      </AddBackground>
+      </CoverPhotoBtn>
       <input
         type="file"
         id="hidden-cover-file-upload"
@@ -151,27 +150,32 @@ const ProfileBanner = ({ userData }) => {
 };
 
 export default ProfileBanner;
-const AddBackground = styled.button`
+const CoverPhotoBtn = styled.button`
   display: flex;
   opacity: ${(props) => (props.$ishover ? "1" : "0")};
   align-items: center;
-  height: 2.083vw;
   align-self: flex-end;
-  margin: 10px 25px 10px auto;
   border: none;
   outline: none;
   transition: opacity 0.3s ease-in-out;
+  height: 2.083vw;
+  margin: 0.694vw 1.736vw 0.694vw auto;
   ${media.fullWidth} {
     height: 30px;
+    margin: 10px 25px 10px auto;
   }
 
   ${media.tablet} {
+    ${text.bodyXSBold}
     height: 2.93vw;
+    margin: 0.977vw 2.441vw 0.977vw auto;
+    padding:1.441vw;
   }
 
   ${media.mobile} {
-    ${text.bodySBold}
+    ${text.bodyXSBold}
     height: 7.009vw;
+  margin: 2.336vw 5.841vw 2.336vw auto;
   }
 `;
 const UploadPhotoBtn = styled.img`
@@ -247,18 +251,17 @@ const ProfileImageWrapper = styled.div`
   align-self: flex-end;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
   overflow: hidden;
   background-color: black;
   border-radius: 50%;
   width: 10.417vw;
   height: 10.417vw;
   border: 0.208vw solid white;
-  bottom: -3.861vw;
+  bottom: -3.889vw;
   margin-left: 2.778vw;
   ${media.fullWidth} {
     border: 3px solid white;
-    bottom: -70px;
+    bottom: -56px;
     margin-left: 40px;
     width: 150px;
     height: 150px;
@@ -283,35 +286,43 @@ const ProfileImageWrapper = styled.div`
 const Wrapper = styled.div`
   position: relative;
   display: flex;
-  width: 95%;
+  width: 62.5vw;
+  height: 19.514vw;
   background-image: ${(props) =>
     props.$imageurl ? `url(${props.$imageurl})` : `url(${protrudingSquares})`};
   background-repeat: ${(props) => (props.$imageurl ? "no-repeat" : "repeat")};
-  background-position: center;
-  background-size: ${(props) => (props.$imageurl ? "cover" : "59%")};
-  margin-top: 1.736vw;
+  background-position: bottom;
+  background-size: ${(props) => (props.$imageurl ? "62.5vw 19.514vw" : "59%")};
+  object-fit: cover;
+  margin-top: 2.431vw;
   border-radius: 1.736vw;
   border: 0.069vw solid black;
   border-top: none;
-  height: 20.833vw;
   z-index: 1;
   ${media.fullWidth} {
-    height: 300px;
+    width: 900px;
+    height: 281px;
+    background-size: ${(props) => (props.$imageurl ? "900px 281px" : "59%")};
     border-radius: 25px;
-    margin-top: 25px;
+    margin-top: 35px;
     border: 1px solid black;
   }
 
   ${media.tablet} {
-    height: 29.297vw;
+    height: 24.902vw;
+    width: 70.477vw;
+    background-size: ${(props) =>
+      props.$imageurl ? "70.477vw 24.902vw" : "59%"};
     border-radius: 2.441vw;
-    margin-top: 2.441vw;
+    margin-top: 4.883vw;
     border: 0.098vw solid black;
   }
 
   ${media.mobile} {
-    width: 90%;
-    height: 45.093vw;
+    width: 86.776vw;
+    height: 41.047vw;
+    background-size: ${(props) =>
+      props.$imageurl ? "86.776vw 41.047vw" : "59%"};
     border-radius: 5.841vw;
     margin-top: 5.841vw;
     border: 0.234vw solid black;

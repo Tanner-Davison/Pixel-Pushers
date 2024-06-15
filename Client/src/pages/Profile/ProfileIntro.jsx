@@ -196,8 +196,9 @@ const InfoDiv = styled.div`
   ${media.mobile} {
     border-left: 0.467vw solid ${colors.navGreen};
     padding-left: 2.505vw;
-    margin-left: 3.505vw;
+    margin-left:0.505vw;
     gap: 2.336vw;
+    max-width:85vw;
   }
 `;
 const UserInfo = styled.div`
@@ -206,7 +207,7 @@ const UserInfo = styled.div`
   flex-direction: column;
   width: 100%;
   margin: 5.903vw 0vw 0vw 0vw;
-  padding-left: 95px;
+  padding-left: 6.597vw;
 
   ${media.fullWidth} {
     margin: 85px 0px 0px 0px;
