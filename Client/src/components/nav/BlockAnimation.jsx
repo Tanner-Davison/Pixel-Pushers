@@ -17,11 +17,11 @@ const BlockAnimation = ({ length }) => {
           keyframes: {
             "25%": { y: 0, rotate: 0, autoAlpha: 1 },
             "50%": { y: -100 },
-            "75%": { y: 0, rotate: 380, ease: "back.inOut", autoAlpha: 1 },
+            "75%": { y: 0, rotate: 380, ease: "bounce", autoAlpha: 1 },
             "100%": { x: length, y: 0, rotate: 360, autoAlpha: 0 },
           },
           duration: 3,
-          stagger: 0.3,
+          stagger: 0.5,
         })
         .to(
           ".blocky-two",
@@ -29,12 +29,12 @@ const BlockAnimation = ({ length }) => {
             keyframes: {
               0: { rotate: 1280, y: 0 },
               "45%": { y: 0 },
-              "50%": { y: -50 },
+              "50%": { y: -65},
               "60%": { y: 0 },
               "90%":{scale:1, borderColor:'white'},
               "100%": { x: `-${length}`, y: 0, rotate: 10,scale:1.5, borderColor:'red' },
             },
-            duration: 5,
+            duration: 4,
           },
           0
         );
@@ -45,10 +45,6 @@ const BlockAnimation = ({ length }) => {
 
   return (
     <Wrapper className="blocky-scope">
-      <Block className="blocky" />
-      <Block className="blocky" />
-      <Block className="blocky" />
-      <Block className="blocky" />
       <Block className="blocky" />
       <Block className="blocky" />
       <Block className="blocky" />
@@ -84,6 +80,7 @@ const Block = styled.div`
   position: absolute;
   width: 1.736vw;
   height: 1.736vw;
+
   opacity: 0;
   border-radius: 0.208vw;
   border: 0.347vw solid ${colors.primaryPurple};
@@ -120,6 +117,7 @@ const BlockTwo = styled.div`
   border: 0.347vw solid ${colors.white};
   top: 7.0vw;
   right: 0vw;
+  
   ${media.fullWidth} {
     width: 25px;
     height: 25px;

@@ -98,9 +98,21 @@ const WelcomeMessage = styled.div`
   }
 `;
 const NotLoggedInWrapper = styled.div`
+position: relative;
   display: flex;
   flex-direction: column;
-  gap:40px;
+  gap:2.778vw;
+  ${media.fullWidth} {
+    gap:40px;
+  }
+  
+  ${media.tablet} {
+    gap:3.906vw;
+  }
+  
+  ${media.mobile} {
+    gap:9.346vw;
+  }
 
 `
 const Wrapper = styled.div`
