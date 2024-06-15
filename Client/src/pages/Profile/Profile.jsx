@@ -31,21 +31,24 @@ const Profile = () => {
 };
 
 export default Profile;
+const Friends = styled.div`
+  
 
+`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  width: 83.333vw;
+  width: 100vw;
 
   ${media.fullWidth} {
-    width: 1200px;
+    width: 1440px;
   }
 
   ${media.tablet} {
-    width: 95.125vw;
+    width: 100vw;
   }
 
   ${media.mobile} {

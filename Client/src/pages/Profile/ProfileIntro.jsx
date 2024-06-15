@@ -36,8 +36,8 @@ const ProfileIntro = ({ userData }) => {
         />
       )}
       <UserInfo className="profile-intro-wrapper">
-        <Username>{userName}</Username>
         <InfoDiv className="user-info-div">
+          <Username>{userName}</Username>
           <HeadlineDiv
             onMouseEnter={() => setColumnHover("headline")}
             onMouseLeave={() => setColumnHover("")}
@@ -49,6 +49,7 @@ const ProfileIntro = ({ userData }) => {
           </HeadlineDiv>
 
           <JobStatusDiv
+            $status={selected}
             onMouseEnter={() => setColumnHover("job-status")}
             onMouseLeave={() => setColumnHover("")}
           >
@@ -73,18 +74,21 @@ const ProfileIntro = ({ userData }) => {
               editor("location", location ? "+ Edit Location" : "+ location")}
           </LocationDiv>
         </InfoDiv>
+        <Friends>Hello</Friends>
       </UserInfo>
     </>
   );
 };
 
 export default ProfileIntro;
+const Friends = styled.div``;
 const ActionButton = styled.span``;
 const Edit = styled.button`
   ${text.bodyS};
   height: 100%;
   padding: 0.278vw 0.694vw;
   color: ${colors.primaryPurple};
+  text-wrap: nowrap;
   &:hover {
     color: ${colors.darkPurple};
   }
@@ -127,13 +131,52 @@ const InfoColumn = styled.div`
 const HeadlineDiv = styled(InfoColumn)`
   cursor: pointer;
   ${text.bodySBold}
+  border-left: 0.139vw solid ${colors.navGreen};
+  padding-left: 0.694vw;
+
+  ${media.fullWidth} {
+    padding-left: 10px;
+  }
+
+  ${media.tablet} {
+    padding-left: 0.977vw;
+  }
+
+  ${media.mobile} {
+    padding-left: 3.336vw;
+  }
 `;
 const LocationDiv = styled(InfoColumn)`
   cursor: pointer;
   width: fit-content;
 `;
 const JobStatusDiv = styled(InfoColumn)`
+  position: relative;
   cursor: default;
+  ${text.bodySBold}
+  border-left: ${(props) =>
+    props.$status === "Employed"
+      ? `3px solid ${colors.darkYellow}`
+      : props.$status === "Open to work"
+      ? `2px solid ${colors.navGreen}`
+      : props.$status === "Self Employed"
+      ? `3px solid ${colors.darkTeal}`
+      : props.$status === "Retired"
+      ? `3px solid ${colors.darkOrange}`
+      : `2px solid ${colors.white}`};
+  padding-left: 0.694vw;
+
+  ${media.fullWidth} {
+    padding-left: 10px;
+  }
+
+  ${media.tablet} {
+    padding-left: 0.977vw;
+  }
+
+  ${media.mobile} {
+    padding-left: 3.336vw;
+  }
 `;
 const Location = styled(Info)`
   ${text.bodyMChillax}
@@ -175,11 +218,12 @@ const Username = styled.h3`
 const InfoDiv = styled.div`
   display: flex;
   flex-direction: column;
-  border-left: 0.139vw solid ${colors.navGreen};
+  width: 39.236vw;
   padding-left: 1.042vw;
   margin-left: 1.042vw;
   gap: 0.694vw;
   ${media.fullWidth} {
+    width: 565px;
     border-left: 2px solid ${colors.navGreen};
     padding-left: 15px;
     margin-left: 15px;
@@ -187,40 +231,41 @@ const InfoDiv = styled.div`
   }
 
   ${media.tablet} {
-    border-left: 0.195vw solid ${colors.navGreen};
+    width: 350px;
     padding-left: 1.465vw;
     margin-left: 1.465vw;
     gap: 0.977vw;
   }
 
   ${media.mobile} {
-    border-left: 0.467vw solid ${colors.navGreen};
     padding-left: 2.505vw;
-    margin-left:0.505vw;
+    margin-left: 0.98vw;
     gap: 2.336vw;
-    max-width:85vw;
+    width: 85vw;
   }
 `;
 const UserInfo = styled.div`
   display: flex;
   align-self: flex-start;
-  flex-direction: column;
-  width: 100%;
-  margin: 5.903vw 0vw 0vw 0vw;
+  flex-direction: row;
+  width: fit-content;
+  margin: 5.903vw 0vw 0vw 12.5vw;
   padding-left: 6.597vw;
 
   ${media.fullWidth} {
-    margin: 85px 0px 0px 0px;
+    margin: 85px 0px 0px 180px;
     padding-left: 95px;
   }
 
   ${media.tablet} {
-    margin: 9.766vw 0vw 0vw 0vw;
+    margin: 9.766vw 0vw 0vw 6.5vw;
     padding-left: 8.766vw;
   }
 
   ${media.mobile} {
     margin: 12.692vw 0vw 0vw 0vw;
-    padding-left: 9.682vw;
+    padding-left: 7.682vw;
+    gap: 5.841vw;
+    flex-direction: column;
   }
 `;

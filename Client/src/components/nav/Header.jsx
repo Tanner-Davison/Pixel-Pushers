@@ -4,7 +4,7 @@ import {
   EditTwoTone,
   HomeTwoTone,
 } from "@ant-design/icons";
-import colors from 'styles/colors'
+import colors from "styles/colors";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Link, Outlet, useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ import styled from "styled-components";
 import text from "styles/text";
 import { useAuth } from "../../AuthContext";
 import { logout } from "../../API/UserLoginHandler";
+import media from "styles/media";
 
 const Header = () => {
   const { isLoggedIn, handleContextLogout } = useAuth();
@@ -109,35 +110,80 @@ const Header = () => {
 export default Header;
 const Border = styled.div`
   background-color: ${colors.navGreen};
-  width: 0px;
-  border-radius: 50px;
-  height: 2.5px;
+  width: 0vw;
+  border-radius: 3.472vw;
+  height: 0.174vw;
+
+  ${media.fullWidth} {
+    width: 0px;
+    border-radius: 50px;
+    height: 2.5px;
+  }
+
+  ${media.tablet} {
+    width: 0vw;
+    border-radius: 4.883vw;
+    height: 0.244vw;
+  }
+
+  ${media.mobile} {
+    width: 0vw;
+    border-radius: 11.682vw;
+    height: 0.584vw;
+  }
 `;
 const Logout = styled(Link)`
   background-color: transparent;
 `;
 const MenuItem = styled.div`
   cursor: pointer;
-  a {
-    color: white;
-    ${text.bodyMBoldChillax}
-
-  }
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   width: auto;
+  a {
+    color: white;
+    ${text.bodyMBoldChillax}
+    ${media.fullWidth} {
+    }
+
+    ${media.tablet} {
+      ${text.bodyMChillax}
+    }
+
+    ${media.mobile} {
+      ${text.bodyM}
+    }
+  }
 `;
 const Menu = styled.div`
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 25px;
-  height: 35px;
-  padding: 0px 25px;
-  background-color: #412485;
   overflow: hidden;
+  background-color: #412485;
   z-index: 3;
+  gap: 1.736vw;
+  height: 2.431vw;
+  padding: 0vw 3.472vw;
+
+  ${media.fullWidth} {
+    gap: 25px;
+    height: 35px;
+    padding: 0px 50px;
+  }
+
+  ${media.tablet} {
+    gap: 2.441vw;
+    height: 3.418vw;
+    padding: 2vw 4.441vw;
+  }
+
+  ${media.mobile} {
+    gap: 5.841vw;
+    height: 8.178vw;
+    padding: 5vw 5.841vw;
+  }
 `;

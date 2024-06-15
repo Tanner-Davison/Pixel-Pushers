@@ -62,6 +62,7 @@ const IntroSettingsModal = ({
             <InputHeadline
               $focus={focus === "headline"}
               type="text"
+              maxLength={40}
               onFocus={() => setFocus("headline")}
               name="headline"
               value={headline}
