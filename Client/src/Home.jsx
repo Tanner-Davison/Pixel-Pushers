@@ -8,9 +8,10 @@ import { SplitText } from "gsap/SplitText";
 import gsap from "gsap";
 import colors from "styles/colors";
 import media from "styles/media";
-import getMedia from './utils/getMedia';
+import getMedia from "./utils/getMedia";
 import { GSDevTools } from "gsap/all";
 import BlockAnimation from "./components/nav/BlockAnimation";
+import HermanJumper from "./components/nav/HermanJumper";
 gsap.registerPlugin(SplitText);
 
 const Home = () => {
@@ -26,7 +27,7 @@ const Home = () => {
         defaults: { duration: 1, ease: "back(2)" },
       });
 
-      animation.to(".wrapper", { autoAlpha: 1 });
+      animation.to(".wrapper", { autoAlpha: 1, overflow:'hidden' });
       animation.from(
         split.lines,
         {
@@ -38,7 +39,8 @@ const Home = () => {
           transformOrigin: "50% 50% 150",
         },
         0
-      );
+      )
+      .to('.wrapper',{overflow:'visible'})
     }
     //eslint-disable-next-line
   }, [isLoading]);
@@ -47,13 +49,14 @@ const Home = () => {
     <Wrapper className="wrapper">
       {!isLoading && !userData && (
         <NotLoggedInWrapper>
-        <WelcomeMessage id="splitText">
-          {
-            "Welcome to PIXEL PUSHERS to have access to all features please continue to"
-          }
-          <a href={"/login"}> login</a>
-        </WelcomeMessage>
-        <BlockAnimation length={getMedia('500px','500px','405px','310px')}/>
+          <WelcomeMessage id="splitText">
+            {
+              "Welcome to PIXEL PUSHERS to have access to all features please continue to"
+            }
+            <a href={"/login"}> login</a>
+          </WelcomeMessage>
+          <HermanJumper />
+          {/* <BlockAnimation length={getMedia('500px','500px','405px','310px')}/> */}
         </NotLoggedInWrapper>
       )}
       {userData && (
@@ -73,6 +76,7 @@ const WelcomeMessage = styled.div`
   width: 34.722vw;
   perspective: 27.778vw;
   margin-top: 6.944vw;
+
   a {
     color: ${colors.navGreen};
   }
@@ -92,29 +96,34 @@ const WelcomeMessage = styled.div`
 
   ${media.mobile} {
     padding: 2.336vw;
-  width: 79.907vw;
-  perspective: 46.729vw;
-  margin-top: 11.682vw;
+    width: 79.907vw;
+    perspective: 46.729vw;
+    margin-top: 11.682vw;
   }
 `;
 const NotLoggedInWrapper = styled.div`
-position: relative;
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap:2.778vw;
+  align-items: center;
+  justify-content: center;
+  gap: 2.778vw;
+padding-bottom:3.472vw;
   ${media.fullWidth} {
-    gap:40px;
-  }
-  
-  ${media.tablet} {
-    gap:3.906vw;
-  }
-  
-  ${media.mobile} {
-    gap:9.346vw;
+    gap: 40px;
+    padding-bottom:50px;
   }
 
-`
+  ${media.tablet} {
+    gap: 3.906vw;
+    padding-bottom:4.883vw;
+  }
+
+  ${media.mobile} {
+    gap: 9.346vw;
+    padding-bottom:11.682vw;
+  }
+`;
 const Wrapper = styled.div`
   display: flex;
   visibility: hidden;

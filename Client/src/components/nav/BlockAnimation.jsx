@@ -12,13 +12,14 @@ const BlockAnimation = ({ length }) => {
     () => {
       const blocks = gsap.utils.toArray(".blocky");
       const blockTl = gsap
-        .timeline({ repeat: -1, yoyo: true })
+        .timeline({ repeat: -1, yoyo: false, repeatDelay: 1 })
         .to(blocks, {
           keyframes: {
-            "25%": { y: 0, rotate: 0, autoAlpha: 1 },
+            "25%": { y: 3, rotate: 0, autoAlpha: 1 },
             "50%": { y: -100 },
-            "75%": { y: 0, rotate: 380, ease: "bounce", autoAlpha: 1 },
-            "100%": { x: length, y: 0, rotate: 360, autoAlpha: 0 },
+            "75%": { y: 3, rotate: 370, ease: "bounce" },
+            "94%": { x: length, y: 3, rotate: 360, autoAlpha: 1 },
+            100: { y: 100, autoAlpha: 0 },
           },
           duration: 3,
           stagger: 0.5,
@@ -27,17 +28,23 @@ const BlockAnimation = ({ length }) => {
           ".blocky-two",
           {
             keyframes: {
-              0: { rotate: 1280, y: 0 },
-              "45%": { y: 0 },
-              "50%": { y: -65},
-              "60%": { y: 0 },
-              "90%":{scale:1, borderColor:'white'},
-              "100%": { x: `-${length}`, y: 0, rotate: 10,scale:1.5, borderColor:'red' },
+              0: { y: 50, ease: "power1.out", rotate: 1500 },
+              10: { y: 0, x: 10, ease: "back.out" },
+              20: { rotate: 1280, y: 0, ease: "power1.out" },
+              50: { borderRadius: "8px" },
+              85: { y: 0 },
+              "89%": {
+                x: `-${length}`,
+                y: 0,
+                rotate: 10,
+              },
+              98: { autoAlpha: 1 },
+              100: { x: `-${length}`, y: 150, autoAlpha: 0 },
             },
             duration: 4,
           },
           0
-        );
+        )
       //eslint-disable-next-line
     },
     { scope: ".blocky-scope" }
@@ -49,6 +56,7 @@ const BlockAnimation = ({ length }) => {
       <Block className="blocky" />
       <Block className="blocky" />
       <BlockTwo className="blocky-two" />
+    
       <Ground />
     </Wrapper>
   );
@@ -59,20 +67,21 @@ const Ground = styled.div`
   position: absolute;
   width: 100%;
   top: 8.958vw;
-  height: 0.208vw;
+  height: 0.408vw;
+  border-radius: 50px;
+  perspective:100;
   background-color: ${colors.navGreen};
   ${media.fullWidth} {
     top: 129px;
     height: 3px;
   }
-  
+
   ${media.tablet} {
     top: 12.598vw;
     height: 0.293vw;
   }
-  
-  ${media.mobile} {
 
+  ${media.mobile} {
     top: 30.03vw;
   }
 `;
@@ -114,10 +123,10 @@ const BlockTwo = styled.div`
   width: 1.736vw;
   height: 1.736vw;
   border-radius: 0.208vw;
-  border: 0.347vw solid ${colors.white};
-  top: 7.0vw;
+  border: 0.347vw solid ${colors.primaryYellow};
+  top: 7vw;
   right: 0vw;
-  
+
   ${media.fullWidth} {
     width: 25px;
     height: 25px;
@@ -145,6 +154,7 @@ const BlockTwo = styled.div`
     right: 0vw;
   }
 `;
+
 const Wrapper = styled.div`
   position: relative;
   height: 300px;
