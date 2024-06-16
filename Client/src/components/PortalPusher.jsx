@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
@@ -12,6 +12,7 @@ import { EasePack } from "gsap/all";
 gsap.registerPlugin(EasePack);
 
 const PortalPusher = () => {
+    const [time, setTime]= useState(null)
   const scopeRef = useRef();
   useGSAP(
     () => {
@@ -48,7 +49,7 @@ const PortalPusher = () => {
           { scale: 0, autoAlpha: 0, repeat: 1, yoyo: true, repeatDelay: 0.5 },
           0.67
         );
-
+//total time: 2.17
     },
     { scope: scopeRef }
   );

@@ -7,7 +7,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { GSDevTools } from "gsap/all";
 import pickleRick from "../assets/pickleRick.png";
-import portalRick from '../assets/portal.png';
+import portalRick from "../assets/portal.png";
 
 const HermanJumper = () => {
   useGSAP(
@@ -19,21 +19,20 @@ const HermanJumper = () => {
         .from(hole, { scale: 0, repeat: 1, yoyo: true })
         .fromTo(
           herman,
-          { y: 175, x: 0, scaleY: 2 , rotate:-20},
-          { y: -175, scaleY: 1, rotate:20 },
+          { y: 175, x: 0, scaleY: 2, rotate: -20 },
+          { y: -175, scaleY: 1, rotate: 20 },
           0.2
         )
-        .to(herman, { y: 0, ease: "power1.in",rotate:360 }, ">")
+        .to(herman, { y: 0, ease: "power1.in", rotate: 360 }, ">")
         .to(herman, {
           scaleY: 0.8,
           scaleX: 1.1,
           transformOrigin: "50% 100%",
-          duration:0.2,
+          duration: 0.2,
           repeat: 1,
           yoyo: true,
         });
-
-  
+      //total time 1.6
     },
     { scope: ".herman-wrapper" }
   );
@@ -95,11 +94,11 @@ const HermanWrapper = styled.div`
 const Hole = styled.div`
   box-sizing: border-box;
   position: absolute;
-  background:green;
-  background-image:url(${portalRick});
+  background: green;
+  background-image: url(${portalRick});
   background-repeat: no-repeat;
   background-position: center;
-  background-size:125% 150%;
+  background-size: 125% 150%;
   border-radius: 50%;
   width: 10.417vw;
   height: 1.389vw;
@@ -134,7 +133,7 @@ const Wrapper = styled.div`
   overflow: hidden;
   box-sizing: border-box;
   background: transparent;
-  align-self:center;
+  align-self: center;
   left: 0vw;
   width: 27.778vw;
   height: 27.778vw;
