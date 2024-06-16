@@ -6,8 +6,8 @@ import text from "styles/text";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { GSDevTools } from "gsap/all";
-import pickleRick from "../../assets/pickleRick.png";
-import portalRick from '../../assets/portal.png';
+import pickleRick from "../assets/pickleRick.png";
+import portalRick from '../assets/portal.png';
 
 const HermanJumper = () => {
   useGSAP(
