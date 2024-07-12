@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const { connectDb } = require("./Database/database");
 const userRouter = require('./Routes/user');
 const uploadRouter = require('./Routes/upload');
+const pythonRouter = require('./Routes/python')
 const PORT = process.env.PORT || 3001;
 
 try {
@@ -28,7 +29,7 @@ app.use(cookieParser());
 
 connectDb().then((client) => {
   app.locals.db = client.db("PixelPushers");
-  
+  app.use('/python', pythonRouter)
   app.use('/pixel-pushers/user', userRouter); 
   app.use('/pixel-pushers/upload', uploadRouter); 
 });

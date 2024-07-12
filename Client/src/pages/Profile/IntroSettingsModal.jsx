@@ -103,27 +103,27 @@ const IntroSettingsModal = ({
 
 export default IntroSettingsModal;
 const UpdateBtn = styled.button`
-position: absolute;
+  position: absolute;
   border: 0.069vw ridge ${colors.yellow500};
   color: ${colors.yellow400};
-  bottom:2.083vw;
-  right:3.472vw;
+  bottom: 2.083vw;
+  right: 3.472vw;
   ${media.fullWidth} {
     border: 1px ridge ${colors.yellow500};
-    bottom:30px;
-  right:50px;
+    bottom: 30px;
+    right: 50px;
   }
-  
+
   ${media.tablet} {
     border: 0.098vw ridge ${colors.yellow500};
-    bottom:2.93vw;
-  right:4.883vw;
+    bottom: 2.93vw;
+    right: 4.883vw;
   }
-  
+
   ${media.mobile} {
     border: 0.234vw ridge ${colors.yellow500};
-    bottom:5.009vw;
-  right:5.682vw;
+    bottom: 5.009vw;
+    right: 5.682vw;
   }
 `;
 const IPLocation = styled.input`
@@ -185,16 +185,14 @@ const InputHeadline = styled.input`
 
 const JobStatusDiv = styled(InputDiv)`
   border-left: 3px solid
-    ${(props) =>
-      props.$focus ? `${colors.navGreen}` : `transparent`};
-      transition:border .3s ease-in-out;
+    ${(props) => (props.$focus ? `${colors.navGreen}` : `transparent`)};
+  transition: border 0.3s ease-in-out;
 `;
 
 const HeadlineDiv = styled(InputDiv)`
   border-left: 3px solid
-    ${(props) =>
-      props.$focus ? `${colors.navGreen}` : `transparent`};
-      transition:border .3s ease-in-out;
+    ${(props) => (props.$focus ? `${colors.navGreen}` : `transparent`)};
+  transition: border 0.3s ease-in-out;
 `;
 
 const SelectDiv = styled(InputDiv)``;
@@ -206,9 +204,8 @@ const Title = styled.h2`
 
 const LocationDiv = styled(InputDiv)`
   border-left: 3px solid
-    ${(props) =>
-      props.$focus ? `${colors.navGreen}` : `transparent`};
-      transition:border .3s ease-in-out;
+    ${(props) => (props.$focus ? `${colors.navGreen}` : `transparent`)};
+  transition: border 0.3s ease-in-out;
 `;
 
 const FormInputs = styled.div`
@@ -220,18 +217,18 @@ const FormInputs = styled.div`
   ${media.fullWidth} {
     gap: 25px;
   }
-  
+
   ${media.tablet} {
     gap: 2.441vw;
   }
-  
+
   ${media.mobile} {
     gap: 4.841vw;
   }
 `;
 
 const Form = styled.div`
-position: relative;
+  position: relative;
   display: flex;
   flex-direction: column;
   background-color: #242424;
@@ -256,7 +253,7 @@ position: relative;
     gap: 2.441vw;
     border: 0.195vw solid black;
     padding: 4.883vw;
-    top:-15vh;
+    top: -15vh;
   }
 
   ${media.mobile} {
@@ -265,7 +262,6 @@ position: relative;
     min-height: 88.785vw;
     gap: 5.841vw;
     text-align: center;
-    
   }
 `;
 

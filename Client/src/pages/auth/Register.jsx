@@ -201,24 +201,25 @@ const Form = styled.form`
   gap: 0.694vw;
   margin: 3.958vw;
   padding: 3.472vw;
-  border-radius: 8px;
+  border-radius: 2.083vw;
   -webkit-box-shadow: 0px 0px 9px -3px #ffffff;
   box-shadow: 0px 0px 9px -3px #ffffff;
   ${media.fullWidth} {
     margin: 53px;
+    border-radius: 30px;
   }
 
   ${media.tablet} {
     margin: 9.766vw;
-    padding: 4.883vw;
-    border-radius: 0.781vw;
-    gap: 0.977vw;
+    padding: 10.883vw;
+    border-radius: 2.93vw;
+    gap: 2.577vw;
   }
 
   ${media.mobile} {
     margin: 11.682vw;
     padding: 11.682vw;
-    border-radius: 1.869vw;
+    border-radius: 7.009vw;
     gap: 2.336vw;
   }
 `;
@@ -227,4 +228,5 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  height:80vh;
 `;

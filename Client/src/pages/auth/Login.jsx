@@ -1,10 +1,10 @@
 import { useState } from "react";
-import styled from "styled-components";
-import media from "styles/media";
-import text from "styles/text";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
 import { login } from "../../API/UserLoginHandler";
+import styled from "styled-components";
+import media from "styles/media";
+import text from "styles/text";
 
 const Login = () => {
   const [email, setEmail] = useState(null);
@@ -13,6 +13,7 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
   const { handleContextLogin } = useAuth();
+
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
@@ -43,7 +44,7 @@ const Login = () => {
   return (
     <Wrapper>
       <Form id="login-form">
-        <FormHeader>User Login </FormHeader>
+        <FormHeader>User Login</FormHeader>
         <Email
           type="email"
           placeholder="Email"
@@ -67,9 +68,9 @@ const Login = () => {
           }}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="button" onClick={() => handleSubmit()}>
+        <LoginButton type="button" onClick={() => handleSubmit()}>
           Login
-        </button>
+        </LoginButton>
         {emailError && <EmailError>Invalid email or login</EmailError>}
       </Form>
     </Wrapper>
@@ -82,15 +83,16 @@ const EmailError = styled.div`
   text-align: center;
   color: hsla(350, 50%, 60%, 1);
 `;
-
+const LoginButton = styled.button``;
 const Email = styled.input`
   border: ${(props) =>
     props.$iserror
       ? "2px solid red"
       : props.$validemail
       ? "2px solid hsla(135, 50%, 50%, 1)"
-      : "unset"};
+      : "2px solid transparent"};
   color: ${(props) => (props.$iserror ? "red" : "unset")};
+  box-sizing: border-box;
 `;
 const Password = styled(Email)`
   border: ${(props) => (props.$passworderror ? "2px solid red" : "unset")};
@@ -105,27 +107,28 @@ const Form = styled.form`
   width: fit-content;
   justify-content: center;
   flex-direction: column;
-  gap: 0.694vw;
+  gap: 1.694vw;
   margin: 3.958vw;
   padding: 3.472vw;
-  border-radius: 8px;
+  border-radius: 2.083vw;
   -webkit-box-shadow: 0px 0px 9px -3px #ffffff;
   box-shadow: 0px 0px 9px -3px #ffffff;
   ${media.fullWidth} {
     margin: 53px;
+    border-radius: 30px;
   }
 
   ${media.tablet} {
     margin: 9.766vw;
     padding: 4.883vw;
-    border-radius: 0.781vw;
+    border-radius: 2.93vw;
     gap: 0.977vw;
   }
 
   ${media.mobile} {
     margin: 11.682vw;
     padding: 11.682vw;
-    border-radius: 1.869vw;
+    border-radius: 7.009vw;
     gap: 2.336vw;
   }
 `;
@@ -134,4 +137,5 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 80vh;
 `;

@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import text from "styles/text";
-import { username } from "./HelperFunctions/username";
-import { useAuth } from "./AuthContext";
-import { fetchUserData } from "./API/UserData";
+import { username } from "../HelperFunctions/username";
+import { useAuth } from "../AuthContext";
+import { fetchUserData } from "../API/UserData";
 import { SplitText } from "gsap/SplitText";
 import gsap from "gsap";
 import colors from "styles/colors";
 import media from "styles/media";
-import getMedia from "./utils/getMedia";
+import getMedia from "../utils/getMedia";
 import { GSDevTools } from "gsap/all";
-import BlockAnimation from "./components/nav/BlockAnimation";
-import HermanJumper from "./components/HermanJumper";
-import PortalPusher from './components/PortalPusher/'
+import BlockAnimation from "../components/BlockAnimation";
+import HermanJumper from "../components/HermanJumper";
+import PortalPusher from '../components/PortalPusher/'
 gsap.registerPlugin(SplitText);
 
 const Home = () => {
@@ -57,11 +57,6 @@ const Home = () => {
             <a href={"/login"}> login</a>
           <BlockAnimation length={getMedia('500px','500px','405px','310px')}/>
           </WelcomeMessage>
-          <div style={{width:'98vw',height:'600px', display:'flex', }}>
-
-          <PortalPusher/>
-          </div>
-          <HermanJumper />
         </NotLoggedInWrapper>
       )}
       {userData && (

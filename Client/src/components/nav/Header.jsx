@@ -91,10 +91,10 @@ const Header = () => {
             <Border className="border-grow" />
           </MenuItem>
         )}
-        <MenuItem className="menu-item" icon={<CheckCircleTwoTone />}>
+        {/* <MenuItem className="menu-item" icon={<CheckCircleTwoTone />}>
           <Link to="/Anime">Anime</Link>
           <Border className="border-grow" />
-        </MenuItem>
+        </MenuItem> */}
         {isLoggedIn && (
           <MenuItem className="menu-item" icon={<CheckCircleTwoTone />}>
             <Logout onClick={handleLogout}>Logout</Logout>
@@ -149,7 +149,7 @@ const MenuItem = styled.div`
     }
 
     ${media.tablet} {
-      ${text.bodyMChillax}
+      ${text.bodyMBoldChillax}
     }
 
     ${media.mobile} {
@@ -166,9 +166,10 @@ const Menu = styled.div`
   background-color: #412485;
   z-index: 3;
   gap: 1.736vw;
-  height: 2.431vw;
+  height: 3.431vw;
   padding: 0vw 3.472vw;
-
+  border-bottom-left-radius: 0.556vw;
+  border-bottom-right-radius: 0.556vw;
   ${media.fullWidth} {
     gap: 25px;
     height: 35px;
@@ -177,8 +178,10 @@ const Menu = styled.div`
 
   ${media.tablet} {
     gap: 2.441vw;
-    height: 3.418vw;
+    height: 6.418vw;
     padding: 2vw 4.441vw;
+    border-bottom-left-radius: 1.953vw;
+    border-bottom-right-radius: 1.953vw;
   }
 
   ${media.mobile} {
