@@ -12,7 +12,8 @@ import getMedia from "../utils/getMedia";
 import { GSDevTools } from "gsap/all";
 import BlockAnimation from "../components/BlockAnimation";
 import HermanJumper from "../components/HermanJumper";
-import PortalPusher from '../components/PortalPusher/'
+import PortalPusher from "../components/PortalPusher/";
+import MasonryGrid from "../components/MasonryGrid";
 gsap.registerPlugin(SplitText);
 
 const Home = () => {
@@ -28,20 +29,21 @@ const Home = () => {
         defaults: { duration: 1, ease: "back(2)" },
       });
 
-      animation.to(".wrapper", { autoAlpha: 1, overflow:'hidden' });
-      animation.from(
-        split.lines,
-        {
-          y: 100,
-          opacity: 0,
-          rotationX: -90,
-          rotationY: -45,
-          stagger: 0.04,
-          transformOrigin: "50% 50% 150",
-        },
-        0
-      )
-      .to('.wrapper',{overflow:'visible'})
+      animation.to(".wrapper", { autoAlpha: 1, overflow: "hidden" });
+      animation
+        .from(
+          split.lines,
+          {
+            y: 100,
+            opacity: 0,
+            rotationX: -90,
+            rotationY: -45,
+            stagger: 0.04,
+            transformOrigin: "50% 50% 150",
+          },
+          0
+        )
+        .to(".wrapper", { overflow: "visible" });
     }
     //eslint-disable-next-line
   }, [isLoading]);
@@ -55,14 +57,20 @@ const Home = () => {
               "Welcome to PIXEL PUSHERS to have access to all features please continue to"
             }
             <a href={"/login"}> login</a>
-          <BlockAnimation length={getMedia('500px','500px','405px','310px')}/>
+            <BlockAnimation
+              length={getMedia("500px", "500px", "405px", "310px")}
+            />
           </WelcomeMessage>
         </NotLoggedInWrapper>
       )}
       {userData && (
-        <WelcomeMessage>{`Welcome ${username(
-          userData.firstName
-        )},`}</WelcomeMessage>
+        <LoggedIn>
+          <WelcomeMessage>{`Welcome ${username(
+            userData.firstName
+          )},`}</WelcomeMessage>
+
+          <MasonryGrid />
+        </LoggedIn>
       )}
     </Wrapper>
   );
@@ -72,6 +80,8 @@ export default Home;
 const WelcomeMessage = styled.div`
   ${text.h3Chillax}
   text-align: center;
+  align-self: center;
+  margin-bottom:3.472vw;
   padding: 0.694vw;
   width: 34.722vw;
   perspective: 27.778vw;
@@ -85,6 +95,7 @@ const WelcomeMessage = styled.div`
     width: 500px;
     perspective: 400px;
     margin-top: 100px;
+    margin-bottom:50px;
   }
 
   ${media.tablet} {
@@ -92,6 +103,7 @@ const WelcomeMessage = styled.div`
     width: 48.828vw;
     perspective: 39.063vw;
     margin-top: 9.766vw;
+    margin-bottom:4.883vw;
   }
 
   ${media.mobile} {
@@ -99,6 +111,23 @@ const WelcomeMessage = styled.div`
     width: 79.907vw;
     perspective: 46.729vw;
     margin-top: 11.682vw;
+    margin-bottom:8.804vw;
+  }
+`;
+const LoggedIn = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  ${media.fullWidth} {
+    width: 1440px;
+  }
+
+  ${media.tablet} {
+    width: 100vw;
+  }
+
+  ${media.mobile} {
+    width: 100vw;
   }
 `;
 const NotLoggedInWrapper = styled.div`
@@ -108,20 +137,20 @@ const NotLoggedInWrapper = styled.div`
   align-items: center;
   justify-content: center;
   gap: 2.778vw;
-padding-bottom:3.472vw;
+  padding-bottom: 3.472vw;
   ${media.fullWidth} {
     gap: 40px;
-    padding-bottom:50px;
+    padding-bottom: 50px;
   }
 
   ${media.tablet} {
     gap: 3.906vw;
-    padding-bottom:4.883vw;
+    padding-bottom: 4.883vw;
   }
 
   ${media.mobile} {
     gap: 9.346vw;
-    padding-bottom:11.682vw;
+    padding-bottom: 11.682vw;
   }
 `;
 const Wrapper = styled.div`
