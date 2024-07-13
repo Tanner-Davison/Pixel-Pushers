@@ -10,6 +10,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 const MasonryGrid = () => {
+  const masonryScope = document.querySelector(".masonry-grid");
   useGSAP(
     () => {
       const target = document.querySelector(".angry-face");
@@ -26,22 +27,24 @@ const MasonryGrid = () => {
       target.addEventListener("mouseenter", () => tl.play());
       target.addEventListener("mouseleave", () => tl.reverse());
     },
-    { scope: ".masonry-grid" }
+    { scope: masonryScope }
   );
 
   return (
     <Wrapper className={"masonry-grid"}>
       <Boxes
         $radius={"20px"}
-        $backgroundcolor={"black"}
+        $backgroundcolor={"transparent"}
         $flex={getMedia(25, 15, 15, 1)}
         $width={getMedia("350px", "24.306vw", "20.063vw", "23.364vw")}
-        $height={getMedia("220px", "250px", "27.778vw", "200px")}
+        $height={getMedia("250px", "17.361vw", "27.778vw", "200px")}
         $align
+        $padding={getMedia("3px", "0.208vw", "0.293vw", "1.402vw")}
         $justify={"center"}
       >
         <Image
           src={hayden}
+          $flex={1}
           alt={"RAINBOW SPARKLE"}
           $height={"100%"}
           $width={"100%"}
@@ -49,20 +52,42 @@ const MasonryGrid = () => {
         />
       </Boxes>
       <Boxes
-        $radius={"20px"}
         $backgroundcolor={"transparent"}
         $flex={2}
-        $gap={"10px"}
+        $padding={getMedia(
+          "0px 10px",
+          "0vw 0.394vw",
+          "0vw 0.377vw",
+          "0vw 0.536vw"
+        )}
+        $gap={"8px"}
         $direction={"column"}
+        $justify={"space-between"}
         $width={getMedia("300px", "300px", "300px", "300px")}
       >
-        <SmallBox $radius={"8px"} $backgroundcolor={"#FF6663"}>
+        <SmallBox
+          $radius={getMedia(
+            "13px 13px 5px 5px ",
+            "0.903vw 0.903vw 0.347vw 0.347vw ",
+            "1.27vw 1.27vw 0.488vw 0.488vw ",
+            "3.037vw 3.037vw 1.168vw 1.168vw "
+          )}
+          $backgroundcolor={"#FF6663"}
+        >
           Hello world
         </SmallBox>
-        <SmallBox $radius={"8px"} $backgroundcolor={"#99C24D  "}>
+        <SmallBox $radius={"5px"} $backgroundcolor={"#99C24D  "}>
           Hello world
         </SmallBox>
-        <SmallBox $radius={"8px"} $backgroundcolor={"#8963BA"}>
+        <SmallBox
+          $radius={getMedia(
+            "5px 5px 13px 13px",
+            "0.347vw 0.347vw 0.903vw 0.903vw",
+            "0.488vw 0.488vw 1.27vw 1.27vw",
+            "1.168vw 1.168vw 3.037vw 3.037vw"
+          )}
+          $backgroundcolor={"#8963BA"}
+        >
           Hello world
         </SmallBox>
       </Boxes>
@@ -75,7 +100,7 @@ const MasonryGrid = () => {
       </Boxes>
       <Boxes
         $radius={"15px"}
-        $flex={1}
+        $flex={3.6}
         $height={"100px"}
         $width={getMedia("300px", "20.833vw", "29.297vw", "45.093vw")}
         $backgroundcolor={"#177E89"}
@@ -85,8 +110,8 @@ const MasonryGrid = () => {
 
       <Boxes
         className={"angry-div"}
-        $radius={"300px"}
-        $width={getMedia("100px", "6.944vw", "7.324vw", "32.083vw")}
+        $radius={getMedia("15px", "0.903vw", "1.465vw", "3.505vw")}
+        $width={getMedia("150px", "6.944vw", "7.324vw", "32.083vw")}
         $backgroundcolor={"#E71D36"}
         $height={"100px"}
         $justify={"center"}
@@ -94,14 +119,18 @@ const MasonryGrid = () => {
         <Image
           className={"angry-face"}
           src={eyes}
-          $width={getMedia("50px", "120px", "50px", "50px")}
-          $rotate={`rotate(25deg)`}
+          $width={getMedia("50px", "120px", "11.719vw", "50px")}
           alt={"eyespeeking"}
           $align={"center"}
         />
       </Boxes>
 
-      <Boxes $radius={"15px"} $flex={1} $backgroundcolor={`#FF6663`}>
+      <Boxes
+        $radius={"13px"}
+        $backgroundcolor={`#FF6663`}
+        $flex={1}
+        $width={getMedia("100%", "100%", "100%", "60%")}
+      >
         world
       </Boxes>
     </Wrapper>
@@ -115,9 +144,10 @@ const Small = styled.p`
 const Image = styled.img`
   position: relative;
   height: ${(props) => props.$height || "13.194vw"};
-  width: ${(props) => props.$width || "13.194vw"};
+  width: ${(props) => props.$width || "13.084vw"};
   align-self: ${(props) => props?.$align || "unset"};
-  border-radius: 25px;
+  border-radius: 13px;
+  flex: 1;
   top: ${(props) => props.$top || "unset"};
   left: ${(props) => props.$left || "unset"};
   object-fit: ${(props) => (props.$cover ? "cover" : "fill")};
@@ -128,13 +158,12 @@ const Image = styled.img`
   }
 
   ${media.tablet} {
-    width: ${(props) => props.$width || "21.531vw"};
+    width: ${(props) => props.$width || "21.484vw"};
     height: ${(props) => props.$height || "21.531vw"};
   }
 
   ${media.mobile} {
-    height: ${(props) => props.$height || "width: 40.729vw"};
-    height: 40.729vw;
+    height: ${(props) => props.$height || "51.402vw"};
   }
 `;
 const SmallBox = styled.div`
@@ -145,6 +174,7 @@ const SmallBox = styled.div`
   width: 100%;
   height: ${(props) => props.$height || "auto"};
   padding: 1.389vw;
+  flex: 1;
   &:hover {
     transform: scale(1.1);
   }
@@ -176,31 +206,34 @@ const Boxes = styled.div`
   background-color: ${(props) => props.$backgroundcolor || "white"};
   height: ${(props) => props.$height || "auto"};
   flex: ${(props) => props.$flex || "unset"};
-  padding: 0.694vw;
+  padding: ${(props) => props.$padding || "0.694vw"};
   border-radius: ${(props) => props.$radius || "0vw"};
   min-width: ${(props) => props.$width || "6.944vw"};
   gap: ${(props) => props.$gap || "0.694vw"};
   overflow: hidden;
+  z-index: 1;
   &:hover {
     transform: scale(1.1);
+    z-index: 100;
+    overflow: visible;
   }
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, z-index 0.3s ease-in-out;
   ${media.fullWidth} {
-    padding: 10px;
+    padding: ${(props) => props.$padding || "10px"};
     border-radius: ${(props) => props.$radius || "0px"};
     min-width: ${(props) => props.$width || "200px"};
     gap: ${(props) => props.$gap || "10px"};
   }
 
   ${media.tablet} {
-    padding: 0.977vw;
+    padding: ${(props) => props.$padding || "0.977vw"};
     border-radius: ${(props) => props.$radius || "0vw"};
     min-width: ${(props) => props.$width || "19.531vw"};
     gap: ${(props) => props.$gap || "0.977vw"};
   }
 
   ${media.mobile} {
-    padding: 2.336vw;
+    padding: ${(props) => props.$padding || "2.336vw"};
     border-radius: ${(props) => props.$radius || "0vw"};
     min-width: ${(props) => props.$width || "100px"};
     gap: ${(props) => props.$gap || "2.336vw"};
@@ -212,19 +245,20 @@ const Wrapper = styled.div`
   align-self: center;
   flex-wrap: wrap;
   width: 65%;
-  background-color: #000000;
+  background-color: rgba(0, 0, 0, 0.6);
   padding: 0.694vw;
   border-radius: 1.389vw;
-  gap: 0.556vw;
+  gap: 0.903vw 0.347vw;
+  z-index: 1;
   ${media.fullWidth} {
-    gap: 8px;
+    gap: 13px 5px;
     padding: 10px;
     border-radius: 20px;
     width: 65%;
   }
 
   ${media.tablet} {
-    gap: 0.781vw;
+    gap: 1.27vw 0.488vw;
     width: 75%;
     padding: 0.977vw;
     border-radius: 1.953vw;
@@ -232,7 +266,7 @@ const Wrapper = styled.div`
 
   ${media.mobile} {
     width: 100%;
-    gap: 1.869vw;
+    gap: 3.037vw 1.168vw;
     padding: 2.336vw;
     border-radius: 4.673vw;
   }

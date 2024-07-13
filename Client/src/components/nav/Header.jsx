@@ -68,7 +68,7 @@ const Header = () => {
         <MenuItem
           className="menu-item"
           style={{ marginRight: "auto" }}
-          icon={<HomeTwoTone />}
+          $icon={<HomeTwoTone />}
         >
           <Link to="/">Pixel Pushers</Link>
           <Border className="border-grow" />
@@ -80,13 +80,13 @@ const Header = () => {
           </MenuItem>
         )}
         {!isLoggedIn && (
-          <MenuItem className="menu-item" icon={<EditTwoTone />}>
+          <MenuItem className="menu-item" $icon={<EditTwoTone />}>
             <Link to="/register">New User</Link>
             <Border className="border-grow" />
           </MenuItem>
         )}
         {!isLoggedIn && (
-          <MenuItem className="menu-item" icon={<CheckCircleTwoTone />}>
+          <MenuItem className="menu-item" $icon={<CheckCircleTwoTone />}>
             <Link to="/login">Login</Link>
             <Border className="border-grow" />
           </MenuItem>
@@ -96,7 +96,7 @@ const Header = () => {
           <Border className="border-grow" />
         </MenuItem> */}
         {isLoggedIn && (
-          <MenuItem className="menu-item" icon={<CheckCircleTwoTone />}>
+          <MenuItem className="menu-item" $icon={<CheckCircleTwoTone />}>
             <Logout onClick={handleLogout}>Logout</Logout>
             <Border className="border-grow" />
           </MenuItem>
