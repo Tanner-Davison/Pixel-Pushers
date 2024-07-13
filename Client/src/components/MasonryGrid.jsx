@@ -1,63 +1,107 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
 import text from "styles/text";
 import hayden from "../assets/hayden.png";
+import eyes from "../assets/prettyEyes.png";
 import getMedia from "../utils/getMedia";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const MasonryGrid = () => {
+  useGSAP(
+    () => {
+      const target = document.querySelector(".angry-face");
+      const bg = document.querySelector(".angry-div");
+
+      const tl = gsap
+        .timeline({ paused: true })
+        .to(target, {
+          rotate: 180,
+          ease: "linear",
+        })
+        .to(bg, { backgroundColor: "#132E32" }, "<");
+
+      target.addEventListener("mouseenter", () => tl.play());
+      target.addEventListener("mouseleave", () => tl.reverse());
+    },
+    { scope: ".masonry-grid" }
+  );
+
   return (
-    <Wrapper>
+    <Wrapper className={"masonry-grid"}>
       <Boxes
         $radius={"20px"}
         $backgroundcolor={"black"}
-        $flex={25}
-        $width={getMedia('450px', '31.25vw', '43.945vw', '45.14vw')}
-        $height={"200px"}
-        $justify={'center'}
+        $flex={getMedia(25, 15, 15, 1)}
+        $width={getMedia("350px", "24.306vw", "20.063vw", "23.364vw")}
+        $height={getMedia("220px", "250px", "27.778vw", "200px")}
+        $align
+        $justify={"center"}
       >
-      j
-        <Image src={hayden} alt={"RAINBOW SPARKLE"} />
+        <Image
+          src={hayden}
+          alt={"RAINBOW SPARKLE"}
+          $height={"100%"}
+          $width={"100%"}
+          $cover={true}
+        />
       </Boxes>
       <Boxes
         $radius={"20px"}
         $backgroundcolor={"transparent"}
         $flex={2}
-        $gap={"20px"}
+        $gap={"10px"}
         $direction={"column"}
+        $width={getMedia("300px", "300px", "300px", "300px")}
       >
-        <SmallBox $radius={"8px"} $backgroundcolor={"gray"}>
+        <SmallBox $radius={"8px"} $backgroundcolor={"#FF6663"}>
           Hello world
         </SmallBox>
-        <SmallBox $radius={"8px"} $backgroundcolor={"green"}>
+        <SmallBox $radius={"8px"} $backgroundcolor={"#99C24D  "}>
           Hello world
         </SmallBox>
-        <SmallBox $radius={"8px"} $backgroundcolor={"gray"}>
+        <SmallBox $radius={"8px"} $backgroundcolor={"#8963BA"}>
           Hello world
         </SmallBox>
       </Boxes>
-      <Boxes $radius={"15px"} $backgroundcolor={"pink"} $flex={1}>
+      <Boxes
+        $radius={"15px"}
+        $backgroundcolor={"#A4A8D1"}
+        $width={getMedia("200px", "13.889vw", "19.531vw", "46.729vw")}
+      >
         world
       </Boxes>
       <Boxes
         $radius={"15px"}
         $flex={1}
         $height={"100px"}
-        $width={getMedia('300px', '20.833vw', '29.297vw', '45.093vw')}
-        $backgroundcolor={"hotpink"}
+        $width={getMedia("300px", "20.833vw", "29.297vw", "45.093vw")}
+        $backgroundcolor={"#177E89"}
       >
-        world how are you today
+        <Small>world how are you today </Small>
       </Boxes>
+
       <Boxes
-        $radius={"15px"}
-        $width={getMedia('300px', '20.833vw', '29.297vw', '45.093vw')}
-        $backgroundcolor={"pink"}
-        $flex={4}
+        className={"angry-div"}
+        $radius={"300px"}
+        $width={getMedia("100px", "6.944vw", "7.324vw", "32.083vw")}
+        $backgroundcolor={"#E71D36"}
+        $height={"100px"}
+        $justify={"center"}
       >
-        world
+        <Image
+          className={"angry-face"}
+          src={eyes}
+          $width={getMedia("50px", "120px", "50px", "50px")}
+          $rotate={`rotate(25deg)`}
+          alt={"eyespeeking"}
+          $align={"center"}
+        />
       </Boxes>
-      <Boxes $radius={"15px"} $flex={1} $backgroundcolor={`purple`}>
+
+      <Boxes $radius={"15px"} $flex={1} $backgroundcolor={`#FF6663`}>
         world
       </Boxes>
     </Wrapper>
@@ -65,32 +109,42 @@ const MasonryGrid = () => {
 };
 
 export default MasonryGrid;
-
+const Small = styled.p`
+  ${text.bodyXSBold}
+`;
 const Image = styled.img`
- height:13.194vw;
- width:13.194vw;
- border-radius: 25px;
+  position: relative;
+  height: ${(props) => props.$height || "13.194vw"};
+  width: ${(props) => props.$width || "13.194vw"};
+  align-self: ${(props) => props?.$align || "unset"};
+  border-radius: 25px;
+  top: ${(props) => props.$top || "unset"};
+  left: ${(props) => props.$left || "unset"};
+  object-fit: ${(props) => (props.$cover ? "cover" : "fill")};
+
   ${media.fullWidth} {
-    width:190px;
-    height: 190px;
+    width: ${(props) => props.$width || "190px"};
+    height: ${(props) => props.$height || "190px"};
   }
-  
+
   ${media.tablet} {
-    width:21.531vw;
-    height: 21.531vw;
+    width: ${(props) => props.$width || "21.531vw"};
+    height: ${(props) => props.$height || "21.531vw"};
   }
-  
+
   ${media.mobile} {
-    width:40.729vw;
+    height: ${(props) => props.$height || "width: 40.729vw"};
     height: 40.729vw;
   }
-`
+`;
 const SmallBox = styled.div`
+  position: relative;
   background-color: ${(props) => props.$backgroundcolor || "white"};
-  width: 100%;
+  align-items: ${(props) => props.$align || "center"};
   border-radius: ${(props) => props.$radius || "0px"};
-  padding: 12px;
+  width: 100%;
   height: ${(props) => props.$height || "auto"};
+  padding: 1.389vw;
   &:hover {
     transform: scale(1.1);
   }
@@ -98,33 +152,35 @@ const SmallBox = styled.div`
 
   ${media.fullWidth} {
     border-radius: ${(props) => props.$radius || "0vw"};
-  padding: 0.833vw;
+    padding: 20px;
   }
-  
+
   ${media.tablet} {
     border-radius: ${(props) => props.$radius || "0vw"};
-  padding: 1.872vw;
+    padding: 1.953vw;
   }
-  
+
   ${media.mobile} {
     border-radius: ${(props) => props.$radius || "0vw"};
-  padding: 2.804vw;
+    padding: 12px;
   }
 `;
 const Boxes = styled.div`
-${text.bodyM}
+  position: relative;
+  ${(props) => props.$fontsize || `${text.bodyM}`};
   display: flex;
   flex-direction: ${(props) => props.$direction || "row"};
-  align-items: center;
-  justify-content: ${props=> props.$justify || 'flex-start'};
+  align-items: ${(props) => props.$align || "center"};
+  justify-content: ${(props) => props.$justify || "flex-start"};
   text-align: center;
   background-color: ${(props) => props.$backgroundcolor || "white"};
   height: ${(props) => props.$height || "auto"};
-  flex: ${(props) => props.$flex || "1"};
+  flex: ${(props) => props.$flex || "unset"};
   padding: 0.694vw;
   border-radius: ${(props) => props.$radius || "0vw"};
-  min-width: ${(props) => props.$width || "13.889vw"};
+  min-width: ${(props) => props.$width || "6.944vw"};
   gap: ${(props) => props.$gap || "0.694vw"};
+  overflow: hidden;
   &:hover {
     transform: scale(1.1);
   }
@@ -146,16 +202,17 @@ ${text.bodyM}
   ${media.mobile} {
     padding: 2.336vw;
     border-radius: ${(props) => props.$radius || "0vw"};
-    min-width: ${(props) => props.$width || "46.729vw"};
+    min-width: ${(props) => props.$width || "100px"};
     gap: ${(props) => props.$gap || "2.336vw"};
   }
 `;
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   align-self: center;
   flex-wrap: wrap;
   width: 65%;
-  background-color: black;
+  background-color: #000000;
   padding: 0.694vw;
   border-radius: 1.389vw;
   gap: 0.556vw;
@@ -163,17 +220,18 @@ const Wrapper = styled.div`
     gap: 8px;
     padding: 10px;
     border-radius: 20px;
+    width: 65%;
   }
-  
+
   ${media.tablet} {
     gap: 0.781vw;
     width: 75%;
     padding: 0.977vw;
     border-radius: 1.953vw;
   }
-  
+
   ${media.mobile} {
-    width:100%;
+    width: 100%;
     gap: 1.869vw;
     padding: 2.336vw;
     border-radius: 4.673vw;
