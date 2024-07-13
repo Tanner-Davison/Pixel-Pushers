@@ -56,7 +56,7 @@ const MasonryGrid = () => {
         $width={getMedia("350px", "24.306vw", "20.063vw", "23.364vw")}
         $height={getMedia("250px", "17.361vw", "27.778vw", "200px")}
         $align={"flex-end"}
-        $textalign={'flex-start'}
+        $textalign={"flex-start"}
         $padding={getMedia("3px", "0.208vw", "0.293vw", "1.402vw")}
         $justify={"space-between"}
       >
@@ -99,11 +99,11 @@ const MasonryGrid = () => {
             "1.27vw 1.27vw 0.488vw 0.488vw ",
             "3.037vw 3.037vw 1.168vw 1.168vw "
           )}
-          $backgroundcolor={"#FF6663"}
+          $backgroundcolor={"  #535353"}
         >
           Hello world
         </SmallBox>
-        <SmallBox $radius={"5px"} $backgroundcolor={"#99C24D  "}>
+        <SmallBox $radius={"5px"} $backgroundcolor={"#434343  "}>
           Hello world
         </SmallBox>
         <SmallBox
@@ -113,14 +113,14 @@ const MasonryGrid = () => {
             "0.488vw 0.488vw 1.27vw 1.27vw",
             "1.168vw 1.168vw 3.037vw 3.037vw"
           )}
-          $backgroundcolor={"#8963BA"}
+          $backgroundcolor={"#343434"}
         >
           Hello world
         </SmallBox>
       </Boxes>
       <Boxes
         $radius={"15px"}
-        $backgroundcolor={"#A4A8D1"}
+        $backgroundcolor={"#1E1E1E"}
         $width={getMedia("200px", "13.889vw", "19.531vw", "100%")}
       >
         <InputContainer>
@@ -139,7 +139,7 @@ const MasonryGrid = () => {
             </ToggleButton>
           </ToggleContainer>
           <SearchContainer>
-            <input
+            <Input
               type="text"
               value={searchQuery}
               placeholder={
@@ -147,7 +147,7 @@ const MasonryGrid = () => {
               }
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button onClick={handleMusicSearch}>Search</button>
+            <Button onClick={handleMusicSearch}>Search</Button>
           </SearchContainer>
         </InputContainer>
       </Boxes>
@@ -258,7 +258,7 @@ const Boxes = styled.div`
   flex-direction: ${(props) => props.$direction || "row"};
   align-items: ${(props) => props.$align || "center"};
   justify-content: ${(props) => props.$justify || "flex-start"};
-  text-align: ${props=> props?.$textalign || 'center'};
+  text-align: ${(props) => props?.$textalign || "center"};
   background-color: ${(props) => props.$backgroundcolor || "white"};
   height: ${(props) => props.$height || "auto"};
   flex: ${(props) => props.$flex || "unset"};
@@ -268,9 +268,10 @@ const Boxes = styled.div`
   gap: ${(props) => props.$gap || "0.694vw"};
   overflow: hidden;
   z-index: 1;
-  
+
   &:hover {
-    transform: ${(props) => (props.$noHover ? 'unset' : 'scale(1.1)')};
+    transform: ${(props) => (props.$noHover ? "unset" : "scale(1.1)")};
+    overflow: ${(props) => (props.$noHover ? 'unset': 'visible')};
     z-index: 100;
   }
   transition: transform 0.3s ease-in-out, z-index 0.3s ease-in-out;
@@ -298,15 +299,21 @@ const Boxes = styled.div`
     }
   }
 `;
+const Input = styled.input`
+  border-top-left-radius: 0vw;
+  ${media.fullWidth} {
+    border-top-left-radius: 0px;
+  }
+  border: 1px inset #353839;
+`;
+const Button = styled.button`
+  background-color: #353839;
+  border: 1px outset black;
+`;
 const SearchContainer = styled.div`
   display: flex;
   gap: 0.694vw;
-  input {
-    border-top-left-radius: 0vw;
-    ${media.fullWidth} {
-      border-top-left-radius: 0px;
-    }
-  }
+
   ${media.fullWidth} {
     gap: 10px;
   }
@@ -376,7 +383,7 @@ const Wrapper = styled.div`
   align-self: center;
   flex-wrap: wrap;
   width: 65%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: #0e0e10;
   padding: 1.3vw 0.794vw;
   border-radius: 1.389vw;
   gap: 0.903vw 0.347vw;
