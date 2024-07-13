@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
@@ -8,9 +8,23 @@ import eyes from "../assets/prettyEyes.png";
 import getMedia from "../utils/getMedia";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import axios from "axios";
+import { fetchArtistData } from "../API/music";
+import MusicBox from "./MusicBox";
 
 const MasonryGrid = () => {
   const masonryScope = document.querySelector(".masonry-grid");
+  const [artistSearch, setArtistSearch] = useState("");
+  const [artistInfo, setArtistInfo] = useState({});
+
+  const handleArtistFetch = async () => {
+    const infoResponse = await fetchArtistData(artistSearch);
+   
+    return setArtistInfo(infoResponse);
+  };
+  useEffect(() => {
+    console.log(artistInfo);
+  }, [artistInfo]);
   useGSAP(
     () => {
       const target = document.querySelector(".angry-face");
@@ -38,18 +52,22 @@ const MasonryGrid = () => {
         $flex={getMedia(25, 15, 15, 1)}
         $width={getMedia("350px", "24.306vw", "20.063vw", "23.364vw")}
         $height={getMedia("250px", "17.361vw", "27.778vw", "200px")}
-        $align
+        $align={'flex-end'}
         $padding={getMedia("3px", "0.208vw", "0.293vw", "1.402vw")}
-        $justify={"center"}
+        $justify={"flex-start"}
       >
-        <Image
-          src={hayden}
-          $flex={1}
-          alt={"RAINBOW SPARKLE"}
-          $height={"100%"}
-          $width={"100%"}
-          $cover={true}
-        />
+        {artistInfo.img && (
+          <>
+            <Image
+              src={artistInfo?.img}
+              alt={"last.fm-artist-img"}
+              $height={"100%"}
+              $width={!artistInfo.info ? "100%":"50%"}
+              $cover={!artistInfo.info ? "cover":"contain"}
+            />
+            {artistInfo.info && <MusicBox content={artistInfo?.info?.info?.results?.albummatches} />}
+          </>
+        )}
       </Boxes>
       <Boxes
         $backgroundcolor={"transparent"}
@@ -94,9 +112,15 @@ const MasonryGrid = () => {
       <Boxes
         $radius={"15px"}
         $backgroundcolor={"#A4A8D1"}
-        $width={getMedia("200px", "13.889vw", "19.531vw", "46.729vw")}
+        $width={getMedia("200px", "13.889vw", "19.531vw", "100%")}
       >
-        world
+        <input
+          type="text"
+          value={artistSearch}
+          placeholder="Album Lookup .."
+          onChange={(e) => setArtistSearch(e.target.value)}
+        />
+        <button onClick={handleArtistFetch}>Search</button>
       </Boxes>
       <Boxes
         $radius={"15px"}
@@ -147,10 +171,9 @@ const Image = styled.img`
   width: ${(props) => props.$width || "13.084vw"};
   align-self: ${(props) => props?.$align || "unset"};
   border-radius: 13px;
-  flex: 1;
   top: ${(props) => props.$top || "unset"};
   left: ${(props) => props.$left || "unset"};
-  object-fit: ${(props) => (props.$cover ? "cover" : "fill")};
+  object-fit: ${(props) => props.$cover || "fill"};
 
   ${media.fullWidth} {
     width: ${(props) => props.$width || "190px"};
@@ -193,6 +216,10 @@ const SmallBox = styled.div`
   ${media.mobile} {
     border-radius: ${(props) => props.$radius || "0vw"};
     padding: 12px;
+    &:hover {
+      transform: scale(1);
+    }
+    transition: unset;
   }
 `;
 const Boxes = styled.div`
@@ -237,6 +264,9 @@ const Boxes = styled.div`
     border-radius: ${(props) => props.$radius || "0vw"};
     min-width: ${(props) => props.$width || "100px"};
     gap: ${(props) => props.$gap || "2.336vw"};
+    &:hover {
+      transform: scale(1.03);
+    }
   }
 `;
 const Wrapper = styled.div`
