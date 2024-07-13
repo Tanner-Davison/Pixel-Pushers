@@ -24,9 +24,7 @@ const MasonryGrid = () => {
    
     return setArtistInfo(infoResponse);
   };
-  useEffect(() => {
-    console.log(artistInfo);
-  }, [artistInfo]);
+
   useGSAP(
     () => {
       const target = document.querySelector(".angry-face");
