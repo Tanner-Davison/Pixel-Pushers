@@ -8,7 +8,6 @@ import eyes from "../assets/prettyEyes.png";
 import getMedia from "../utils/getMedia";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import axios from "axios";
 import { fetchArtistData } from "../API/music";
 import MusicBox from "./MusicBox";
 
@@ -18,6 +17,9 @@ const MasonryGrid = () => {
   const [artistInfo, setArtistInfo] = useState({});
 
   const handleArtistFetch = async () => {
+    if(artistSearch === ''){
+      return 
+    }
     const infoResponse = await fetchArtistData(artistSearch);
    
     return setArtistInfo(infoResponse);
@@ -54,7 +56,7 @@ const MasonryGrid = () => {
         $height={getMedia("250px", "17.361vw", "27.778vw", "200px")}
         $align={'flex-end'}
         $padding={getMedia("3px", "0.208vw", "0.293vw", "1.402vw")}
-        $justify={"flex-start"}
+        $justify={"space-evenly"}
       >
         {artistInfo.img && (
           <>
@@ -62,7 +64,7 @@ const MasonryGrid = () => {
               src={artistInfo?.img}
               alt={"last.fm-artist-img"}
               $height={"100%"}
-              $width={!artistInfo.info ? "100%":"50%"}
+              $width={!artistInfo.info ? "100%":"42%"}
               $cover={!artistInfo.info ? "cover":"contain"}
             />
             {artistInfo.info && <MusicBox content={artistInfo?.info?.info?.results?.albummatches} />}
@@ -276,7 +278,7 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   width: 65%;
   background-color: rgba(0, 0, 0, 0.6);
-  padding: 0.694vw;
+  padding: 1.3vw 0.794vw;
   border-radius: 1.389vw;
   gap: 0.903vw 0.347vw;
   z-index: 1;
