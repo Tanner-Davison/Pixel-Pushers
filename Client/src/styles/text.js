@@ -764,25 +764,25 @@ ${media.mobile} {
   bodySChillax: `
   font-family: 'Chillax-Regular';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
 
     ${media.fullWidth} {
-      font-size: 16px;
+      font-size: 12px;
       line-height: 24px;
     }
     
     ${media.desktop} {
-      font-size: 1.111vw;
+      font-size: 0.833vw;
       line-height: 1.667vw;
     }
 
     ${media.tablet} {
-      font-size: 1.563vw;
+      font-size: 1.363vw;
       line-height: 2.344vw;
     }
 
     ${media.mobile} {
-      font-size: 3.738vw;
+      font-size: 2.504vw;
       line-height: 5.607vw;
     }
     `,

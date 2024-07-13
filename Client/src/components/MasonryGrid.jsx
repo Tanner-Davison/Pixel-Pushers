@@ -13,23 +13,25 @@ import MusicBox from "./MusicBox";
 
 const MasonryGrid = () => {
   const masonryScope = document.querySelector(".masonry-grid");
-  const [artistSearch, setArtistSearch] = useState("");
-  const [artistInfo, setArtistInfo] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+  const [albumInfo, setAlbumInfo] = useState({});
+  const [selected, setSelected] = useState("album");
 
-  const handleArtistFetch = async () => {
-    if(artistSearch === ''){
-      return 
+  const handleMusicSearch = async () => {
+    if (searchQuery === "") {
+      return;
     }
-    const infoResponse = await fetchArtistData(artistSearch);
-   
-    return setArtistInfo(infoResponse);
+    const infoResponse = await fetchArtistData(searchQuery, selected);
+    if (infoResponse) {
+      console.log(infoResponse);
+      setAlbumInfo(infoResponse);
+    }
   };
 
   useGSAP(
     () => {
       const target = document.querySelector(".angry-face");
       const bg = document.querySelector(".angry-div");
-
       const tl = gsap
         .timeline({ paused: true })
         .to(target, {
@@ -49,23 +51,30 @@ const MasonryGrid = () => {
       <Boxes
         $radius={"20px"}
         $backgroundcolor={"transparent"}
+        $noHover
         $flex={getMedia(25, 15, 15, 1)}
         $width={getMedia("350px", "24.306vw", "20.063vw", "23.364vw")}
         $height={getMedia("250px", "17.361vw", "27.778vw", "200px")}
-        $align={'flex-end'}
+        $align={"flex-end"}
+        $textalign={'flex-start'}
         $padding={getMedia("3px", "0.208vw", "0.293vw", "1.402vw")}
-        $justify={"space-evenly"}
+        $justify={"space-between"}
       >
-        {artistInfo.img && (
+        {albumInfo.img && (
           <>
             <Image
-              src={artistInfo?.img}
+              src={albumInfo?.img}
               alt={"last.fm-artist-img"}
               $height={"100%"}
-              $width={!artistInfo.info ? "100%":"42%"}
-              $cover={!artistInfo.info ? "cover":"contain"}
+              $width={!albumInfo.info ? "100%" : "42%"}
+              $cover={!albumInfo.info ? "cover" : "contain"}
             />
-            {artistInfo.info && <MusicBox content={artistInfo?.info?.info?.results?.albummatches} />}
+            {albumInfo.info && (
+              <MusicBox
+                content={albumInfo?.info?.info?.results?.albummatches}
+                summary={albumInfo?.summary}
+              />
+            )}
           </>
         )}
       </Boxes>
@@ -114,13 +123,33 @@ const MasonryGrid = () => {
         $backgroundcolor={"#A4A8D1"}
         $width={getMedia("200px", "13.889vw", "19.531vw", "100%")}
       >
-        <input
-          type="text"
-          value={artistSearch}
-          placeholder="Album Lookup .."
-          onChange={(e) => setArtistSearch(e.target.value)}
-        />
-        <button onClick={handleArtistFetch}>Search</button>
+        <InputContainer>
+          <ToggleContainer>
+            <ToggleButton
+              active={selected === "artist"}
+              onClick={() => setSelected("artist")}
+            >
+              Artist
+            </ToggleButton>
+            <ToggleButton
+              active={selected === "album"}
+              onClick={() => setSelected("album")}
+            >
+              Album
+            </ToggleButton>
+          </ToggleContainer>
+          <SearchContainer>
+            <input
+              type="text"
+              value={searchQuery}
+              placeholder={
+                selected === "artist" ? "Artist Lookup..." : "Album Lookup .."
+              }
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button onClick={handleMusicSearch}>Search</button>
+          </SearchContainer>
+        </InputContainer>
       </Boxes>
       <Boxes
         $radius={"15px"}
@@ -229,7 +258,7 @@ const Boxes = styled.div`
   flex-direction: ${(props) => props.$direction || "row"};
   align-items: ${(props) => props.$align || "center"};
   justify-content: ${(props) => props.$justify || "flex-start"};
-  text-align: center;
+  text-align: ${props=> props?.$textalign || 'center'};
   background-color: ${(props) => props.$backgroundcolor || "white"};
   height: ${(props) => props.$height || "auto"};
   flex: ${(props) => props.$flex || "unset"};
@@ -239,10 +268,10 @@ const Boxes = styled.div`
   gap: ${(props) => props.$gap || "0.694vw"};
   overflow: hidden;
   z-index: 1;
+  
   &:hover {
-    transform: scale(1.1);
+    transform: ${(props) => (props.$noHover ? 'unset' : 'scale(1.1)')};
     z-index: 100;
-    overflow: visible;
   }
   transition: transform 0.3s ease-in-out, z-index 0.3s ease-in-out;
   ${media.fullWidth} {
@@ -267,6 +296,78 @@ const Boxes = styled.div`
     &:hover {
       transform: scale(1.03);
     }
+  }
+`;
+const SearchContainer = styled.div`
+  display: flex;
+  gap: 0.694vw;
+  input {
+    border-top-left-radius: 0vw;
+    ${media.fullWidth} {
+      border-top-left-radius: 0px;
+    }
+  }
+  ${media.fullWidth} {
+    gap: 10px;
+  }
+
+  ${media.tablet} {
+    gap: 0.977vw;
+  }
+
+  ${media.mobile} {
+    gap: 2.336vw;
+  }
+`;
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const ToggleContainer = styled.div`
+  display: flex;
+  :first-child {
+    border-top-left-radius: 0.694vw;
+    ${media.fullWidth} {
+      border-top-left-radius: 10px;
+    }
+
+    ${media.tablet} {
+      border-top-left-radius: 0.977vw;
+    }
+
+    ${media.mobile} {
+      border-top-left-radius: 2.336vw;
+    }
+  }
+  :last-child {
+    border-top-right-radius: 0.694vw;
+    ${media.fullWidth} {
+      border-top-right-radius: 10px;
+    }
+
+    ${media.tablet} {
+      border-top-right-radius: 0.977vw;
+    }
+
+    ${media.mobile} {
+      border-top-right-radius: 2.336vw;
+    }
+  }
+`;
+
+const ToggleButton = styled.div`
+  ${text.bodySChillax}
+  padding: 0px 5px;
+  margin: 0px;
+
+  cursor: pointer;
+
+  background-color: ${(props) => (props.active ? "#99C24D" : "white")};
+  color: ${(props) => (props.active ? "white" : "black")};
+
+  &:hover {
+    background-color: ${(props) =>
+      props.active ? `${colors.primaryPurple}` : "#f0f0f0"};
   }
 `;
 const Wrapper = styled.div`

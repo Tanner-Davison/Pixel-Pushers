@@ -1,18 +1,26 @@
 import axios, { AxiosError } from "axios";
 import noResults from "../assets/noResults.webp";
-export const fetchArtistData = async (artistData) => {
-  console.log(artistData);
+
+export const fetchArtistData = async (searchQuery, selected) => {
+  console.log(searchQuery);
   try {
-    const response = await axios.get("/pixel-pushers/music/album", {
-      params: { artistData },
+    const response = await axios.get(`/pixel-pushers/music/${selected}`, {
+      params: { searchQuery },
     });
-    console.log(response.data);
+
     if (response.data) {
-      console.log(response.data.info);
       if (response.data.img === "") {
-        return { info: false, img: noResults };
+        return {
+          info: false,
+          summarty: response.data.summary,
+          img: "No results",
+        };
       }
-      return { info: response.data, img: response.data.img };
+      return {
+        info: response.data,
+        summary: response.data.summary,
+        img: response.data.img,
+      };
     }
   } catch (error) {
     if (error.response) {

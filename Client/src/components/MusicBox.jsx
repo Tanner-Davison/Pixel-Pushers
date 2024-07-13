@@ -3,34 +3,73 @@ import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
 import text from "styles/text";
-
-const MusicBox = ({ content }) => {
+import albumIcon from "../assets/albumIcon.png";
+import mic from "../assets/mic.png";
+import lastFm from "../assets/Lastfm-02.svg";
+const MusicBox = ({ content, summary }) => {
   console.log(content);
   return (
     <Wrapper>
       <InfoWrap>
-        <AlbumName> Album : </AlbumName>
+        <AlbumName>
+          <IconContainer>
+            <Icon src={albumIcon} alt={"album-icon"} />
+          </IconContainer>
+          Album :{" "}
+        </AlbumName>
         <Indented>{content?.album[0]?.name}</Indented>
       </InfoWrap>
       <InfoWrap>
-        <ArtistName>Artist : </ArtistName>
+        <ArtistName>
+          <IconContainer>
+            <Icon src={mic} alt={"artist-icon"} />
+          </IconContainer>
+          Artist :{" "}
+        </ArtistName>
         <Indented>{content?.album[0]?.artist}</Indented>
       </InfoWrap>
       <InfoWrap>
-        <Visit>Visit: </Visit>
+        <Visit>
+          <IconContainer>
+            <Icon src={lastFm} alt={"last-fm-logo"} />
+          </IconContainer>
+          Visit:{" "}
+        </Visit>
         <Link href={content?.album[0]?.url}>
           <Indented>{`last.fm/${content?.album[0]?.artist}`}</Indented>
         </Link>
       </InfoWrap>
+      {summary && (
+        <InfoWrap>
+          <About>About Artist:</About>
+          <Summary dangerouslySetInnerHTML={{ __html: summary }} />
+        </InfoWrap>
+      )}
     </Wrapper>
   );
 };
 
 export default MusicBox;
+const Icon = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+const IconContainer = styled.div`
+  width: 20px;
+  height: 20px;
+`;
+const Summary = styled.p`
+  ${text.bodyMChillax}
+  padding-right:5px;
+`;
 const Indented = styled.p`
   text-indent: 10px;
 `;
-const Visit = styled.p`
+const Visit = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   ${text.bodyMBold}
 `;
 
@@ -38,10 +77,21 @@ const Link = styled.a`
   ${text.bodyM}
   font-style: italic !important;
 `;
-const AlbumName = styled.p`
+const AlbumName = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   ${text.bodyMBold}
 `;
-const ArtistName = styled.p`
+const ArtistName = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  ${text.bodyMBold}
+`;
+const About = styled.p`
   ${text.bodyMBold}
 `;
 const InfoWrap = styled.div`
@@ -55,10 +105,11 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
-  align-self: center;
+  overflow-y: scroll;
+  padding: 10px 0px;
   gap: 15px;
-  width: 45%;
+  width: 55%;
+  height: 100%;
 
   ${media.fullWidth} {
   }
