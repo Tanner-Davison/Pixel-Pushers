@@ -156,7 +156,7 @@ const MasonryGrid = () => {
         $flex={3.6}
         $height={"100px"}
         $width={getMedia("300px", "20.833vw", "29.297vw", "45.093vw")}
-        $backgroundcolor={"#177E89"}
+        $backgroundcolor={"#FF6663"}
       >
         <Small>world how are you today </Small>
       </Boxes>
@@ -165,7 +165,7 @@ const MasonryGrid = () => {
         className={"angry-div"}
         $radius={getMedia("15px", "0.903vw", "1.465vw", "3.505vw")}
         $width={getMedia("150px", "6.944vw", "7.324vw", "32.083vw")}
-        $backgroundcolor={"#E71D36"}
+        $backgroundcolor={"#1B1B1B"}
         $height={"100px"}
         $justify={"center"}
       >
@@ -180,7 +180,7 @@ const MasonryGrid = () => {
 
       <Boxes
         $radius={"13px"}
-        $backgroundcolor={`#FF6663`}
+        $backgroundcolor={` #412485`}
         $flex={1}
         $width={getMedia("100%", "100%", "100%", "60%")}
       >
@@ -271,7 +271,7 @@ const Boxes = styled.div`
 
   &:hover {
     transform: ${(props) => (props.$noHover ? "unset" : "scale(1.1)")};
-    overflow: ${(props) => (props.$noHover ? 'unset': 'visible')};
+    overflow: ${(props) => (props.$noHover ? "unset" : "visible")};
     z-index: 100;
   }
   transition: transform 0.3s ease-in-out, z-index 0.3s ease-in-out;
@@ -301,10 +301,11 @@ const Boxes = styled.div`
 `;
 const Input = styled.input`
   border-top-left-radius: 0vw;
+  background-color: #535353;
+  
   ${media.fullWidth} {
     border-top-left-radius: 0px;
   }
-  border: 1px inset #353839;
 `;
 const Button = styled.button`
   background-color: #353839;
