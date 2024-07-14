@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import noResults from "../assets/noResults.webp";
 
 export const fetchArtistData = async (searchQuery, selected) => {
