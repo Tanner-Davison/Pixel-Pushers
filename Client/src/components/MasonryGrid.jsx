@@ -3,14 +3,14 @@ import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/colors";
 import text from "styles/text";
-import hayden from "../assets/hayden.png";
 import eyes from "../assets/prettyEyes.png";
 import getMedia from "../utils/getMedia";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { fetchArtistData } from "../API/music";
 import MusicBox from "./MusicBox";
-
+import recordImg from "../assets/recordVinyl.png";
+import DefaultMusicBoxWrapper from "./DefaultMusicBoxWrapper";
 const MasonryGrid = () => {
   const masonryScope = document.querySelector(".masonry-grid");
   const [searchQuery, setSearchQuery] = useState("");
@@ -48,144 +48,161 @@ const MasonryGrid = () => {
 
   return (
     <Wrapper className={"masonry-grid"}>
-      <Boxes
-        $radius={"20px"}
-        $backgroundcolor={"transparent"}
-        $noHover
-        $flex={getMedia(25, 15, 15, 1)}
-        $width={getMedia("350px", "24.306vw", "20.063vw", "23.364vw")}
-        $height={getMedia("250px", "17.361vw", "27.778vw", "200px")}
-        $align={"flex-end"}
-        $textalign={"flex-start"}
-        $padding={getMedia("3px", "0.208vw", "0.293vw", "1.402vw")}
-        $justify={"space-between"}
-      >
-        {albumInfo.img && (
-          <>
-            <Image
-              src={albumInfo?.img}
-              alt={"last.fm-artist-img"}
-              $height={"100%"}
-              $width={!albumInfo.info ? "100%" : "42%"}
-              $cover={!albumInfo.info ? "cover" : "contain"}
-            />
-            {albumInfo.info && (
-              <MusicBox
-                content={albumInfo?.info?.info?.results?.albummatches}
-                summary={albumInfo?.summary}
+      <Left>
+        <Boxes
+          $radius={"20px"}
+          $backgroundcolor={"transparent"}
+          $noHover={true}
+          $flex={getMedia(25, 15, 15, 1)}
+          $width={getMedia("350px", "24.306vw", "20.063vw", "23.364vw")}
+          $height={getMedia("250px", "17.361vw", "27.778vw", "200px")}
+          $align={"flex-end"}
+          $textalign={"flex-start"}
+          $padding={getMedia("3px", "0.208vw", "0.293vw", "1.402vw")}
+          $justify={"space-between"}
+        >
+          {!albumInfo.img && (
+            <>
+              <Image
+                className={"default-record"}
+                src={recordImg}
+                alt={"vinyl-record"}
+                $height={"100%"}
+                $width={getMedia("85%", "85%", "100%", "85%")}
+                $left={getMedia("-284px", "-284px", "-160px", "-164px")}
+                $noHover
               />
+              <DefaultMusicBoxWrapper />
+            </>
+          )}
+          {albumInfo.img && (
+            <>
+              <Image
+                src={albumInfo?.img}
+                alt={"last.fm-artist-img"}
+                $height={"100%"}
+                $width={!albumInfo.info ? "100%" : "42%"}
+                $cover={!albumInfo.info ? "cover" : "contain"}
+              />
+              {albumInfo.info && (
+                <MusicBox
+                  content={albumInfo?.info?.info?.results?.albummatches}
+                  summary={albumInfo?.summary}
+                />
+              )}
+            </>
+          )}
+        </Boxes>
+        <Boxes
+          $backgroundcolor={"transparent"}
+          $flex={2}
+          $padding={getMedia(
+            "0px 10px",
+            "0vw 0.394vw",
+            "0vw 0.377vw",
+            "0vw 0.536vw"
+          )}
+          $gap={"8px"}
+          $direction={"column"}
+          $justify={"space-between"}
+          $width={getMedia("300px", "300px", "300px", "300px")}
+        >
+          <SmallBox
+            $radius={getMedia(
+              "13px 13px 5px 5px ",
+              "0.903vw 0.903vw 0.347vw 0.347vw ",
+              "1.27vw 1.27vw 0.488vw 0.488vw ",
+              "3.037vw 3.037vw 1.168vw 1.168vw "
             )}
-          </>
-        )}
-      </Boxes>
-      <Boxes
-        $backgroundcolor={"transparent"}
-        $flex={2}
-        $padding={getMedia(
-          "0px 10px",
-          "0vw 0.394vw",
-          "0vw 0.377vw",
-          "0vw 0.536vw"
-        )}
-        $gap={"8px"}
-        $direction={"column"}
-        $justify={"space-between"}
-        $width={getMedia("300px", "300px", "300px", "300px")}
-      >
-        <SmallBox
-          $radius={getMedia(
-            "13px 13px 5px 5px ",
-            "0.903vw 0.903vw 0.347vw 0.347vw ",
-            "1.27vw 1.27vw 0.488vw 0.488vw ",
-            "3.037vw 3.037vw 1.168vw 1.168vw "
-          )}
-          $backgroundcolor={"  #535353"}
+            $backgroundcolor={"  #535353"}
+          >
+            Hello world
+          </SmallBox>
+          <SmallBox $radius={"5px"} $backgroundcolor={"#434343  "}>
+            Hello world
+          </SmallBox>
+          <SmallBox
+            $radius={getMedia(
+              "5px 5px 13px 13px",
+              "0.347vw 0.347vw 0.903vw 0.903vw",
+              "0.488vw 0.488vw 1.27vw 1.27vw",
+              "1.168vw 1.168vw 3.037vw 3.037vw"
+            )}
+            $backgroundcolor={"#343434"}
+          >
+            Hello world
+          </SmallBox>
+        </Boxes>
+        <Boxes
+        $noHover={true}
+          $radius={"15px"}
+          $backgroundcolor={"#1E1E1E"}
+          $width={getMedia("200px", "13.889vw", "19.531vw", "100%")}
         >
-          Hello world
-        </SmallBox>
-        <SmallBox $radius={"5px"} $backgroundcolor={"#434343  "}>
-          Hello world
-        </SmallBox>
-        <SmallBox
-          $radius={getMedia(
-            "5px 5px 13px 13px",
-            "0.347vw 0.347vw 0.903vw 0.903vw",
-            "0.488vw 0.488vw 1.27vw 1.27vw",
-            "1.168vw 1.168vw 3.037vw 3.037vw"
-          )}
-          $backgroundcolor={"#343434"}
+          <InputContainer>
+            <ToggleContainer>
+              <ToggleButton
+                active={selected === "artist"}
+                onClick={() => setSelected("artist")}
+              >
+                Artist
+              </ToggleButton>
+              <ToggleButton
+                active={selected === "album"}
+                onClick={() => setSelected("album")}
+              >
+                Album
+              </ToggleButton>
+            </ToggleContainer>
+            <SearchContainer>
+              <Input
+                type="text"
+                value={searchQuery}
+                placeholder={
+                  selected === "artist" ? "Artist Lookup..." : "Album Lookup .."
+                }
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button onClick={handleMusicSearch}>Search</Button>
+            </SearchContainer>
+          </InputContainer>
+        </Boxes>
+        <Boxes
+          $radius={"15px"}
+          $flex={3.6}
+          $height={"100px"}
+          $width={getMedia("300px", "20.833vw", "19.297vw", "45.093vw")}
+          $backgroundcolor={"#FF6663"}
         >
-          Hello world
-        </SmallBox>
-      </Boxes>
-      <Boxes
-        $radius={"15px"}
-        $backgroundcolor={"#1E1E1E"}
-        $width={getMedia("200px", "13.889vw", "19.531vw", "100%")}
-      >
-        <InputContainer>
-          <ToggleContainer>
-            <ToggleButton
-              active={selected === "artist"}
-              onClick={() => setSelected("artist")}
-            >
-              Artist
-            </ToggleButton>
-            <ToggleButton
-              active={selected === "album"}
-              onClick={() => setSelected("album")}
-            >
-              Album
-            </ToggleButton>
-          </ToggleContainer>
-          <SearchContainer>
-            <Input
-              type="text"
-              value={searchQuery}
-              placeholder={
-                selected === "artist" ? "Artist Lookup..." : "Album Lookup .."
-              }
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Button onClick={handleMusicSearch}>Search</Button>
-          </SearchContainer>
-        </InputContainer>
-      </Boxes>
-      <Boxes
-        $radius={"15px"}
-        $flex={3.6}
-        $height={"100px"}
-        $width={getMedia("300px", "20.833vw", "29.297vw", "45.093vw")}
-        $backgroundcolor={"#FF6663"}
-      >
-        <Small>world how are you today </Small>
-      </Boxes>
+          <Small>world how are you today </Small>
+        </Boxes>
 
-      <Boxes
-        className={"angry-div"}
-        $radius={getMedia("15px", "0.903vw", "1.465vw", "3.505vw")}
-        $width={getMedia("150px", "6.944vw", "7.324vw", "32.083vw")}
-        $backgroundcolor={"#1B1B1B"}
-        $height={"100px"}
-        $justify={"center"}
-      >
-        <Image
-          className={"angry-face"}
-          src={eyes}
-          $width={getMedia("50px", "120px", "11.719vw", "50px")}
-          alt={"eyespeeking"}
-          $align={"center"}
-        />
-      </Boxes>
+        <Boxes
+          className={"angry-div"}
+          $radius={getMedia("15px", "0.903vw", "1.465vw", "3.505vw")}
+          $width={getMedia("150px", "6.944vw", "7.324vw", "32.083vw")}
+          $backgroundcolor={"#1B1B1B"}
+          $height={"100px"}
+          $justify={"center"}
+        >
+          <Image
+            className={"angry-face"}
+            src={eyes}
+            $width={getMedia("50px", "120px", "11.719vw", "50px")}
+            alt={"eyespeeking"}
+            $align={"center"}
+          />
+        </Boxes>
 
-      <Boxes
-        $radius={"13px"}
-        $backgroundcolor={` #412485`}
-        $flex={1}
-        $width={getMedia("100%", "100%", "100%", "60%")}
-      >
-        world
-      </Boxes>
+        <Boxes
+          $radius={"13px"}
+          $backgroundcolor={` #412485`}
+          $flex={1}
+          $width={getMedia("100%", "100%", "100%", "60%")}
+        >
+          world
+        </Boxes>
+      </Left>
     </Wrapper>
   );
 };
@@ -268,13 +285,13 @@ const Boxes = styled.div`
   gap: ${(props) => props.$gap || "0.694vw"};
   overflow: hidden;
   z-index: 1;
-
+  transition: transform 0.2s ease-in-out, z-index 0.3s ease-in-out;
   &:hover {
     transform: ${(props) => (props.$noHover ? "unset" : "scale(1.1)")};
-    overflow: ${(props) => (props.$noHover ? "unset" : "visible")};
-    z-index: 100;
+    overflow: ${(props) => (props.$noHover ? "hidden" : "visible")};
+    z-index: ${(props) => (props.$noHover ? "unset" : "20")};
   }
-  transition: transform 0.3s ease-in-out, z-index 0.3s ease-in-out;
+
   ${media.fullWidth} {
     padding: ${(props) => props.$padding || "10px"};
     border-radius: ${(props) => props.$radius || "0px"};
@@ -294,15 +311,12 @@ const Boxes = styled.div`
     border-radius: ${(props) => props.$radius || "0vw"};
     min-width: ${(props) => props.$width || "100px"};
     gap: ${(props) => props.$gap || "2.336vw"};
-    &:hover {
-      transform: scale(1.03);
-    }
   }
 `;
 const Input = styled.input`
   border-top-left-radius: 0vw;
   background-color: #535353;
-  
+
   ${media.fullWidth} {
     border-top-left-radius: 0px;
   }
@@ -378,10 +392,9 @@ const ToggleButton = styled.div`
       props.active ? `${colors.primaryPurple}` : "#f0f0f0"};
   }
 `;
-const Wrapper = styled.div`
+const Left = styled.div`
   position: relative;
   display: flex;
-  align-self: center;
   flex-wrap: wrap;
   width: 65%;
   background-color: #0e0e10;
@@ -408,5 +421,22 @@ const Wrapper = styled.div`
     gap: 3.037vw 1.168vw;
     padding: 2.336vw;
     border-radius: 4.673vw;
+  }
+`;
+const Wrapper = styled.div`
+  display: flex;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  ${media.fullWidth} {
+    width: 1440px;
+  }
+
+  ${media.tablet} {
+    width: 100vw;
+  }
+
+  ${media.mobile} {
+    width: 100vw;
   }
 `;

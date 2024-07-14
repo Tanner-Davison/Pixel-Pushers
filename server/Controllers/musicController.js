@@ -16,9 +16,10 @@ const fetchArtistInfo = async (searchQuery) => {
         format: "json",
         limit: 1,
       },
-    });
+    }); 
 
     if (response.data) {
+      console.log(response.data)
       return response.data.artist.bio.summary;
     } else {
       console.log("Nothing Found");

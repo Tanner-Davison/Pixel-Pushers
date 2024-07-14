@@ -7,7 +7,7 @@ import albumIcon from "../assets/albumIcon.png";
 import mic from "../assets/mic.png";
 import lastFm from "../assets/Lastfm-02.svg";
 const MusicBox = ({ content, summary }) => {
-  console.log(content);
+  console.log(summary);
   return (
     <Wrapper>
       <InfoWrap>

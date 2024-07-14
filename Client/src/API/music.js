@@ -13,7 +13,7 @@ export const fetchArtistData = async (searchQuery, selected) => {
         return {
           info: false,
           summarty: response.data.summary,
-          img: "No results",
+          img: noResults, //this is an image dont change to string 
         };
       }
       return {
