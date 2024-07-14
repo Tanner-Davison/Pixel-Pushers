@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import media from "styles/media";
-import colors from "styles/colors";
-import text from "styles/text";
-import eyes from "../assets/prettyEyes.png";
-import getMedia from "../utils/getMedia";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import React, { useState } from "react";
+import styled from "styled-components";
+import colors from "styles/colors";
+import media from "styles/media";
+import text from "styles/text";
 import { fetchArtistData } from "../API/music";
-import MusicBox from "./MusicBox";
+import eyes from "../assets/prettyEyes.png";
 import recordImg from "../assets/recordVinyl.png";
+import getMedia from "../utils/getMedia";
 import DefaultMusicBoxWrapper from "./DefaultMusicBoxWrapper";
+import MusicBox from "./MusicBox";
+import singleRecord from "../assets/singleRecord.png";
+
 const MasonryGrid = () => {
   const masonryScope = document.querySelector(".masonry-grid");
   const [searchQuery, setSearchQuery] = useState("");
@@ -30,18 +32,34 @@ const MasonryGrid = () => {
 
   useGSAP(
     () => {
-      const target = document.querySelector(".angry-face");
-      const bg = document.querySelector(".angry-div");
-      const tl = gsap
-        .timeline({ paused: true })
-        .to(target, {
-          rotate: 180,
-          ease: "linear",
-        })
-        .to(bg, { backgroundColor: "#132E32" }, "<");
+      const target = document.querySelector(".single-record-image");
+      const bg = document.querySelector(".single-record-div");
 
-      target.addEventListener("mouseenter", () => tl.play());
-      target.addEventListener("mouseleave", () => tl.reverse());
+      if (target && bg) {
+        const infiniteTl = gsap
+          .timeline({ paused: false })
+          .to(target, {
+            rotate: 360,
+            duration: 15,
+            repeat: -1,
+            ease: "linear",
+          });
+
+        const tl = gsap
+          .timeline({ paused: true })
+          .to(target, { rotate: 360, ease: "linear" })
+          .to(bg, { backgroundColor: "#132E32" }, "<");
+
+        target.addEventListener("mouseenter", () => {
+          infiniteTl.pause(1.5);
+          tl.play();
+        });
+
+        target.addEventListener("mouseleave", () => {
+          infiniteTl.play();
+          tl.reverse();
+        });
+      }
     },
     { scope: masonryScope }
   );
@@ -134,7 +152,7 @@ const MasonryGrid = () => {
           </SmallBox>
         </Boxes>
         <Boxes
-        $noHover={true}
+          $noHover={true}
           $radius={"15px"}
           $backgroundcolor={"#1E1E1E"}
           $width={getMedia("200px", "13.889vw", "19.531vw", "100%")}
@@ -178,7 +196,8 @@ const MasonryGrid = () => {
         </Boxes>
 
         <Boxes
-          className={"angry-div"}
+          className={"single-record-div"}
+          $cursor={true}
           $radius={getMedia("15px", "0.903vw", "1.465vw", "3.505vw")}
           $width={getMedia("150px", "6.944vw", "7.324vw", "32.083vw")}
           $backgroundcolor={"#1B1B1B"}
@@ -186,9 +205,10 @@ const MasonryGrid = () => {
           $justify={"center"}
         >
           <Image
-            className={"angry-face"}
-            src={eyes}
-            $width={getMedia("50px", "120px", "11.719vw", "50px")}
+            className={"single-record-image"}
+            src={singleRecord}
+            $width={"95%"}
+            $height={"95%"}
             alt={"eyespeeking"}
             $align={"center"}
           />
@@ -269,6 +289,7 @@ const SmallBox = styled.div`
   }
 `;
 const Boxes = styled.div`
+  cursor: ${(props) => (props.$cursor ? "pointer" : "arrow")};
   position: relative;
   ${(props) => props.$fontsize || `${text.bodyM}`};
   display: flex;
