@@ -189,7 +189,7 @@ const MasonryGrid = () => {
           $radius={"15px"}
           $flex={3.6}
           $height={"100px"}
-          $width={getMedia("300px", "20.833vw", "19.297vw", "45.093vw")}
+          $width={getMedia("300px", "20.833vw", "19.297vw", "23.364vw")}
           $backgroundcolor={"#FF6663"}
         >
           <Small>world how are you today </Small>
@@ -199,9 +199,9 @@ const MasonryGrid = () => {
           className={"single-record-div"}
           $cursor={true}
           $radius={getMedia("15px", "0.903vw", "1.465vw", "3.505vw")}
-          $width={getMedia("150px", "6.944vw", "7.324vw", "32.083vw")}
+          $width={getMedia("100px", "6.944vw", "12.3vw", "23.364vw")}
           $backgroundcolor={"#1B1B1B"}
-          $height={"100px"}
+          $height={getMedia("100px", "6.944vw", "12.3vw", "23.364vw")}
           $justify={"center"}
         >
           <Image
