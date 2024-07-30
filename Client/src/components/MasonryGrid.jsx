@@ -194,7 +194,6 @@ const MasonryGrid = () => {
         >
           <Small>world how are you today </Small>
         </Boxes>
-
         <Boxes
           className={"single-record-div"}
           $cursor={true}
