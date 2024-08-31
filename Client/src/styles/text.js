@@ -811,5 +811,30 @@ ${media.mobile} {
         line-height: 8.411vw;
       }
       `,
+      bodyIBM: `
+      font-family: 'IBMPlexSans-Regular';
+      font-style: normal;
+      font-weight: 400;
+    
+        ${media.fullWidth} {
+          font-size: 18px;
+          line-height: 27px;
+        }
+        
+        ${media.desktop} {
+          font-size: 1.25vw;
+          line-height: 1.875vw;
+        }
+    
+        ${media.tablet} {
+          font-size: 1.758vw;
+          line-height: 2.637vw;
+        }
+    
+        ${media.mobile} {
+          font-size: 4.206vw;
+          line-height: 6.308vw;
+        }
+        `,
 };
 export default text;

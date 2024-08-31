@@ -144,7 +144,7 @@ const MenuItem = styled.div`
   width: auto;
   a {
     color: white;
-    ${text.bodyMBoldChillax}
+    ${text.bodyIBM}
     ${media.fullWidth} {
     }
 
